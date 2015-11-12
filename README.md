@@ -8,3 +8,10 @@ This repository contains three subdirectories:
 
 You can write a short summary of your project into this file.
 This file is read by the gitlab and is shown on the repository's front page.
+
+Collaborators
+
+Agrasagar Bhattacharyya
+Chamran Moradi Ashour
+Joni Turunen
+Tommi Gröhn
