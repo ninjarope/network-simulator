@@ -28,21 +28,32 @@ class Router;
 class PacketGenerator;
 
 //=============================================================
-
-typedef std::string AddressType;
-typedef std::map<AddressType, Link*> Connections;
-typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
-typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
+namespace NsTypes {
+    typedef std::string AddressType;
+    typedef std::string PacketDataType;
+    typedef std::queue<Packet> PacketQueue;
+    typedef std::vector<Link*> Connections;
+    typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
+    typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
+}
 
 //=============================================================
 class Packet {
 public:
     Packet() {}
-    AddressType getSource() { return source; }
-    AddressType getDestination() { return destination; }
     
+    Packet(NsTypes::AddressType s, NsTypes::AddressType d, NsTypes::PacketDataType data)
+        : source(s), destination(d), data(data) {}
+    
+    NsTypes::AddressType getSource() { return source; }
+    
+    NsTypes::AddressType getDestination() { return destination; }
+
+    NsTypes::PacketDataType getData() { return data; }
+
 private:
-    AddressType source, destination;
+    NsTypes::AddressType source, destination;
+    NsTypes::PacketDataType data;
 };
 
 //=============================================================
@@ -50,48 +61,79 @@ private:
 class Node {
 public:
     Node() {}
+    
+    Node(NsTypes::AddressType address) : address(address) {}
+    
     virtual ~Node() {}
-    void receivePacket(Packet);
-    void addConnection(std::pair<AddressType, Link*>);
-    Connections& getConnections() { return connections; }
-    std::queue<Packet>& getPackets() { return packets; }
-    AddressType getAddress() { return address; }
+    
+    void receivePacket(Packet p) { packets.push(p); }
+    
+    void addConnection(Link* link) { connections.push_back(link); }
+    
+    NsTypes::Connections& getConnections() { return connections; }
+    
+    NsTypes::PacketQueue& getPackets() { return packets; }
+    
+    NsTypes::AddressType getAddress() { return address; }
+    
     virtual std::string getType() const = 0;
+    
     virtual void run() = 0;
     
 protected:
-    Connections connections;
-    std::queue<Packet> packets;
-    AddressType address;
+    NsTypes::Connections connections;
+    NsTypes::PacketQueue packets;
+    NsTypes::AddressType address;
 };
+
 
 //=============================================================
 /* Abstract link base class. */
 class Link {
 public:
     Link() {}
-    Link(Node* begin, Node* end) {
-        connection = {begin, end};
-        begin->addConnection({end->getAddress(), this});
+    
+    Link(Node* source, Node* destination) {
+        this->source = source;
+        this->destination = destination;
+        source->addConnection(this);
     }
+    
     virtual ~Link() {}
-    void addPacket(Packet) {}
+    
+    /* Add packet to queue waiting for transmission. */
+    void addPacket(Packet p) { packetsWaiting.push(p); }
+    
     virtual void run() = 0;
     
 protected:
-    std::pair<Node*, Node*> connection;
-    std::queue<Packet> packetsWaiting;
+    Node* source;
+    Node* destination;
+    NsTypes::PacketQueue packetsWaiting;
     std::vector<Packet> packetsInTransmission;
     double transmissionSpeed;
     double propagationDelay;
 };
 
 //=============================================================
-/* Some implementation of link. */
+/* Some test implementation of link, just straight forwarding of packets. */
 class LinkType1 : public Link {
 public:
     LinkType1() {}
-    void run() override {}
+
+    LinkType1(Node* source, Node* destination) : Link(source, destination) {}
+
+    void run() override {
+        while (!packetsWaiting.empty()) {
+            destination->receivePacket(packetsWaiting.front());
+            std::cout
+                << "Link " << this << " forwarded "
+                << packetsWaiting.front().getData() << " to node "
+                << destination->getAddress()
+                << std::endl;
+            packetsWaiting.pop();
+        }
+    }
     
 private:
 };
@@ -101,10 +143,17 @@ private:
 class Application {
 public:
     Application() {}
-    Application(Node* hostNode) {}
-    void setHost(Node* node) { hostNode = node; }
+    
+    Application(Node* hostNode) { setHost(hostNode); }
+    
+    /* Set host node that will run this application. */
+    void setHost(Node* hostNode) { this->hostNode = hostNode; }
+    
     virtual ~Application() {}
+    
     std::string getType() const { return type; }
+    
+    /* Derived classes implement this - modifies node packets directly. */
     virtual void process() = 0;
     
 protected:
@@ -112,65 +161,70 @@ protected:
     std::string type;
 };
 
-/* Routes and receives packets. */
+//=============================================================
+/* Example router application class. */
 class Router : public Application {
 public:
     Router() { type = "Router"; }
-    Router(ShortestPaths shortestPaths, Node* hostNode) {
-        // set routing based on given paths
-        // routing = shortestPaths.at(hostNode);
-    }
+    
     void process() override {
-        // example implementation, forward packets to links
-        // based on routing
+        // example with no routing, forward packets to "first" host node link, if any
         Packet p;
-        AddressType packetDestination;
-        std::queue<Packet>& packets = hostNode->getPackets();
+        NsTypes::AddressType packetDestination;
+        NsTypes::PacketQueue& packets = hostNode->getPackets();
         while (!packets.empty()) {
             p = packets.front();
             packetDestination = p.getDestination();
-            routing.at(packetDestination).front()
-                ->getConnections().at(packetDestination)
-                ->addPacket(p);
+            if (!hostNode->getConnections().empty()) {
+                hostNode->getConnections().front()->addPacket(p);
+                std::cout
+                    << hostNode->getAddress() << " forwarded "
+                    << p.getData() << " to link "
+                    << hostNode->getConnections().front()
+                    << std::endl;
+            }
             packets.pop();
         }
     }
     
 private:
-    /* Based on given shortest paths, associates next link to node in path
-     for given packet destination address. */
-    PathsToDestinationAddress routing;
+    /* Routing table. */
+    NsTypes::PathsToDestinationAddress routing;
 };
 
 /* Routes packets and generates new ones. */
 class PacketGenerator : public Application {
 public:
     PacketGenerator() { type = "PacketGenerator"; }
-    PacketGenerator(ShortestPaths p, Node* hostNode) {}
+    
     void process() override {}
     
 private:
 };
 
 //=============================================================
+/* Node implementation that runs some application(s). */
 class ApplicationNode : public Node {
 public:
     ApplicationNode() {}
-    ApplicationNode(Application* a) { addApplication(a); }
+    
+    ApplicationNode(NsTypes::AddressType address, Application* a) : Node(address) { addApplication(a); }
+    
     void addApplication(Application* a) {
-        a->setHost(static_cast<Node*> (this));
+        a->setHost(this);
         applications.push_back(a);
     };
+    
+    /* Return types of applications. */
     std::string getType() const override {
         std::stringstream ss;
         for (auto& application : applications)
             ss << "[" << application->getType() << "]";
-        ss << std::endl;
-        
         return ss.str();
     }
+    
     void run() override {
-        // do something to the packets based on connections...
+        // run all applications
         for (auto& application : applications)
             application->process();
     }
@@ -183,12 +237,19 @@ private:
 class Timer {
 public:
     Timer() {}
+    
     virtual ~Timer() {}
+    
     void setTimerIntervalSeconds(double seconds) {}
+    
     double getTimerIntervalSeconds() { return interval; }
+    
     void startTimer() {}
+    
     void stopTimer() {}
+    
     void setRunningTime(double seconds) {}
+    
     virtual void timerCallback() = 0;
     
 private:
@@ -200,9 +261,13 @@ private:
 class Network {
 public:
     Network() {}
+    
     const std::vector<ApplicationNode*>& getNodes() const { return nodes; }
+    
     const std::vector<Link*>& getLinks() const { return links; }
+    
     void addNode(ApplicationNode* n) { nodes.push_back(n); }
+    
     void addLink(Link* l) { links.push_back(l); }
     
 private:
@@ -216,24 +281,33 @@ public:
     /* Some constructors, there could also be ones that initialze
      simulator from file etc... */
     NetworkSimulator() {}
+    
     NetworkSimulator(const Network&) {}
+    
     ~NetworkSimulator() {}
+    
     void addNodes(std::vector<ApplicationNode*> nodes) {
         for (auto n : nodes) {
             network.addNode(n);
         }
     }
-    const Network& getNetworkState() const { return network; } 
+
+    void addLinks(std::vector<Link*> links) {
+        for (auto l : links) {
+            network.addLink(l);
+        }
+    }
+
+    const Network& getNetworkState() const { return network; }
     
-    /* Calls run() method (in multiple threads?) for all links 
-     and nodes in network and optionally updates GUI. */
+    /* Calls run() method (in multiple threads?) of all nodes and links. */
     void timerCallback() override {
-        
+        for (auto& node : network.getNodes()) node->run();
+        for (auto& link : network.getLinks()) link->run();
     }
     
 private:
     Network network;
-    // GuiObject gui; ???
 };
 
 
