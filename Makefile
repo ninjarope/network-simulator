@@ -5,7 +5,7 @@ LDLIBS = -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 PROJECT = ns
 SRCDIR = src
 OBJDIR = obj
-SRCS := $(wildcard **/*.cc)
+SRCS := $(wildcard **/*.cpp)
 OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 .PHONY: all clean
