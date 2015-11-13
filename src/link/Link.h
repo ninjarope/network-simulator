@@ -13,24 +13,19 @@
 #include "Node.h"
 #include "Packet.h"
 
-//=============================================================
 /* Abstract link base class. */
 class Link {
 public:
-    Link() {}
+    Link();
     
-    Link(Node* source, Node* destination) {
-        this->source = source;
-        this->destination = destination;
-        source->addConnection(this);
-    }
+    Link(Node* source, Node* destination);
     
-    virtual ~Link() {}
+    virtual ~Link();
     
     /* Add packet to queue waiting for transmission. */
-    void addPacket(Packet p) { packetsWaiting.push(p); }
+    void addPacket(Packet p);
     
-    virtual void run() = 0;
+    virtual void run(double timeProgress) = 0;
     
 protected:
     Node* source;

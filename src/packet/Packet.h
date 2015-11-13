@@ -11,19 +11,18 @@
 
 #include "nsTypes.h"
 
-//=============================================================
+
 class Packet {
 public:
-    Packet() {}
+    Packet();
     
-    Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data)
-    : source(s), destination(d), data(data) {}
+    Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data);
     
-    nsTypes::AddressType getSource() { return source; }
+    nsTypes::AddressType getSource();
     
-    nsTypes::AddressType getDestination() { return destination; }
+    nsTypes::AddressType getDestination();
     
-    nsTypes::PacketDataType getData() { return data; }
+    nsTypes::PacketDataType getData();
     
 private:
     nsTypes::AddressType source, destination;

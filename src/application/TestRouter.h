@@ -11,34 +11,22 @@
 
 #include "Application.h"
 
-//=============================================================
-/* Example TestRouter application class. */
+
+/* Example implementation of application. Application implementation 
+   could be given */
 class TestRouter : public Application {
 public:
-    TestRouter() { type = "TestRouter"; }
+    TestRouter();
     
-    void process() override {
-        // example with no routing, forward packets to "first" host node link, if any
-        Packet p;
-        nsTypes::AddressType packetDestination;
-        nsTypes::PacketQueue& packets = hostNode->getPackets();
-        while (!packets.empty()) {
-            p = packets.front();
-            packetDestination = p.getDestination();
-            if (!hostNode->getConnections().empty()) {
-                hostNode->getConnections().front()->addPacket(p);
-                std::cout
-                << hostNode->getAddress() << " forwarded "
-                << p.getData() << " to link "
-                << hostNode->getConnections().front()
-                << std::endl;
-            }
-            packets.pop();
-        }
-    }
+    /* Simply forwards queued packets to the first link in host node connections 
+       with no delay. */
+    void process() override;
     
 private:
-    /* Routing table. */
-    nsTypes::PathsToDestinationAddress routing;
+    /* Router could generate routing table based given shortest paths. ShortestPaths
+       can be very large data structure in a large network, hence the pointer. 
+       These variables are not actually used in this implementation. */
+    nsTypes::ShortestPaths* shortestPaths;
+    nsTypes::PathsToDestinationAddress routingTable;
 };
 #endif /* defined(__ns_sketch__TestRouter__) */

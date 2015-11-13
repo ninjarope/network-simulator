@@ -11,30 +11,40 @@
 
 #include "nsTypes.h"
 #include "Packet.h"
+#include "Link.h"
 
-//=============================================================
+
 /* Abstract base class for nodes. */
 class Node {
 public:
-    Node() {}
+    Node();
     
-    Node(nsTypes::AddressType address) : address(address) {}
+    /* Construct node and give it an address. */
+    Node(nsTypes::AddressType address);
     
-    virtual ~Node() {}
+    virtual ~Node();
     
-    void receivePacket(Packet p) { packets.push(p); }
+    /* Receive new packet and assign it to queue. */
+    void receivePacket(Packet p);
     
-    void addConnection(Link* link) { connections.push_back(link); }
+    /* Add new (outgoing) link to other node. Links will add themselves
+       to connections by calling this function when they are created. */
+    void addConnection(Link* link);
     
-    nsTypes::Connections& getConnections() { return connections; }
+    /* Return connections (outgoing links). */
+    nsTypes::Connections& getConnections();
     
-    nsTypes::PacketQueue& getPackets() { return packets; }
+    /* Return packets currently in queue. */
+    nsTypes::PacketQueue& getPackets();
     
-    nsTypes::AddressType getAddress() { return address; }
+    /* Return address of the node. */
+    nsTypes::AddressType getAddress();
     
+    /* Derived classes must define their type and impement this. */
     virtual std::string getType() const = 0;
     
-    virtual void run() = 0;
+    /* Perform some actions when clock ticks. */
+    virtual void run(double timeProgress) = 0;
     
 protected:
     nsTypes::Connections connections;

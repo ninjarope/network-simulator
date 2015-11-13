@@ -15,10 +15,9 @@
 #include <map>
 #include <list>
 
-//=============================================================
 class Packet;
-class Node;
 class Link;
+class Node;
 
 namespace nsTypes {
     typedef std::string AddressType;

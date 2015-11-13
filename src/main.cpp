@@ -12,22 +12,26 @@
 #include "TestLink.h"
 
 int main() {
+    /* Simple test case. */
+    
     // create some nodes
     std::vector<ApplicationNode*> nodes;
     nodes.push_back(new ApplicationNode("A", new TestRouter));
     nodes.push_back(new ApplicationNode("B", new TestRouter));
     nodes.push_back(new ApplicationNode("C", new TestRouter));
 
-    // create some links
+    // create some links between nodes
     std::vector<Link*> links;
     links.push_back(new TestLink(nodes[0], nodes[1]));
     links.push_back(new TestLink(nodes[1], nodes[2]));
   
-    // create some packets and assign them to nodes
+    // create some packets
     std::vector<Packet> packets;
     packets.push_back(Packet("A", "B", "packet AB"));
     packets.push_back(Packet("A", "C", "packet AC"));
     packets.push_back(Packet("B", "C", "packet BC"));
+    
+    // assign packets to nodes
     nodes[0]->receivePacket (packets[0]);
     nodes[0]->receivePacket (packets[1]);
     nodes[1]->receivePacket (packets[2]);

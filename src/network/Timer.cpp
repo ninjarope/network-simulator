@@ -7,3 +7,18 @@
 //
 
 #include "Timer.h"
+
+Timer::Timer() {}
+
+Timer::~Timer() {}
+
+void Timer::setTimerIntervalSeconds(double seconds) {}
+
+double Timer::getTimerIntervalSeconds() { return interval; }
+
+void Timer::startTimer() {}
+
+void Timer::stopTimer() {}
+
+void Timer::setRunningTime(double seconds) {}
+

@@ -9,26 +9,36 @@
 #ifndef __ns_sketch__Timer__
 #define __ns_sketch__Timer__
 
-//=============================================================
+
 class Timer {
 public:
-    Timer() {}
+    Timer();
     
-    virtual ~Timer() {}
+    virtual ~Timer();
     
-    void setTimerIntervalSeconds(double seconds) {}
+    /* Set timer interval in seconds. */
+    void setTimerIntervalSeconds(double seconds);
     
-    double getTimerIntervalSeconds() { return interval; }
+    /* Return timer interval. */
+    double getTimerIntervalSeconds();
     
-    void startTimer() {}
+    /* Reset and start timer. */
+    void startTimer();
     
-    void stopTimer() {}
+    /* Pause or resume timer (change current state). */
+    void toggleTimer();
     
-    void setRunningTime(double seconds) {}
+    /* Stop timer. */
+    void stopTimer();
     
+    /* Set maximum running time. */
+    void setRunningTime(double seconds);
+    
+    /* Function will be called at set interval when timer is running. */
     virtual void timerCallback() = 0;
     
 private:
+    bool running;
     double interval;
     double runningTime;
 };

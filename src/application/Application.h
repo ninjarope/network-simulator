@@ -16,22 +16,25 @@
 #include "Node.h"
 #include "Link.h"
 
-//=============================================================
+
 /* Abstract node application base class. */
 class Application {
 public:
-    Application() {}
+    Application();
     
-    Application(Node* hostNode) { setHost(hostNode); }
+    /* Construct application and bind it to given host node. */
+    Application(Node* hostNode);
     
-    /* Set host node that will run this application. */
-    void setHost(Node* hostNode) { this->hostNode = hostNode; }
+    virtual ~Application();
+
+    /* Set the host node that will be running this application. */
+    void setHost(Node* hostNode);
     
-    virtual ~Application() {}
+    /* Return type identifier of the application. */
+    std::string getType() const;
     
-    std::string getType() const { return type; }
-    
-    /* Derived classes implement this - modifies node packets directly. */
+    /* Derived classes implement this - application has access to it's 
+       host via hostNode pointer. */
     virtual void process() = 0;
     
 protected:

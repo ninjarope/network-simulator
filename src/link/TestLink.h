@@ -12,25 +12,16 @@
 #include <iostream>
 #include "Link.h"
 
-//=============================================================
-/* Some test implementation of link, just straight forwarding of packets. */
+
+/* Example implementation of link. */
 class TestLink : public Link {
 public:
-    TestLink() {}
+    TestLink();
     
-    TestLink(Node* source, Node* destination) : Link(source, destination) {}
+    TestLink(Node* source, Node* destination);
     
-    void run() override {
-        while (!packetsWaiting.empty()) {
-            destination->receivePacket(packetsWaiting.front());
-            std::cout
-            << "Link " << this << " forwarded "
-            << packetsWaiting.front().getData() << " to node "
-            << destination->getAddress()
-            << std::endl;
-            packetsWaiting.pop();
-        }
-    }
+    /* Forward new packets to destination with no delay. */
+    void run(double timeProgress) override;
     
 private:
 };

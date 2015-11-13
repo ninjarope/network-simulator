@@ -10,25 +10,30 @@
 #define __ns_sketch__Network__
 
 #include <vector>
+#include <memory>
 #include "ApplicationNode.h"
 #include "Link.h"
 
-//=============================================================
+
 class Network {
 public:
-    Network() {}
+    Network();
     
-    const std::vector<ApplicationNode*>& getNodes() const { return nodes; }
+    /* Return network nodes. */
+    const std::vector<std::unique_ptr<ApplicationNode>>& getNodes() const;
     
-    const std::vector<Link*>& getLinks() const { return links; }
+    /* Return all links between nodes. */
+    const std::vector<std::unique_ptr<Link>>& getLinks() const;
     
-    void addNode(ApplicationNode* n) { nodes.push_back(n); }
+    /* Add new node to network. Network takes ownership of the node. */
+    void addNode(ApplicationNode* n);
     
-    void addLink(Link* l) { links.push_back(l); }
+    /* Add new link between nodes. Network takes ownership of the link. */
+    void addLink(Link* l);
     
 private:
-    std::vector<ApplicationNode*> nodes;
-    std::vector<Link*> links;
+    std::vector<std::unique_ptr<ApplicationNode>> nodes;
+    std::vector<std::unique_ptr<Link>> links;
 };
 
 

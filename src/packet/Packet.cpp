@@ -7,3 +7,14 @@
 //
 
 #include "Packet.h"
+
+Packet::Packet() {}
+
+Packet::Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data)
+    : source(s), destination(d), data(data) {}
+
+nsTypes::AddressType Packet::getSource() { return source; }
+
+nsTypes::AddressType Packet::getDestination() { return destination; }
+
+nsTypes::PacketDataType Packet::getData() { return data; }

@@ -7,3 +7,13 @@
 //
 
 #include "Application.h"
+
+Application::Application() {}
+
+Application::Application(Node* hostNode) { setHost(hostNode); }
+
+Application::~Application() {}
+
+void Application::setHost(Node* hostNode) { this->hostNode = hostNode; }
+
+std::string Application::getType() const { return type; }

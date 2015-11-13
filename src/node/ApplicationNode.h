@@ -10,39 +10,30 @@
 #define __ns_sketch__ApplicationNode__
 
 #include <sstream>
+#include <memory>
 
 #include "Application.h"
 #include "Node.h"
 
-//=============================================================
 /* Node implementation that runs some application(s). */
 class ApplicationNode : public Node {
 public:
-    ApplicationNode() {}
+    ApplicationNode();
     
-    ApplicationNode(nsTypes::AddressType address, Application* a) : Node(address) { addApplication(a); }
+    /* Construct ApplicationNode with given address and initial application. */
+    ApplicationNode(nsTypes::AddressType address, Application* a);
     
-    void addApplication(Application* a) {
-        a->setHost(this);
-        applications.push_back(a);
-    };
+    /* Connect new application to host. Node takes ownership of the application. */
+    void addApplication(Application* a);
     
-    /* Return types of applications. */
-    std::string getType() const override {
-        std::stringstream ss;
-        for (auto& application : applications)
-            ss << "[" << application->getType() << "]";
-        return ss.str();
-    }
+    /* Return type names of applications that node is running. */
+    std::string getType() const override;
     
-    void run() override {
-        // run all applications
-        for (auto& application : applications)
-            application->process();
-    }
+    /* Run all connected applications. */
+    void run(double timeProgress) override;
     
 private:
-    std::vector<Application*> applications;
+    std::vector<std::unique_ptr<Application>> applications;
 };
 
 

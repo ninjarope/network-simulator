@@ -12,36 +12,27 @@
 #include "Timer.h"
 #include "Network.h"
 
-//=============================================================
+
 class NetworkSimulator : public Timer {
 public:
-    /* Some constructors, there could also be ones that initialze
-     simulator from file etc... */
-    NetworkSimulator() {}
+    NetworkSimulator();
     
-    NetworkSimulator(const Network&) {}
+    NetworkSimulator(const Network&);
     
-    ~NetworkSimulator() {}
+    ~NetworkSimulator();
     
-    void addNodes(std::vector<ApplicationNode*> nodes) {
-        for (auto n : nodes) {
-            network.addNode(n);
-        }
-    }
+    /* Add nodes to network. */
+    void addNodes(std::vector<ApplicationNode*> nodes);
     
-    void addLinks(std::vector<Link*> links) {
-        for (auto l : links) {
-            network.addLink(l);
-        }
-    }
+    /* Add links to network. */
+    void addLinks(std::vector<Link*> links);
     
-    const Network& getNetworkState() const { return network; }
+    /* Return current network state. */
+    const Network& getNetworkState() const;
     
-    /* Calls run() method (in multiple threads?) of all nodes and links. */
-    void timerCallback() override {
-        for (auto& node : network.getNodes()) node->run();
-        for (auto& link : network.getLinks()) link->run();
-    }
+    /* Calls run() method (in multiple threads?) of all nodes and links. 
+       In final implementation this function should be private. */
+    void timerCallback() override;
     
 private:
     Network network;
