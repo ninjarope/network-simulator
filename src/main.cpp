@@ -7,19 +7,21 @@
 //
 
 #include <iostream>
-#include "ns_classes.h"
+#include "NetworkSimulator.h"
+#include "TestRouter.h"
+#include "TestLink.h"
 
 int main() {
     // create some nodes
     std::vector<ApplicationNode*> nodes;
-    nodes.push_back(new ApplicationNode("A", new Router));
-    nodes.push_back(new ApplicationNode("B", new Router));
-    nodes.push_back(new ApplicationNode("C", new Router));
+    nodes.push_back(new ApplicationNode("A", new TestRouter));
+    nodes.push_back(new ApplicationNode("B", new TestRouter));
+    nodes.push_back(new ApplicationNode("C", new TestRouter));
 
     // create some links
     std::vector<Link*> links;
-    links.push_back(new LinkType1(nodes[0], nodes[1]));
-    links.push_back(new LinkType1(nodes[1], nodes[2]));
+    links.push_back(new TestLink(nodes[0], nodes[1]));
+    links.push_back(new TestLink(nodes[1], nodes[2]));
   
     // create some packets and assign them to nodes
     std::vector<Packet> packets;
@@ -37,7 +39,7 @@ int main() {
     
     // run few cycles
     int cycles = 3;
-    for (int i = 0; i < cycles; ++i) {
+    for (int i = 1; i <= cycles; ++i) {
         std::cout << "CLOCK CYCLE " << i << std::endl;
         ns.timerCallback();
     }
