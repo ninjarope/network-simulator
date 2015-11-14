@@ -10,12 +10,32 @@
 
 ApplicationNode::ApplicationNode() {}
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address, Application* a) : Node(address) { addApplication(a);
+ApplicationNode::ApplicationNode(nsTypes::AddressType address) : Node(address) {}
+
+ApplicationNode::ApplicationNode(nsTypes::AddressType address, Application* a) : Node(address) { addApplications(a);
 }
 
-void ApplicationNode::addApplication(Application* a) {
-    a->setHost(this);
-    applications.push_back(std::unique_ptr<Application>(a));
+ApplicationNode::ApplicationNode(nsTypes::AddressType address,
+                                 std::vector<Application*> applications) : Node(address){
+    addApplications(applications);
+}
+
+void ApplicationNode::addApplications(Application* application) {
+    if (application) {
+        application->setHost(this);
+        applications.push_back(std::unique_ptr<Application>(application));
+    }
+}
+
+void ApplicationNode::addApplications(std::vector<Application*> applications) {
+    for (auto a : applications) {
+        addApplications(a);
+    }
+}
+
+void ApplicationNode::setApplications(std::vector<Application*> applications) {
+    this->applications.clear();
+    addApplications(applications);
 }
 
 std::string ApplicationNode::getType() const {

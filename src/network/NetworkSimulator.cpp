@@ -14,22 +14,8 @@ NetworkSimulator::NetworkSimulator(const Network&) {}
 
 NetworkSimulator::~NetworkSimulator() {}
 
-void NetworkSimulator::addNodes(std::vector<ApplicationNode*> nodes) {
-    for (auto n : nodes) {
-        network.addNode(n);
-    }
-}
-
-void NetworkSimulator::addLinks(std::vector<Link*> links) {
-    for (auto l : links) {
-        network.addLink(l);
-    }
-}
-
-const Network& NetworkSimulator::getNetworkState() const { return network; }
-
 void NetworkSimulator::timerCallback() {
     double timeProgress = getTimerIntervalSeconds();
-    for (auto& node : network.getNodes()) node->run(timeProgress);
-    for (auto& link : network.getLinks()) link->run(timeProgress);
+    for (auto& node : getNodes()) node.second->run(timeProgress);
+    for (auto& link : getLinks()) link->run(timeProgress);
 }

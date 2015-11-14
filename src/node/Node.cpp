@@ -14,9 +14,22 @@ Node::Node(nsTypes::AddressType address) : address(address) {}
 
 Node::~Node() {}
 
-void Node::receivePacket(Packet p) { packets.push(p); }
+void Node::receivePacket(Packet p) { packets.push_back(p); }
 
 void Node::addConnection(Link* link) { connections.push_back(link); }
+
+void Node::removeConnection(Link* link) {
+    /* Requires some checking and mods... */
+    auto it = connections.begin();
+    if (*it && link) {
+        while (it != connections.end()) {
+            if (*it == link) {
+                connections.erase(it);
+                break;
+            } else it++;
+        }
+    }
+}
 
 nsTypes::Connections& Node::getConnections() { return connections; }
 

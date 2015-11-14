@@ -13,7 +13,7 @@
 #include "Network.h"
 
 
-class NetworkSimulator : public Timer {
+class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
     
@@ -21,21 +21,11 @@ public:
     
     ~NetworkSimulator();
     
-    /* Add nodes to network. */
-    void addNodes(std::vector<ApplicationNode*> nodes);
-    
-    /* Add links to network. */
-    void addLinks(std::vector<Link*> links);
-    
-    /* Return current network state. */
-    const Network& getNetworkState() const;
-    
     /* Calls run() method (in multiple threads?) of all nodes and links. 
        In final implementation this function should be private. */
     void timerCallback() override;
     
 private:
-    Network network;
 };
 
 #endif /* defined(__ns_sketch__NetworkSimulator__) */

@@ -9,7 +9,6 @@
 #ifndef __ns_sketch__Timer__
 #define __ns_sketch__Timer__
 
-
 class Timer {
 public:
     Timer();
@@ -39,8 +38,9 @@ public:
     
 private:
     bool running;
-    double interval;
-    double runningTime;
+    int intervalMs = 1000;
+    double currentTime;
+    double runningTime = 10000;
 };
 
 #endif /* defined(__ns_sketch__Timer__) */

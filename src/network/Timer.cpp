@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
+#include <iostream>
+#include <thread>
+
 #include "Timer.h"
 
 Timer::Timer() {}
@@ -14,9 +17,17 @@ Timer::~Timer() {}
 
 void Timer::setTimerIntervalSeconds(double seconds) {}
 
-double Timer::getTimerIntervalSeconds() { return interval; }
+double Timer::getTimerIntervalSeconds() { return intervalMs * 1000.0; }
 
-void Timer::startTimer() {}
+void Timer::startTimer() {
+    while (currentTime < runningTime) {
+        std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
+        timerCallback();
+        std::this_thread::sleep_for(std::chrono::milliseconds(intervalMs));
+        currentTime += intervalMs;
+    }
+    stopTimer();
+}
 
 void Timer::stopTimer() {}
 

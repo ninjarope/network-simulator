@@ -23,7 +23,7 @@ public:
     void process() override;
     
 private:
-    /* Router could generate routing table based given shortest paths. ShortestPaths
+    /* Router could generate routing table based on given shortest paths. ShortestPaths
        can be very large data structure in a large network, hence the pointer. 
        These variables are not actually used in this implementation. */
     nsTypes::ShortestPaths* shortestPaths;

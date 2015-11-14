@@ -30,7 +30,10 @@ public:
     /* Add new (outgoing) link to other node. Links will add themselves
        to connections by calling this function when they are created. */
     void addConnection(Link* link);
-    
+
+    /* Remove outgoing connection. Links can call this when deleting themselves. */
+    void removeConnection(Link* link);
+
     /* Return connections (outgoing links). */
     nsTypes::Connections& getConnections();
     

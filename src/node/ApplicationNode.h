@@ -19,12 +19,23 @@
 class ApplicationNode : public Node {
 public:
     ApplicationNode();
+
+    /* Construct ApplicationNode with given address. */
+    ApplicationNode(nsTypes::AddressType address);
     
     /* Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(nsTypes::AddressType address, Application* a);
+    ApplicationNode(nsTypes::AddressType address, Application* application);
     
-    /* Connect new application to host. Node takes ownership of the application. */
-    void addApplication(Application* a);
+    /* Construct ApplicationNode with given address and initial application. */
+    ApplicationNode(nsTypes::AddressType address, std::vector<Application*> applications);
+    
+    /* Connect new applications to host. Node takes ownership of the application. */
+    void addApplications(Application* application);
+    
+    void addApplications(std::vector<Application*> applications);
+
+    /* Set applications (clears previous applications). */
+    void setApplications(std::vector<Application*> applications);
     
     /* Return type names of applications that node is running. */
     std::string getType() const override;

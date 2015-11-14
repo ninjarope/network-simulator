@@ -22,7 +22,7 @@ class Node;
 namespace nsTypes {
     typedef std::string AddressType;
     typedef std::string PacketDataType;
-    typedef std::queue<Packet> PacketQueue;
+    typedef std::list<Packet> PacketQueue;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;

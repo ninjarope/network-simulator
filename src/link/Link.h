@@ -13,7 +13,8 @@
 #include "Node.h"
 #include "Packet.h"
 
-/* Abstract link base class. */
+/* Abstract link base class. Links could destroy themselves if
+   they notice destination node has been deleted. */
 class Link {
 public:
     Link();
@@ -24,7 +25,17 @@ public:
     
     /* Add packet to queue waiting for transmission. */
     void addPacket(Packet p);
+
+    bool setSource(Node* source);
     
+    bool setDestination(Node* destination);
+    
+    Node* getSource();
+
+    Node* getDestination();
+
+    /* Links having speed and delay should consider time between calls
+       (timeProgress). */
     virtual void run(double timeProgress) = 0;
     
 protected:

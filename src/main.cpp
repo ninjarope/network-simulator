@@ -10,41 +10,45 @@
 #include "NetworkSimulator.h"
 #include "TestRouter.h"
 #include "TestLink.h"
+#include "PacketGenerator.h"
+#include "PacketReceiver.h"
 
 int main() {
     /* Simple test case. */
+
+    NetworkSimulator ns;
     
     // create some nodes
-    std::vector<ApplicationNode*> nodes;
-    nodes.push_back(new ApplicationNode("A", new TestRouter));
-    nodes.push_back(new ApplicationNode("B", new TestRouter));
-    nodes.push_back(new ApplicationNode("C", new TestRouter));
+    ns.addNode("A");
+    ns.addNode("B");
+    ns.addNode("C");
+    ns.addNode("D");
+    ns.addNode("E");
+    
+    // add some applications running on nodes
+    ns.getNode("A")->addApplications(new PacketReceiver);
+    ns.getNode("A")->addApplications(new TestRouter);
+    ns.getNode("B")->addApplications(new PacketReceiver);
+    ns.getNode("B")->addApplications(new TestRouter);
+    ns.getNode("C")->addApplications(new PacketReceiver);
+    ns.getNode("C")->addApplications(new TestRouter);
+    ns.getNode("D")->addApplications(new PacketReceiver);
+    ns.getNode("D")->addApplications(new TestRouter);
+    ns.getNode("E")->addApplications(new PacketReceiver);
+    ns.getNode("E")->addApplications(new TestRouter);
+    ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
 
     // create some links between nodes
-    std::vector<Link*> links;
-    links.push_back(new TestLink(nodes[0], nodes[1]));
-    links.push_back(new TestLink(nodes[1], nodes[2]));
-  
-    // create some packets
-    std::vector<Packet> packets;
-    packets.push_back(Packet("A", "B", "packet AB"));
-    packets.push_back(Packet("A", "C", "packet AC"));
-    packets.push_back(Packet("B", "C", "packet BC"));
+    ns.addLink("A", "B", new TestLink);
+    ns.addLink("A", "C", new TestLink);
+    ns.addLink("B", "C", new TestLink);
+    ns.addLink("C", "D", new TestLink);
+    ns.addLink("D", "E", new TestLink);
+    ns.addLink("E", "A", new TestLink);
+
+    // try some node deletion, some issues with this...
+    // ns.removeNode("B");
     
-    // assign packets to nodes
-    nodes[0]->receivePacket (packets[0]);
-    nodes[0]->receivePacket (packets[1]);
-    nodes[1]->receivePacket (packets[2]);
-    
-    // add contents to simulator
-    NetworkSimulator ns;
-    ns.addNodes(nodes);
-    ns.addLinks(links);
-    
-    // run few cycles
-    int cycles = 3;
-    for (int i = 1; i <= cycles; ++i) {
-        std::cout << "CLOCK CYCLE " << i << std::endl;
-        ns.timerCallback();
-    }
+    // run (timer has currently some hard-coded test values)
+    ns.startTimer();
 }

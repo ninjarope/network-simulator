@@ -27,4 +27,4 @@ clean:
 	rm -f -r $(OBJDIR) $(PROJECT)
 
 run: $(PROJECT)
-	./$(PROJECT)
+	./$(PROJ

@@ -18,13 +18,17 @@ void TestRouter::process() {
         p = packets.front();
         packetDestination = p.getDestination();
         if (!hostNode->getConnections().empty()) {
-            hostNode->getConnections().front()->addPacket(p);
+            Link* targetLink = hostNode->getConnections().front();
+            targetLink->addPacket(p);
+            
+            /* Some debugging output... */
             std::cout
             << hostNode->getAddress() << " forwarded "
             << p.getData() << " to link "
-            << hostNode->getConnections().front()
+            << targetLink->getSource()->getAddress() << "-"
+            << targetLink->getDestination()->getAddress()
             << std::endl;
         }
-        packets.pop();
+        packets.erase(packets.begin());
     }
 }

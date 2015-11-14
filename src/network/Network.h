@@ -14,26 +14,53 @@
 #include "ApplicationNode.h"
 #include "Link.h"
 
-
+/* Network class. This class should control all additions and removals
+   of nodes and links. */
 class Network {
 public:
     Network();
     
-    /* Return network nodes. */
-    const std::vector<std::unique_ptr<ApplicationNode>>& getNodes() const;
+    ~Network();
+    
+    /* Return all network nodes. */
+    const std::map<nsTypes::AddressType, ApplicationNode*>& getNodes() const;
     
     /* Return all links between nodes. */
-    const std::vector<std::unique_ptr<Link>>& getLinks() const;
+    const std::vector<Link*>& getLinks() const;
+    
+    /* Return single node. */
+    ApplicationNode* operator[](nsTypes::AddressType address) const;
+
+    ApplicationNode* getNode(nsTypes::AddressType address) const;
+    
+    /* Return single link. */
+    const Link* getLink(nsTypes::AddressType source, nsTypes::AddressType destination) const;
     
     /* Add new node to network. Network takes ownership of the node. */
-    void addNode(ApplicationNode* n);
+    bool addNode(nsTypes::AddressType address);
     
     /* Add new link between nodes. Network takes ownership of the link. */
-    void addLink(Link* l);
+    bool addLink(nsTypes::AddressType source, nsTypes::AddressType destination, Link* l);
+
+    /* Remove node based on address. Returns true if successful. */
+    bool removeNode(nsTypes::AddressType address);
+
+    /* Remove link based on source and destination address. Returns true if successful. */
+    bool removeLink(nsTypes::AddressType source, nsTypes::AddressType destination);
     
-private:
-    std::vector<std::unique_ptr<ApplicationNode>> nodes;
-    std::vector<std::unique_ptr<Link>> links;
+    /* Return number of nodes. */
+    size_t getNodeCount();
+    
+    /* Return number of links: */
+    size_t getLinkCount();
+
+    /* Get addresses in current network. */
+    const std::vector<nsTypes::AddressType>& getAddresses() const;
+    
+protected:
+    std::vector<nsTypes::AddressType> addresses;
+    std::map<nsTypes::AddressType, ApplicationNode*> nodes;
+    std::vector<Link*> links;
 };
 
 
