@@ -14,7 +14,7 @@
 #include "nsTypes.h"
 #include "Timer.h"
 #include "Network.h"
-#include "NetworkSimulatorGUI.h"
+#include "../gui/NetworkSimulatorGUI.h"
 
 class NetworkSimulator : public Network, public Timer {
 public:

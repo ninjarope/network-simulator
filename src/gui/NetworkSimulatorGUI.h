@@ -9,7 +9,7 @@
 #ifndef __NetworkSimulator__NetworkSimulatorGUI__
 #define __NetworkSimulator__NetworkSimulatorGUI__
 
-#include "NetworkSimulator.h"
+#include "../network/NetworkSimulator.h"
 
 /* Abstract base class for all GUI implementations. */
 class NetworkSimulatorGUI {

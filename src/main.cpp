@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "network/NetworkSimulator.h"
+#include "gui/NetworkSimulatorTestGUI.h"
 #include "application/TestRouter.h"
 #include "link/TestLink.h"
 #include "packet/PacketGenerator.h"
