@@ -21,6 +21,6 @@ void NetworkSimulator::timerCallback() {
     double timeProgress = getTimerInterval();
     for (auto& node : getNodes()) node.second->run(timeProgress);
     for (auto& link : getLinks()) link->run(timeProgress);
-    
+
     gui->update();
 }

@@ -16,6 +16,9 @@
 #include "Network.h"
 #include "../gui/NetworkSimulatorGUI.h"
 
+/**
+ * The controller
+ */
 class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
@@ -24,8 +27,10 @@ public:
     
     void setGUI(NetworkSimulatorGUI* gui);
     
-    /* Calls run() method (in multiple threads?) of all nodes and links. 
-       In final implementation this function should be private. */
+    /**
+     * Calls run() method (in multiple threads?) of all nodes and links.
+     * In final implementation this function should be private.
+     */
     void timerCallback() override;
     
 private:
