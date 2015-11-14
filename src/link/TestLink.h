@@ -20,7 +20,7 @@ public:
     
     TestLink(Node* source, Node* destination);
     
-    /* Forward new packets to destination with no delay. */
+    /** Forward new packets to destination with no delay. */
     void run(double timeProgress) override;
     
 private:

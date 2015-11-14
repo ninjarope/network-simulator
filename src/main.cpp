@@ -14,8 +14,11 @@
 #include "packet/PacketGenerator.h"
 #include "packet/PacketReceiver.h"
 
+/**
+ * Simple test case.
+ */
 int main() {
-    /* Simple test case. */
+
 
     NetworkSimulator ns;
     

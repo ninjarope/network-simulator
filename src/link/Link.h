@@ -37,8 +37,10 @@ public:
 
     Node* getDestination();
 
-    /** Links having speed and delay should consider time between calls
-       (timeProgress). */
+    /**
+     * Links having speed and delay should consider time between calls
+     * (timeProgress).
+     */
     virtual void run(double timeProgress) = 0;
     
 protected:

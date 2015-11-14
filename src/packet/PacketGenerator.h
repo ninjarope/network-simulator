@@ -23,8 +23,10 @@ public:
 
     PacketGenerator(unsigned int rate, std::vector<nsTypes::AddressType> destinations);
     
-    /** Generates packets at given rate and adds them to host node
-       packet queue. */
+    /**
+     * Generates packets at given rate and adds them to host node
+     * packet queue.
+     */
     void process() override;
     
 private:

@@ -23,16 +23,19 @@ const std::vector<Link*>& Network::getLinks() const { return links; }
 
 ApplicationNode* Network::operator[](nsTypes::AddressType address) const {
     // TODO: return nullptr if not found
+    /** \todo { return nullptr if not found } */
     return nodes.at(address);
 }
 
 ApplicationNode* Network::getNode(nsTypes::AddressType address) const {
     // TODO: return nullptr if not found
+    /** \todo { return nullptr if not found } */
     return nodes.at(address);
 }
 
 const Link* Network::getLink(nsTypes::AddressType source, nsTypes::AddressType destination) const {
     // TODO: exception handling
+    /** \todo { exception handling } */
     for (auto& link : nodes.at(source)->getConnections()) {
         if (link->getDestination()->getAddress() == destination) return link;
     }
@@ -47,6 +50,7 @@ bool Network::addNode(nsTypes::AddressType address) {
 
 bool Network::addLink(nsTypes::AddressType source, nsTypes::AddressType destination, Link* l) {
     // TODO: exception handling
+    /** \todo { exception handling } */
     if (l) {
         l->setSource(this->getNode(source));
         l->setDestination(this->getNode(destination));
@@ -71,7 +75,7 @@ bool Network::removeNode(nsTypes::AddressType address) {
             removeLink(l->getSource()->getAddress(), address);
         }
     }
-    
+
     delete nodes.at(address);
     nodes.erase(address);
 
