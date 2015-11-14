@@ -9,23 +9,27 @@
 #ifndef __ns_sketch__NetworkSimulator__
 #define __ns_sketch__NetworkSimulator__
 
+#include <memory>
+
+#include "nsTypes.h"
 #include "Timer.h"
 #include "Network.h"
-
+#include "NetworkSimulatorGUI.h"
 
 class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
     
-    NetworkSimulator(const Network&);
-    
     ~NetworkSimulator();
+    
+    void setGUI(NetworkSimulatorGUI* gui);
     
     /* Calls run() method (in multiple threads?) of all nodes and links. 
        In final implementation this function should be private. */
     void timerCallback() override;
     
 private:
+    NetworkSimulatorGUI* gui;
 };
 
 #endif /* defined(__ns_sketch__NetworkSimulator__) */
