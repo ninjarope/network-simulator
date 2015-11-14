@@ -17,8 +17,8 @@ void PacketReceiver::process() {
         if (it->getDestination() == hostNode->getAddress()) {
             /* Some debugging output... */
             std::cout << hostNode->getAddress() << " received " << it->getData() << std::endl;
-            hostNode->getPackets().erase(it);
-        }
-        it++;
+            it = hostNode->getPackets().erase(it);
+        } else it++;
+        
     }
 }
