@@ -18,6 +18,8 @@
 class Packet;
 class Link;
 class Node;
+class NetworkSimulator;
+class NetworkSimulatorGUI;
 
 namespace nsTypes {
     typedef std::string AddressType;

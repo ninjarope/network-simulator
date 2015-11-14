@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "NetworkSimulator.h"
+#include "NetworkSimulatorTestGUI.h"
 #include "TestRouter.h"
 #include "TestLink.h"
 #include "PacketGenerator.h"
@@ -37,7 +38,7 @@ int main() {
     ns.getNode("E")->addApplications(new PacketReceiver);
     ns.getNode("E")->addApplications(new TestRouter);
     ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
-
+    
     // create some links between nodes
     ns.addLink("A", "B", new TestLink);
     ns.addLink("A", "C", new TestLink);
@@ -48,6 +49,9 @@ int main() {
 
     // try some node deletion, some issues with this...
     // ns.removeNode("B");
+    
+    // set GUI
+    ns.setGUI(new NetworkSimulatorTestGUI);
     
     // run (timer has currently some hard-coded test values)
     ns.startTimer();
