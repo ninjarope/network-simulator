@@ -11,13 +11,16 @@
 
 #include "../application/Application.h"
 
-/* Packet receiver application. */
+/**
+ * Packet receiver application.
+ */
 class PacketReceiver : public Application {
 public:
     PacketReceiver();
     
-    /* If host node is recipient of packet, receives (deletes) 
-       packet. */
+    /**
+     * If host node is recipient of packet, receives (deletes) packet.
+     */
     void process() override;
     
 private:

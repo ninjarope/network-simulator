@@ -13,7 +13,7 @@
 #include "Link.h"
 
 
-/* Example implementation of link. */
+/** Example implementation of link. */
 class TestLink : public Link {
 public:
     TestLink();

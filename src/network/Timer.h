@@ -9,31 +9,34 @@
 #ifndef __ns_sketch__Timer__
 #define __ns_sketch__Timer__
 
+/**
+ * Cycles the clock for the network simulator state
+ */
 class Timer {
 public:
     Timer();
     
     virtual ~Timer();
     
-    /* Set timer interval in seconds. */
-    void setTimerIntervalSeconds(double seconds);
+    /** Set timer interval in milliseconds. */
+    void setTimerInterval(double milliseconds);
     
-    /* Return timer interval. */
-    double getTimerIntervalSeconds();
+    /** Return timer interval. */
+    double getTimerInterval();
     
-    /* Reset and start timer. */
+    /** Reset and start timer. */
     void startTimer();
     
-    /* Pause or resume timer (change current state). */
+    /** Pause or resume timer (change current state). */
     void toggleTimer();
     
-    /* Stop timer. */
+    /** Stop timer. */
     void stopTimer();
     
-    /* Set maximum running time. */
+    /** Set maximum running time. */
     void setRunningTime(double seconds);
     
-    /* Function will be called at set interval when timer is running. */
+    /** Function will be called at set interval when timer is running. */
     virtual void timerCallback() = 0;
     
 private:

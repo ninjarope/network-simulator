@@ -12,7 +12,9 @@
 #include "../application/Application.h"
 #include "../network/Network.h"
 
-/* Packet generator application. */
+/**
+ * Packet generator application.
+ * */
 class PacketGenerator : public Application {
 public:
     PacketGenerator();
@@ -21,7 +23,7 @@ public:
 
     PacketGenerator(unsigned int rate, std::vector<nsTypes::AddressType> destinations);
     
-    /* Generates packets at given rate and adds them to host node 
+    /** Generates packets at given rate and adds them to host node
        packet queue. */
     void process() override;
     

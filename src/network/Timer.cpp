@@ -15,9 +15,9 @@ Timer::Timer() {}
 
 Timer::~Timer() {}
 
-void Timer::setTimerIntervalSeconds(double seconds) {}
+void Timer::setTimerInterval(double milliseconds) {}
 
-double Timer::getTimerIntervalSeconds() { return intervalMs * 1000.0; }
+double Timer::getTimerInterval() { return intervalMs * 1000.0; }
 
 void Timer::startTimer() {
     while (currentTime < runningTime) {
@@ -31,5 +31,5 @@ void Timer::startTimer() {
 
 void Timer::stopTimer() {}
 
-void Timer::setRunningTime(double seconds) {}
+void Timer::setRunningTime(double milliseconds) {}
 

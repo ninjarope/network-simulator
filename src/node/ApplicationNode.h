@@ -15,32 +15,34 @@
 #include "../application/Application.h"
 #include "Node.h"
 
-/* Node implementation that runs some application(s). */
+/**
+ * Node implementation that runs some application(s).
+ */
 class ApplicationNode : public Node {
 public:
     ApplicationNode();
 
-    /* Construct ApplicationNode with given address. */
+    /** Construct ApplicationNode with given address. */
     ApplicationNode(nsTypes::AddressType address);
     
-    /* Construct ApplicationNode with given address and initial application. */
+    /** Construct ApplicationNode with given address and initial application. */
     ApplicationNode(nsTypes::AddressType address, Application* application);
     
-    /* Construct ApplicationNode with given address and initial application. */
+    /** Construct ApplicationNode with given address and initial application. */
     ApplicationNode(nsTypes::AddressType address, std::vector<Application*> applications);
     
-    /* Connect new applications to host. Node takes ownership of the application. */
+    /** Connect new applications to host. Node takes ownership of the application. */
     void addApplications(Application* application);
     
     void addApplications(std::vector<Application*> applications);
 
-    /* Set applications (clears previous applications). */
+    /** Set applications (clears previous applications). */
     void setApplications(std::vector<Application*> applications);
     
-    /* Return type names of applications that node is running. */
+    /** Return type names of applications that node is running. */
     std::string getType() const override;
     
-    /* Run all connected applications. */
+    /** Run all connected applications. */
     void run(double timeProgress) override;
     
 private:

@@ -14,47 +14,49 @@
 #include "../node/ApplicationNode.h"
 #include "../link/Link.h"
 
-/* Network class. This class should control all additions and removals
-   of nodes and links. */
+/**
+ * Network class. This class should control all additions and removals
+ * of nodes and links.
+ */
 class Network {
 public:
     Network();
     
     ~Network();
     
-    /* Return all network nodes. */
+    /** Return all network nodes. */
     const std::map<nsTypes::AddressType, ApplicationNode*>& getNodes() const;
     
-    /* Return all links between nodes. */
+    /** Return all links between nodes. */
     const std::vector<Link*>& getLinks() const;
     
-    /* Return single node. */
+    /** Return single node. */
     ApplicationNode* operator[](nsTypes::AddressType address) const;
 
     ApplicationNode* getNode(nsTypes::AddressType address) const;
     
-    /* Return single link. */
+    /** Return single link. */
     const Link* getLink(nsTypes::AddressType source, nsTypes::AddressType destination) const;
     
-    /* Add new node to network. Network takes ownership of the node. */
+    /** Add new node to network. Network takes ownership of the node. */
     bool addNode(nsTypes::AddressType address);
     
-    /* Add new link between nodes. Network takes ownership of the link. */
+    /** Add new link between nodes. Network takes ownership of the link. */
     bool addLink(nsTypes::AddressType source, nsTypes::AddressType destination, Link* l);
 
-    /* Remove node based on address. Returns true if successful. */
+    /** Remove node based on address. Returns true if successful. */
     bool removeNode(nsTypes::AddressType address);
 
-    /* Remove link based on source and destination address. Returns true if successful. */
+    /** Remove link based on source and destination address. Returns true if successful. */
     bool removeLink(nsTypes::AddressType source, nsTypes::AddressType destination);
     
-    /* Return number of nodes. */
+    /** Return number of nodes. */
     size_t getNodeCount();
     
-    /* Return number of links: */
+    /** Return number of links: */
     size_t getLinkCount();
 
-    /* Get addresses in current network. */
+    /** Get addresses in current network. */
     const std::vector<nsTypes::AddressType>& getAddresses() const;
     
 protected:

@@ -14,39 +14,39 @@
 #include "../link/Link.h"
 
 
-/* Abstract base class for nodes. */
+/** Abstract base class for nodes. */
 class Node {
 public:
     Node();
     
-    /* Construct node and give it an address. */
+    /** Construct node and give it an address. */
     Node(nsTypes::AddressType address);
     
     virtual ~Node();
     
-    /* Receive new packet and assign it to queue. */
+    /** Receive new packet and assign it to queue. */
     void receivePacket(Packet p);
     
-    /* Add new (outgoing) link to other node. Links will add themselves
+    /** Add new (outgoing) link to other node. Links will add themselves
        to connections by calling this function when they are created. */
     void addConnection(Link* link);
 
-    /* Remove outgoing connection. Links can call this when deleting themselves. */
+    /** Remove outgoing connection. Links can call this when deleting themselves. */
     void removeConnection(Link* link);
 
-    /* Return connections (outgoing links). */
+    /** Return connections (outgoing links). */
     nsTypes::Connections& getConnections();
     
-    /* Return packets currently in queue. */
+    /** Return packets currently in queue. */
     nsTypes::PacketQueue& getPackets();
     
-    /* Return address of the node. */
+    /** Return address of the node. */
     nsTypes::AddressType getAddress();
     
-    /* Derived classes must define their type and impement this. */
+    /** Derived classes must define their type and implement this. */
     virtual std::string getType() const = 0;
     
-    /* Perform some actions when clock ticks. */
+    /** Perform some actions when clock ticks. */
     virtual void run(double timeProgress) = 0;
     
 protected:
@@ -55,4 +55,4 @@ protected:
     nsTypes::AddressType address;
 };
 
-#endif /* defined(__ns_sketch__Node__) */
+#endif /** defined(__ns_sketch__Node__) */

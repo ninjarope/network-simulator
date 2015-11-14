@@ -11,7 +11,9 @@
 
 #include "../nsTypes.h"
 
-
+/**
+ * Packet that travels between nodes
+ */
 class Packet {
 public:
     Packet();
