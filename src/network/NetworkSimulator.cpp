@@ -8,11 +8,11 @@
 
 #include "NetworkSimulator.h"
 
-NetworkSimulator::NetworkSimulator() : gui(nullptr) {}
+NetworkSimulator::NetworkSimulator() : ui(nullptr) {}
 
-void NetworkSimulator::setGUI(NetworkSimulatorGUI* gui) {
-    this->gui = gui;
-    gui->setNetworkSimulator(this);
+void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
+    this->ui = ui;
+    ui->setNetworkSimulator(this);
 }
 
 NetworkSimulator::~NetworkSimulator() {}
@@ -22,5 +22,5 @@ void NetworkSimulator::timerCallback() {
     for (auto& node : getNodes()) node.second->run(timeDelta);
     for (auto& link : getLinks()) link->run(timeDelta);
 
-    gui->update();
+    ui->update();
 }

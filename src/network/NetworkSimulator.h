@@ -14,7 +14,7 @@
 #include "../nsTypes.h"
 #include "Timer.h"
 #include "Network.h"
-#include "../gui/NetworkSimulatorGUI.h"
+#include "../ui/NetworkSimulatorUI.h"
 
 /**
  * The controller
@@ -25,7 +25,7 @@ public:
     
     ~NetworkSimulator();
     
-    void setGUI(NetworkSimulatorGUI* gui);
+    void setUI(NetworkSimulatorUI* ui);
     
     /**
      * Calls run() method (in multiple threads?) of all nodes and links.
@@ -34,7 +34,7 @@ public:
     void timerCallback() override;
     
 private:
-    NetworkSimulatorGUI* gui;
+    NetworkSimulatorUI* ui;
 };
 
 #endif /* defined(__ns_sketch__NetworkSimulator__) */

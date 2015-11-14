@@ -1,24 +1,24 @@
 //
-//  NetworkSimulatorGUI.h
+//  NetworkSimulatorUI.h
 //  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 14.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __NetworkSimulator__NetworkSimulatorGUI__
-#define __NetworkSimulator__NetworkSimulatorGUI__
+#ifndef __NetworkSimulator__NetworkSimulatorUI__
+#define __NetworkSimulator__NetworkSimulatorUI__
 
 #include "../network/NetworkSimulator.h"
 
 /**
- * Abstract base class for all GUI implementations. 
+ * Abstract base class for all UI implementations. 
  */
-class NetworkSimulatorGUI {
+class NetworkSimulatorUI {
 public:
-    NetworkSimulatorGUI();
+    NetworkSimulatorUI();
     
-    virtual ~NetworkSimulatorGUI();
+    virtual ~NetworkSimulatorUI();
     
     /** NetworkSimulator will call this. */
     void setNetworkSimulator(NetworkSimulator* ns);
@@ -30,4 +30,4 @@ protected:
     NetworkSimulator* networkSimulator;
 };
 
-#endif /* defined(__NetworkSimulator__NetworkSimulatorGUI__) */
+#endif /* defined(__NetworkSimulator__NetworkSimulatorUI__) */
