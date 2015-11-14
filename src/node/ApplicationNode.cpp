@@ -7,6 +7,8 @@
 //
 
 #include "ApplicationNode.h"
+#include "../nsTypes.h"
+#include "../application/Application.h"
 
 ApplicationNode::ApplicationNode() {}
 

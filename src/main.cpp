@@ -7,11 +7,11 @@
 //
 
 #include <iostream>
-#include "NetworkSimulator.h"
-#include "TestRouter.h"
-#include "TestLink.h"
-#include "PacketGenerator.h"
-#include "PacketReceiver.h"
+#include "network/NetworkSimulator.h"
+#include "application/TestRouter.h"
+#include "link/TestLink.h"
+#include "packet/PacketGenerator.h"
+#include "packet/PacketReceiver.h"
 
 int main() {
     /* Simple test case. */

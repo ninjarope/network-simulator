@@ -7,6 +7,7 @@
 //
 
 #include "Application.h"
+#include "../node/Node.h"
 
 Application::Application() {}
 

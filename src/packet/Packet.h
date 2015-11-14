@@ -9,7 +9,7 @@
 #ifndef __ns_sketch__Packet__
 #define __ns_sketch__Packet__
 
-#include "nsTypes.h"
+#include "../nsTypes.h"
 
 
 class Packet {

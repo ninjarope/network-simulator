@@ -11,6 +11,7 @@
 #include <cstdlib>
 
 #include "PacketGenerator.h"
+#include "../nsTypes.h"
 
 PacketGenerator::PacketGenerator() {
     rate = 1;

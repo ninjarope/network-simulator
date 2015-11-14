@@ -10,6 +10,7 @@
 #define __ns_sketch__TestRouter__
 
 #include "Application.h"
+#include "../nsTypes.h"
 
 
 /* Example implementation of application. Application implementation 

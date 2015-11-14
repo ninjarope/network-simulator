@@ -9,8 +9,8 @@
 #ifndef __ns_sketch__PacketGenerator__
 #define __ns_sketch__PacketGenerator__
 
-#include "Application.h"
-#include "Network.h"
+#include "../application/Application.h"
+#include "../network/Network.h"
 
 /* Packet generator application. */
 class PacketGenerator : public Application {

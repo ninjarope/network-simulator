@@ -7,6 +7,7 @@
 //
 
 #include "Packet.h"
+#include "../nsTypes.h"
 
 Packet::Packet() {}
 

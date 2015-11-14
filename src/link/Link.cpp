@@ -7,6 +7,8 @@
 //
 
 #include "Link.h"
+#include "../node/Node.h"
+#include "../packet/Packet.h"
 
 Link::Link() {}
 

@@ -9,7 +9,7 @@
 #ifndef __ns_sketch__PacketReceiver__
 #define __ns_sketch__PacketReceiver__
 
-#include "Application.h"
+#include "../application/Application.h"
 
 /* Packet receiver application. */
 class PacketReceiver : public Application {

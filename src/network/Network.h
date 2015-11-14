@@ -11,8 +11,8 @@
 
 #include <vector>
 #include <memory>
-#include "ApplicationNode.h"
-#include "Link.h"
+#include "../node/ApplicationNode.h"
+#include "../link/Link.h"
 
 /* Network class. This class should control all additions and removals
    of nodes and links. */

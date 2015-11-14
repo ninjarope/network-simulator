@@ -12,7 +12,7 @@
 #include <sstream>
 #include <memory>
 
-#include "Application.h"
+#include "../application/Application.h"
 #include "Node.h"
 
 /* Node implementation that runs some application(s). */

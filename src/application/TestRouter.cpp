@@ -7,6 +7,8 @@
 //
 
 #include "TestRouter.h"
+#include "../packet/Packet.h"
+#include "../nsTypes.h"
 
 TestRouter::TestRouter() { type = "TestRouter"; }
 

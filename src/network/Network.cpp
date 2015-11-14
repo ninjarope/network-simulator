@@ -7,6 +7,8 @@
 //
 
 #include "Network.h"
+#include "../nsTypes.h"
+#include "../node/ApplicationNode.h"
 
 Network::Network() {}
 

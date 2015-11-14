@@ -11,10 +11,10 @@
 
 #include <iostream>
 
-#include "nsTypes.h"
-#include "Packet.h"
-#include "Node.h"
-#include "Link.h"
+#include "../nsTypes.h"
+#include "../packet/Packet.h"
+#include "../node/Node.h"
+#include "../link/Link.h"
 
 
 /* Abstract node application base class. */

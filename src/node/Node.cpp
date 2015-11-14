@@ -7,6 +7,7 @@
 //
 
 #include "Node.h"
+#include "../nsTypes.h"
 
 Node::Node() {}
 

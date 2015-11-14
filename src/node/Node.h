@@ -9,9 +9,9 @@
 #ifndef __ns_sketch__Node__
 #define __ns_sketch__Node__
 
-#include "nsTypes.h"
-#include "Packet.h"
-#include "Link.h"
+#include "../nsTypes.h"
+#include "../packet/Packet.h"
+#include "../link/Link.h"
 
 
 /* Abstract base class for nodes. */

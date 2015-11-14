@@ -9,9 +9,10 @@
 #ifndef __ns_sketch__Link__
 #define __ns_sketch__Link__
 
-#include "nsTypes.h"
-#include "Node.h"
-#include "Packet.h"
+#include "../nsTypes.h"
+#include "../node/Node.h"
+#include "../packet/Packet.h"
+#include "../node/Node.h"
 
 /* Abstract link base class. Links could destroy themselves if
    they notice destination node has been deleted. */
