@@ -34,6 +34,6 @@ void Node::removeConnection(Link* link) {
 
 nsTypes::Connections& Node::getConnections() { return connections; }
 
-nsTypes::PacketQueue& Node::getPackets() { return packets; }
+nsTypes::Packets& Node::getPackets() { return packets; }
 
 nsTypes::AddressType Node::getAddress() { return address; }

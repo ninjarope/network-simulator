@@ -17,14 +17,14 @@ Timer::~Timer() {}
 
 void Timer::setTimerInterval(double milliseconds) {}
 
-double Timer::getTimerInterval() { return intervalMs * 1000.0; }
+double Timer::getTimerInterval() { return interval; }
 
 void Timer::startTimer() {
     while (currentTime < runningTime) {
         std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
         timerCallback();
-        std::this_thread::sleep_for(std::chrono::milliseconds(intervalMs));
-        currentTime += intervalMs;
+        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        currentTime += interval;
     }
     stopTimer();
 }

@@ -38,7 +38,7 @@ public:
     nsTypes::Connections& getConnections();
     
     /** Return packets currently in queue. */
-    nsTypes::PacketQueue& getPackets();
+    nsTypes::Packets& getPackets();
     
     /** Return address of the node. */
     nsTypes::AddressType getAddress();
@@ -47,11 +47,11 @@ public:
     virtual std::string getType() const = 0;
     
     /** Perform some actions when clock ticks. */
-    virtual void run(double timeProgress) = 0;
+    virtual void run(double timeDelta) = 0;
     
 protected:
     nsTypes::Connections connections;
-    nsTypes::PacketQueue packets;
+    nsTypes::Packets packets;
     nsTypes::AddressType address;
 };
 

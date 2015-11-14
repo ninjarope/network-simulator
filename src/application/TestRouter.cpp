@@ -12,10 +12,10 @@
 
 TestRouter::TestRouter() { type = "TestRouter"; }
 
-void TestRouter::process() {
+void TestRouter::process(double timeDelta) {
     Packet p;
     nsTypes::AddressType packetDestination;
-    nsTypes::PacketQueue& packets = hostNode->getPackets();
+    nsTypes::Packets& packets = hostNode->getPackets();
     while (!packets.empty()) {
         p = packets.front();
         packetDestination = p.getDestination();

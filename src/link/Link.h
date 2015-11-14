@@ -39,14 +39,14 @@ public:
 
     /**
      * Links having speed and delay should consider time between calls
-     * (timeProgress).
+     * (timeDelta).
      */
-    virtual void run(double timeProgress) = 0;
+    virtual void run(double timeDelta) = 0;
     
 protected:
     Node* source;
     Node* destination;
-    nsTypes::PacketQueue packetsWaiting;
+    nsTypes::Packets packetsWaiting;
     std::vector<Packet> packetsInTransmission;
     double transmissionSpeed;
     double propagationDelay;

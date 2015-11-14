@@ -48,7 +48,7 @@ std::string ApplicationNode::getType() const {
     return ss.str();
 }
 
-void ApplicationNode::run(double timeProgress) {
+void ApplicationNode::run(double timeDelta) {
     for (auto& application : applications)
-        application->process();
+        application->process(timeDelta);
 }

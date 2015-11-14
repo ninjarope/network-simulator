@@ -32,7 +32,7 @@ PacketGenerator::PacketGenerator(unsigned int rate, std::vector<nsTypes::Address
 /**
  * Generates packets and adds them to host node packet queue.
  * */
-void PacketGenerator::process() {
+void PacketGenerator::process(double timeDelta) {
     for (unsigned int i = 0; i < rate; i++) {
         /* Generate and add packet */
         

@@ -43,7 +43,7 @@ public:
     std::string getType() const override;
     
     /** Run all connected applications. */
-    void run(double timeProgress) override;
+    void run(double timeDelta) override;
     
 private:
     std::vector<std::unique_ptr<Application>> applications;

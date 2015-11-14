@@ -11,7 +11,7 @@
 
 PacketReceiver::PacketReceiver() {}
 
-void PacketReceiver::process() {
+void PacketReceiver::process(double timeDelta) {
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {
         if (it->getDestination() == hostNode->getAddress()) {

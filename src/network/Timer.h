@@ -41,7 +41,7 @@ public:
     
 private:
     bool running;
-    int intervalMs = 1000;
+    int interval = 1000;
     double currentTime;
     double runningTime = 10000;
 };

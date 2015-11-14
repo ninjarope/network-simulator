@@ -18,9 +18,9 @@ void NetworkSimulator::setGUI(NetworkSimulatorGUI* gui) {
 NetworkSimulator::~NetworkSimulator() {}
 
 void NetworkSimulator::timerCallback() {
-    double timeProgress = getTimerInterval();
-    for (auto& node : getNodes()) node.second->run(timeProgress);
-    for (auto& link : getLinks()) link->run(timeProgress);
+    double timeDelta = getTimerInterval();
+    for (auto& node : getNodes()) node.second->run(timeDelta);
+    for (auto& link : getLinks()) link->run(timeDelta);
 
     gui->update();
 }

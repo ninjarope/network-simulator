@@ -21,7 +21,7 @@ public:
     /**
      * If host node is recipient of packet, receives (deletes) packet.
      */
-    void process() override;
+    void process(double timeDelta) override;
     
 private:
     unsigned int rate;
