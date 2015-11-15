@@ -24,8 +24,8 @@ public:
     
     virtual ~Node();
     
-    /** Receive new packet and assign it to queue. */
-    void receivePacket(Packet p);
+    /** Receive new packet and assign it to queue. Takes ownership of the packet. */
+    void receivePacket(Packet* p);
     
     /** Add new (outgoing) link to other node. Links will add themselves
        to connections by calling this function when they are created. */

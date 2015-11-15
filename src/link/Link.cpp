@@ -17,7 +17,11 @@ Link::Link(Node* source, Node* destination) {
     setDestination(destination);
 }
 
+/** Destroys all packets (packets will be lost) when link is removed. */
 Link::~Link() {
+    for (auto& packet : packetsWaiting) delete packet;
+    for (auto& packet : packetsInTransmission) delete packet;
+    
     // This could be also just notifying source node...
     source->removeConnection(this);
 }
@@ -39,7 +43,7 @@ bool Link::setDestination(Node* destination) {
 }
 
 /* Add packet to queue waiting for transmission. */
-void Link::addPacket(Packet p) { packetsWaiting.push_back(p); }
+void Link::addPacket(Packet* p) { packetsWaiting.push_back(p); }
 
 Node* Link::getSource() { return source; }
 

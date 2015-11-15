@@ -21,7 +21,7 @@ void TestLink::run(double timeDelta) {
             << "Link "
             << source->getAddress() << "-"
             << destination->getAddress() << " forwarded "
-            << packetsWaiting.front().getData() << " to node "
+            << packetsWaiting.front()->getData() << " to node "
             << destination->getAddress() << std::endl;
         packetsWaiting.erase(packetsWaiting.begin());
     }

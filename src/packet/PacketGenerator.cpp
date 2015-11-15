@@ -30,12 +30,10 @@ PacketGenerator::PacketGenerator(unsigned int rate, std::vector<nsTypes::Address
 }
 
 /**
- * Generates packets and adds them to host node packet queue.
+ * Generates packets and forwards them to host node.
  * */
 void PacketGenerator::process(double timeDelta) {
     for (unsigned int i = 0; i < rate; i++) {
-        /* Generate and add packet */
-        
         nsTypes::AddressType source = hostNode->getAddress();
         nsTypes::AddressType destination;
         if (!destinations.empty()) {
@@ -44,12 +42,10 @@ void PacketGenerator::process(double timeDelta) {
             destination = "NOT DEFINED";
         }
         
-        /* Generate some data for packet... */
-        std::stringstream data;
-        data << "PACKET "<< count++ << " TO " << destination;
-        
-        Packet p(source, destination, data.str());
-        hostNode->receivePacket(p);
+        /* Generate and forward packet. */
+        std::stringstream packetData;
+        packetData << "PACKET " << count++ << " TO " << destination;
+        hostNode->receivePacket(new Packet(source, destination, packetData.str()));
          
     }
 }

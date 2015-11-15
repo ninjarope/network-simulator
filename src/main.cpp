@@ -41,7 +41,7 @@ int main() {
     ns.getNode("E")->addApplications(new PacketReceiver);
     ns.getNode("E")->addApplications(new TestRouter);
     ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
-    ns.getNode("A")->receivePacket(Packet("A", "E", "TESTPACKET"));
+    ns.getNode("A")->receivePacket(new Packet("A", "E", "TESTPACKET"));
 
     // create some links between nodes
     ns.addLink("A", "B", new TestLink);

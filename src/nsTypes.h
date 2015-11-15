@@ -24,7 +24,7 @@ class NetworkSimulatorUI;
 namespace nsTypes {
     typedef std::string AddressType;
     typedef std::string PacketDataType;
-    typedef std::list<Packet> Packets;
+    typedef std::list<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;

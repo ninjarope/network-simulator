@@ -14,9 +14,9 @@ PacketReceiver::PacketReceiver() {}
 void PacketReceiver::process(double timeDelta) {
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {
-        if (it->getDestination() == hostNode->getAddress()) {
+        if ((*it)->getDestination() == hostNode->getAddress()) {
             /* Some debugging output... */
-            std::cout << hostNode->getAddress() << " received " << it->getData() << std::endl;
+            std::cout << hostNode->getAddress() << " received " << (*it)->getData() << std::endl;
             it = hostNode->getPackets().erase(it);
         } else it++;
         

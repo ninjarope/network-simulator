@@ -26,8 +26,8 @@ public:
     
     virtual ~Link();
     
-    /** Add packet to queue waiting for transmission. */
-    void addPacket(Packet p);
+    /** Add packet to queue waiting for transmission. Takes ownership of the packet. */
+    void addPacket(Packet* p);
 
     bool setSource(Node* source);
     
@@ -47,7 +47,7 @@ protected:
     Node* source;
     Node* destination;
     nsTypes::Packets packetsWaiting;
-    std::vector<Packet> packetsInTransmission;
+    nsTypes::Packets packetsInTransmission;
     double transmissionSpeed;
     double propagationDelay;
 };

@@ -13,12 +13,12 @@
 TestRouter::TestRouter() { type = "TestRouter"; }
 
 void TestRouter::process(double timeDelta) {
-    Packet p;
+    Packet* p;
     nsTypes::AddressType packetDestination;
     nsTypes::Packets& packets = hostNode->getPackets();
     while (!packets.empty()) {
         p = packets.front();
-        packetDestination = p.getDestination();
+        packetDestination = p->getDestination();
         if (!hostNode->getConnections().empty()) {
             Link* targetLink = hostNode->getConnections().front();
             targetLink->addPacket(p);
@@ -26,7 +26,7 @@ void TestRouter::process(double timeDelta) {
             /* Some debugging output... */
             std::cout
             << hostNode->getAddress() << " forwarded "
-            << p.getData() << " to link "
+            << p->getData() << " to link "
             << targetLink->getSource()->getAddress() << "-"
             << targetLink->getDestination()->getAddress()
             << std::endl;

@@ -13,9 +13,11 @@ Node::Node() {}
 
 Node::Node(nsTypes::AddressType address) : address(address) {}
 
-Node::~Node() {}
+Node::~Node() {
+    for (auto& packet : packets) delete packet;
+}
 
-void Node::receivePacket(Packet p) { packets.push_back(p); }
+void Node::receivePacket(Packet* p) { packets.push_back(p); }
 
 void Node::addConnection(Link* link) { connections.push_back(link); }
 
