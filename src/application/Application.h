@@ -20,7 +20,7 @@
 /**
  * Abstract node application base class.
  */
-class Application {
+class Application : public Notifiable {
 public:
     Application();
     
