@@ -10,12 +10,13 @@
 #define __ns_sketch__Node__
 
 #include "../nsTypes.h"
+#include "../network/NetworkComponent.h"
 #include "../packet/Packet.h"
 #include "../link/Link.h"
 
 
 /** Abstract base class for nodes. */
-class Node {
+class Node : public NetworkComponent {
 public:
     Node();
     

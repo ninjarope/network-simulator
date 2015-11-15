@@ -22,12 +22,18 @@ class NetworkSimulator;
 class NetworkSimulatorUI;
 
 namespace nsTypes {
+    enum Notification {
+        someNotificationType1,
+        someNotificationType2
+    };
+    
     typedef std::string AddressType;
     typedef std::string PacketDataType;
     typedef std::list<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
+    typedef std::list<Notification> Notifications;
 }
 
 #endif /* defined(__ns_sketch__nsTypes__) */
