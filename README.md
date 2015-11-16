@@ -2,11 +2,14 @@
 
 Simulator for network connection points, paths between them and packets flowing in midst of this all.
 
+---
+
 ## Quick summary of w46
 
 ### Network
 
-Network has function which returns pointers to all links / nodes in network 
+Network has function which returns pointers to all links / nodes in network
+
 + in the newest version NetworkSimulator there is a Network (and Timer)
 
 + Also specific node by address
@@ -30,12 +33,14 @@ Application serve as a base class for Application logic / in other words for Rou
 ### Link
 
 Links are composed of a pair of two nodes = pair<Node *, Node *>.
+
 + Links could be accessed via map, where key is a pair <sourceAddress, destinationAddress> and value is Link* (function to be implemented in Network).
 
 ### Testing
 
 main.cpp demonstrates current way of use
 
+---
 
 ## Documentation
 
