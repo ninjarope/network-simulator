@@ -12,10 +12,16 @@ Network has function which returns pointers to all links / nodes in network
 + Also specific node by address
 
     network.getNode("some address")
+    
++ To be implemented for links
 
-### Node
+    network.getLink("source address", "destination address")
 
-A Node has a queue of Applications, which are activated for the receives and sends every clock cycle (receiving queue is consumed by the first application)
++ NetworkSimulator is a subclass of Network so these functions work in the same manner for NetworkSimulator objects
+
+### ApplicationNode
+
+An ApplicationNode (subclass of Node) has a vector of Applications, which are activated for the receives and sends every clock cycle. Applications process host node's packet queue by reference, so the order of the applications is crucial.
 
 ### Application
 
@@ -23,8 +29,8 @@ Application serve as a base class for Application logic / in other words for Rou
 
 ### Link
 
-Links are composed of a pair of two nodes = pair<Node *, Node *>
-+ Links could probably have same address or id too so that they could be accessed in same manner 
+Links are composed of a pair of two nodes = pair<Node *, Node *>.
++ Links could be accessed via map, where key is a pair <sourceAddress, destinationAddress> and value is Link* (function to be implemented in Network).
 
 ### Testing
 
