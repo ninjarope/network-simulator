@@ -11,7 +11,10 @@
 
 #include "Timer.h"
 
-Timer::Timer() {}
+Timer::Timer() {
+    interval = 1000;
+    runningTime = 10000;
+}
 
 Timer::~Timer() {}
 

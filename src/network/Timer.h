@@ -41,9 +41,9 @@ public:
     
 private:
     bool running;
-    int interval = 1000;
+    int interval;
     double currentTime;
-    double runningTime = 10000;
+    double runningTime;
 };
 
 #endif /* defined(__ns_sketch__Timer__) */

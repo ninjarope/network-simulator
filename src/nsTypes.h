@@ -32,6 +32,8 @@ namespace nsTypes {
     typedef std::list<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
+
+    /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;
 }

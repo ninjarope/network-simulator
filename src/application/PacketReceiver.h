@@ -13,6 +13,8 @@
 
 /**
  * Packet receiver application.
+ *
+ * Consumes packets from nodes packet queue
  */
 class PacketReceiver : public Application {
 public:
