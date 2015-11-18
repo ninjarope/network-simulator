@@ -56,6 +56,13 @@ bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link 
   } else return false;
 }
 
+bool Network::addLink(ns::AddressType source, ns::AddressType destination, double weight, Link* l) {
+    if (addLink(source, destination, l)) {
+        l->setWeight(weight);
+        return true;
+    } else return false;
+}
+
 bool Network::removeNode(ns::AddressType address) {
   auto it = addresses.begin();
   while (it != addresses.end()) {

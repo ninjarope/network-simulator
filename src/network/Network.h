@@ -45,6 +45,9 @@ public:
     /** Add new link between nodes. Network takes ownership of the link. */
     bool addLink(ns::AddressType source, ns::AddressType destination, Link* l);
 
+    /** Add new link between nodes that has a set weight property. Network takes ownership of the link. */
+    bool addLink(ns::AddressType source, ns::AddressType destination, double weight, Link* l);
+
     /** Remove node based on address. Returns true if successful. */
     bool removeNode(ns::AddressType address);
 

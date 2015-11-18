@@ -24,7 +24,9 @@ public:
     Link();
     
     Link(Node* source, Node* destination);
-    
+
+    Link(Node* source, Node* destination, double weight);
+
     virtual ~Link();
     
     /** Add packet to queue waiting for transmission. Takes ownership of the packet. */
@@ -37,6 +39,10 @@ public:
     Node* getSource();
 
     Node* getDestination();
+    
+    double getWeight();
+    
+    void setWeight(double weight);
 
     /**
      * Links having speed and delay should consider time between calls
@@ -49,8 +55,9 @@ protected:
     Node* destination;
     ns::Packets packetsWaiting;
     ns::Packets packetsInTransmission;
-    double transmissionSpeed;
-    double propagationDelay;
+    double transmissionSpeed = 0.0;
+    double propagationDelay = 0.0;
+    double weight = 0.0;
 };
 
 

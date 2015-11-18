@@ -27,7 +27,7 @@ void TestRouter::process(double timeDelta) {
             std::cout
             << hostNode->getAddress() << " forwarded "
             << p->getData() << " to link "
-            << targetLink->getSource()->getAddress() << "-"
+            << targetLink->getWeight() << "-"
             << targetLink->getDestination()->getAddress()
             << std::endl;
         }

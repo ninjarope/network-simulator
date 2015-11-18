@@ -52,7 +52,7 @@ void RandomRouter::process(double timeDelta) {
             << " forwarded "
             << p->getData()
             << " to link "
-            << targetLink->getSource()->getAddress()
+            << targetLink->getWeight()
             << "-"
             << targetLink->getDestination()->getAddress()
             << std::endl;

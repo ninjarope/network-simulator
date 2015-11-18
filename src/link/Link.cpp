@@ -17,6 +17,13 @@ Link::Link(Node* source, Node* destination) {
     setDestination(destination);
 }
 
+Link::Link(Node* source, Node* destination, double weight) {
+    setSource(source);
+    setDestination(destination);
+    setWeight(weight);
+}
+
+
 /** Destroys all packets (packets will be lost) when link is removed. */
 Link::~Link() {
     for (auto& packet : packetsWaiting) delete packet;
@@ -48,3 +55,11 @@ void Link::addPacket(Packet* p) { packetsWaiting.push_back(p); }
 Node* Link::getSource() { return source; }
 
 Node* Link::getDestination() { return destination; }
+
+double Link::getWeight() {
+    return weight;
+}
+
+void Link::setWeight(double weight) {
+    this->weight = weight;
+}
