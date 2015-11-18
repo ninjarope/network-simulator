@@ -27,7 +27,7 @@ public:
      * Generates packets at given rate and adds them to host node
      * packet queue.
      */
-    void process(double timeDelta) override;
+    void process(double currentTime) override;
     
 private:
     std::vector<ns::AddressType> destinations;

@@ -9,6 +9,8 @@
 #ifndef __ns_sketch__Timer__
 #define __ns_sketch__Timer__
 
+#include <chrono>
+
 /**
  * Cycles the clock for the network simulator state
  */
@@ -39,11 +41,11 @@ public:
     /** Function will be called at set interval when timer is running. */
     virtual void timerCallback() = 0;
     
-private:
+protected:
     bool running;
     int interval;
     double currentTime;
-    double runningTime;
+    double endTime;
 };
 
 #endif /* defined(__ns_sketch__Timer__) */

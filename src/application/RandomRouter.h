@@ -15,7 +15,7 @@ class RandomRouter : public Application {
 public:
     RandomRouter();
     
-    void process(double timeDelta) override;
+    void process(double currentTime) override;
 
 private:
     ns::Connections routingTable;

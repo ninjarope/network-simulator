@@ -32,7 +32,7 @@ PacketGenerator::PacketGenerator(unsigned int rate, std::vector<ns::AddressType>
 /**
  * Generates packets and forwards them to host node.
  * */
-void PacketGenerator::process(double timeDelta) {
+void PacketGenerator::process(double currentTime) {
     for (unsigned int i = 0; i < rate; i++) {
         ns::AddressType source = hostNode->getAddress();
         ns::AddressType destination;

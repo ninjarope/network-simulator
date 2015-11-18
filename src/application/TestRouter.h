@@ -23,7 +23,7 @@ public:
     
     /** Simply forwards queued packets to the first link in host node connections 
        with no delay. */
-    void process(double timeDelta) override;
+    void process(double currentTime) override;
     
 private:
     /** Router could generate routing table based on given shortest paths. ShortestPaths

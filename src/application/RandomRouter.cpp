@@ -13,7 +13,7 @@ RandomRouter::RandomRouter() {
     srand((unsigned int) time(NULL));
 }
 
-void RandomRouter::process(double timeDelta) {
+void RandomRouter::process(double currentTime) {
     routingTable = hostNode->getConnections();
     connections = std::vector<Link*>();
     ns::Packets& packets = hostNode->getPackets();
@@ -52,7 +52,7 @@ void RandomRouter::process(double timeDelta) {
             << " forwarded "
             << p->getData()
             << " to link "
-            << targetLink->getWeight()
+            << targetLink->getSource()->getAddress()
             << "-"
             << targetLink->getDestination()->getAddress()
             << std::endl;

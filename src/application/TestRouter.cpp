@@ -12,7 +12,7 @@
 
 TestRouter::TestRouter() { type = "TestRouter"; }
 
-void TestRouter::process(double timeDelta) {
+void TestRouter::process(double currentTime) {
     Packet* p;
     ns::AddressType packetDestination;
     ns::Packets& packets = hostNode->getPackets();
@@ -27,7 +27,7 @@ void TestRouter::process(double timeDelta) {
             std::cout
             << hostNode->getAddress() << " forwarded "
             << p->getData() << " to link "
-            << targetLink->getWeight() << "-"
+            << targetLink->getSource()->getAddress() << "-"
             << targetLink->getDestination()->getAddress()
             << std::endl;
         }

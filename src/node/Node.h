@@ -48,7 +48,7 @@ public:
     virtual std::string getType() const = 0;
     
     /** Perform some actions when clock ticks. */
-    virtual void run(double timeDelta) = 0;
+    virtual void run(double currentTime) = 0;
     
 protected:
     ns::Connections connections;

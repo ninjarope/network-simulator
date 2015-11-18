@@ -27,7 +27,7 @@ Link::Link(Node* source, Node* destination, double weight) {
 /** Destroys all packets (packets will be lost) when link is removed. */
 Link::~Link() {
     for (auto& packet : packetsWaiting) delete packet;
-    for (auto& packet : packetsInTransmission) delete packet;
+    for (auto& packet : packetsInTransmission) delete packet.first;
     
     // This could be also just notifying source node...
     source->removeConnection(this);
@@ -56,10 +56,27 @@ Node* Link::getSource() { return source; }
 
 Node* Link::getDestination() { return destination; }
 
+void Link::setWeight(double weight) {
+    this->weight = weight;
+}
+
 double Link::getWeight() {
     return weight;
 }
 
-void Link::setWeight(double weight) {
-    this->weight = weight;
+void Link::setTransmissionSpeed(double speed) {
+    transmissionSpeed = speed;
 }
+
+double Link::getTransmissionSpeed() {
+    return transmissionSpeed;
+}
+
+void Link::setPropagationDelay(double delay) {
+    propagationDelay = delay;
+}
+
+double Link::getPropagationDelay() {
+    return propagationDelay;
+}
+

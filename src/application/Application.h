@@ -40,7 +40,7 @@ class Application: public Notifiable {
 
   /** Derived classes implement this - application has access to it's
      host via hostNode pointer. */
-  virtual void process(double timeDelta) = 0;
+  virtual void process(double currentTime) = 0;
 
  protected:
   Node *hostNode;

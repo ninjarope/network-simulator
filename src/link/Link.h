@@ -9,6 +9,8 @@
 #ifndef __ns_sketch__Link__
 #define __ns_sketch__Link__
 
+#include <map>
+
 #include "../ns.h"
 #include "../Notifiable.h"
 #include "../node/Node.h"
@@ -36,25 +38,41 @@ public:
     
     bool setDestination(Node* destination);
     
+    /** Get pointer to source node. */
     Node* getSource();
 
+    /** Get pointer to destination node. */
     Node* getDestination();
     
+    /** Set weight of the link. */
+    void setWeight(double weight);
+
+    /** Return weight of the link. */
     double getWeight();
     
-    void setWeight(double weight);
+    /** Set the transmission speed of the link that determines the interval at which new packets can be transmitted to the link. */
+    void setTransmissionSpeed(double speed);
+    
+    /** Return current transmission speed. */
+    double getTransmissionSpeed();
+    
+    /** Set the propagation delay, which is the time it takes for packet to travel across the link. */
+    void setPropagationDelay(double speed);
+    
+    /** Return current propagation delay. */
+    double getPropagationDelay();
 
     /**
      * Links having speed and delay should consider time between calls
-     * (timeDelta).
+     * (currentTime).
      */
-    virtual void run(double timeDelta) = 0;
+    virtual void run(double currentTime) = 0;
     
 protected:
     Node* source;
     Node* destination;
     ns::Packets packetsWaiting;
-    ns::Packets packetsInTransmission;
+    std::map<Packet*, double> packetsInTransmission;
     double transmissionSpeed = 0.0;
     double propagationDelay = 0.0;
     double weight = 0.0;

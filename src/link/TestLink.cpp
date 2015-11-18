@@ -10,9 +10,7 @@
 
 TestLink::TestLink() {}
 
-TestLink::TestLink(Node* source, Node* destination) : Link(source, destination) {}
-
-void TestLink::run(double timeDelta) {
+void TestLink::run(double currentTime) {
     while (!packetsWaiting.empty()) {
         destination->receivePacket(packetsWaiting.front());
         
