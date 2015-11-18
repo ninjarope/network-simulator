@@ -11,13 +11,18 @@
 
 #include "NetworkSimulatorUI.h"
 
+/**
+ * Concrete UI class / TUI
+ */
 class NetworkSimulatorTestUI : public NetworkSimulatorUI {
 public:
     NetworkSimulatorTestUI() {}
     
-    void update() override { std::cout << "UI UPDATE..." << std::endl; }
+    void update() override;
     
 private:
 };
+
+NetworkSimulatorUI *createUI();
 
 #endif /* defined(__NetworkSimulator__NetworkSimulatorTestUI__) */

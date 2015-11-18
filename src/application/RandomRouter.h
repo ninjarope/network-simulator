@@ -2,8 +2,8 @@
 // Created by j on 11/17/15.
 //
 
-#ifndef NS1_RANDOMROUTER_H
-#define NS1_RANDOMROUTER_H
+#ifndef __ns1_randomrouter_h__
+#define __ns1_randomrouter_h__
 
 #include "Application.h"
 #include "../nsTypes.h"
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif NS1_RANDOMROUTER_H
+#endif /** defined( __ns1_randomrouter_h__) */

@@ -40,6 +40,10 @@ void ApplicationNode::setApplications(std::vector<Application*> applications) {
     addApplications(applications);
 }
 
+const std::vector<std::unique_ptr<Application>> &ApplicationNode::getApplications() const {
+    return applications;
+}
+
 std::string ApplicationNode::getType() const {
     std::stringstream ss;
     for (auto& application : applications) {

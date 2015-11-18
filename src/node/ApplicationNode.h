@@ -36,6 +36,8 @@ public:
     
     void addApplications(std::vector<Application*> applications);
 
+    const std::vector<std::unique_ptr<Application>> &getApplications() const;
+
     /** Set applications (clears previous applications). */
     void setApplications(std::vector<Application*> applications);
     
