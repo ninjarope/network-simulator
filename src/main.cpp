@@ -40,8 +40,8 @@ int main() {
     ns.getNode("D")->addApplications(new TestRouter);
     ns.getNode("E")->addApplications(new PacketReceiver);
     ns.getNode("E")->addApplications(new TestRouter);
-    ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
-    ns.getNode("A")->receivePacket(new Packet("A", "E", "TESTPACKET"));
+    // ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
+    ns.getNode("A")->receivePacket(new Packet("A", "S", "TESTPACKET"));
 
     // create some links between nodes
     ns.addLink("A", "B", new TestLink);

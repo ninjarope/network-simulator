@@ -20,8 +20,6 @@ public:
 private:
     ns::Connections routingTable;
     ns::Connections connections;
-
 };
-
 
 #endif // NS1_RANDOMROUTER_H
