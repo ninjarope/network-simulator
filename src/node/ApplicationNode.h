@@ -23,13 +23,13 @@ public:
     ApplicationNode();
 
     /** Construct ApplicationNode with given address. */
-    ApplicationNode(nsTypes::AddressType address);
+    ApplicationNode(ns::AddressType address);
     
     /** Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(nsTypes::AddressType address, Application* application);
+    ApplicationNode(ns::AddressType address, Application* application);
     
     /** Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(nsTypes::AddressType address, std::vector<Application*> applications);
+    ApplicationNode(ns::AddressType address, std::vector<Application*> applications);
     
     /** Connect new applications to host. Node takes ownership of the application. */
     void addApplications(Application* application);

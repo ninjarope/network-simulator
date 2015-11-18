@@ -9,7 +9,7 @@
 #ifndef __ns_sketch__Link__
 #define __ns_sketch__Link__
 
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../Notifiable.h"
 #include "../node/Node.h"
 #include "../packet/Packet.h"
@@ -47,8 +47,8 @@ public:
 protected:
     Node* source;
     Node* destination;
-    nsTypes::Packets packetsWaiting;
-    nsTypes::Packets packetsInTransmission;
+    ns::Packets packetsWaiting;
+    ns::Packets packetsInTransmission;
     double transmissionSpeed;
     double propagationDelay;
 };

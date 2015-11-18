@@ -11,7 +11,7 @@
 #include <cstdlib>
 
 #include "PacketGenerator.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 PacketGenerator::PacketGenerator() {
     rate = 1;
@@ -23,7 +23,7 @@ PacketGenerator::PacketGenerator(unsigned int rate) {
     count = 1;
 }
 
-PacketGenerator::PacketGenerator(unsigned int rate, std::vector<nsTypes::AddressType> destinations) {
+PacketGenerator::PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations) {
     this->rate = rate;
     this->destinations = destinations;
     count = 1;
@@ -34,8 +34,8 @@ PacketGenerator::PacketGenerator(unsigned int rate, std::vector<nsTypes::Address
  * */
 void PacketGenerator::process(double timeDelta) {
     for (unsigned int i = 0; i < rate; i++) {
-        nsTypes::AddressType source = hostNode->getAddress();
-        nsTypes::AddressType destination;
+        ns::AddressType source = hostNode->getAddress();
+        ns::AddressType destination;
         if (!destinations.empty()) {
             destination = destinations[rand() % destinations.size()];
         } else {

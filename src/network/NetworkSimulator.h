@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "Timer.h"
 #include "Network.h"
 #include "../ui/NetworkSimulatorUI.h"

@@ -7,17 +7,17 @@
 //
 
 #include "ApplicationNode.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../application/Application.h"
 
 ApplicationNode::ApplicationNode() {}
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address) : Node(address) {}
+ApplicationNode::ApplicationNode(ns::AddressType address) : Node(address) {}
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address, Application* a) : Node(address) { addApplications(a);
+ApplicationNode::ApplicationNode(ns::AddressType address, Application* a) : Node(address) { addApplications(a);
 }
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address,
+ApplicationNode::ApplicationNode(ns::AddressType address,
                                  std::vector<Application*> applications) : Node(address){
     addApplications(applications);
 }

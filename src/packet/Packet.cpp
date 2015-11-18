@@ -7,15 +7,15 @@
 //
 
 #include "Packet.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 Packet::Packet() {}
 
-Packet::Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data)
+Packet::Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data)
     : source(s), destination(d), data(data) {}
 
-nsTypes::AddressType Packet::getSource() { return source; }
+ns::AddressType Packet::getSource() { return source; }
 
-nsTypes::AddressType Packet::getDestination() { return destination; }
+ns::AddressType Packet::getDestination() { return destination; }
 
-nsTypes::PacketDataType Packet::getData() { return data; }
+ns::PacketDataType Packet::getData() { return data; }

@@ -1,13 +1,13 @@
 //
-//  nsTypes.h
+//  ns.h
 //  ns_sketch
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__nsTypes__
-#define __ns_sketch__nsTypes__
+#ifndef __ns_sketch__ns__
+#define __ns_sketch__ns__
 
 #include <string>
 #include <queue>
@@ -21,7 +21,7 @@ class Node;
 class NetworkSimulator;
 class NetworkSimulatorUI;
 
-namespace nsTypes {
+namespace ns {
     enum Notification {
         someNotificationType1,
         someNotificationType2
@@ -38,4 +38,4 @@ namespace nsTypes {
     typedef std::list<Notification> Notifications;
 }
 
-#endif /* defined(__ns_sketch__nsTypes__) */
+#endif /* defined(__ns_sketch__ns__) */

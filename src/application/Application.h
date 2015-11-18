@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../packet/Packet.h"
 #include "../node/Node.h"
 #include "../link/Link.h"

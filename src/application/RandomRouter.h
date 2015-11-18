@@ -6,7 +6,7 @@
 #define NS1_RANDOMROUTER_H
 
 #include "Application.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 /**
  * Routes packets randomly
@@ -18,11 +18,10 @@ public:
     void process(double timeDelta) override;
 
 private:
-    nsTypes::Connections routingTable;
-    nsTypes::Connections connections;
-    nsTypes::Packets packets;
+    ns::Connections routingTable;
+    ns::Connections connections;
 
 };
 
 
-#endif NS1_RANDOMROUTER_H
+#endif // NS1_RANDOMROUTER_H

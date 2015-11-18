@@ -21,7 +21,7 @@ public:
 
     PacketGenerator(unsigned int rate);
 
-    PacketGenerator(unsigned int rate, std::vector<nsTypes::AddressType> destinations);
+    PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations);
     
     /**
      * Generates packets at given rate and adds them to host node
@@ -30,7 +30,7 @@ public:
     void process(double timeDelta) override;
     
 private:
-    std::vector<nsTypes::AddressType> destinations;
+    std::vector<ns::AddressType> destinations;
     unsigned int rate;
     unsigned int count;
 };

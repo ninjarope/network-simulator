@@ -10,7 +10,7 @@
 #define __ns_sketch__TestRouter__
 
 #include "Application.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 
 /**
@@ -29,7 +29,7 @@ private:
     /** Router could generate routing table based on given shortest paths. ShortestPaths
        can be very large data structure in a large network, hence the pointer. 
        These variables are not actually used in this implementation. */
-    nsTypes::ShortestPaths* shortestPaths;
-    nsTypes::PathsToDestinationAddress routingTable;
+    ns::ShortestPaths* shortestPaths;
+    ns::PathsToDestinationAddress routingTable;
 };
 #endif /* defined(__ns_sketch__TestRouter__) */

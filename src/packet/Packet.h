@@ -9,7 +9,7 @@
 #ifndef __ns_sketch__Packet__
 #define __ns_sketch__Packet__
 
-#include "../nsTypes.h"
+#include "../ns.h"
 
 /**
  * Packet that travels between nodes
@@ -18,17 +18,17 @@ class Packet {
 public:
     Packet();
     
-    Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data);
+    Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data);
     
-    nsTypes::AddressType getSource();
+    ns::AddressType getSource();
     
-    nsTypes::AddressType getDestination();
+    ns::AddressType getDestination();
     
-    nsTypes::PacketDataType getData();
+    ns::PacketDataType getData();
     
 private:
-    nsTypes::AddressType source, destination;
-    nsTypes::PacketDataType data;
+    ns::AddressType source, destination;
+    ns::PacketDataType data;
 };
 
 #endif /* defined(__ns_sketch__Packet__) */

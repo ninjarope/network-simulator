@@ -15,22 +15,22 @@ Network::~Network() {
   for (auto &node : nodes) delete node.second;
 }
 
-const std::map<nsTypes::AddressType, ApplicationNode *> &Network::getNodes() const { return nodes; }
+const std::map<ns::AddressType, ApplicationNode *> &Network::getNodes() const { return nodes; }
 
 const std::vector<Link *> &Network::getLinks() const { return links; }
 
-ApplicationNode *Network::operator[](nsTypes::AddressType address) const {
+ApplicationNode *Network::operator[](ns::AddressType address) const {
   return getNode(address);
 }
 
-ApplicationNode *Network::getNode(nsTypes::AddressType address) const {
+ApplicationNode *Network::getNode(ns::AddressType address) const {
   if (nodes.at(address))
     return nodes.at(address);
   else
     return nullptr;
 }
 
-const Link *Network::getLink(nsTypes::AddressType source, nsTypes::AddressType destination) const {
+const Link *Network::getLink(ns::AddressType source, ns::AddressType destination) const {
   // TODO: exception handling
   /** \todo { exception handling } */
   for (auto &link : nodes.at(source)->getConnections()) {
@@ -39,13 +39,13 @@ const Link *Network::getLink(nsTypes::AddressType source, nsTypes::AddressType d
   return nullptr;
 }
 
-bool Network::addNode(nsTypes::AddressType address) {
+bool Network::addNode(ns::AddressType address) {
   nodes.insert({address, new ApplicationNode(address)});
   addresses.push_back(address);
   return true;
 }
 
-bool Network::addLink(nsTypes::AddressType source, nsTypes::AddressType destination, Link *l) {
+bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link *l) {
   // TODO: exception handling
   /** \todo { exception handling } */
   if (l) {
@@ -56,7 +56,7 @@ bool Network::addLink(nsTypes::AddressType source, nsTypes::AddressType destinat
   } else return false;
 }
 
-bool Network::removeNode(nsTypes::AddressType address) {
+bool Network::removeNode(ns::AddressType address) {
   auto it = addresses.begin();
   while (it != addresses.end()) {
     if (*it == address) {
@@ -67,7 +67,7 @@ bool Network::removeNode(nsTypes::AddressType address) {
 
   /* Erase bad links. */
   for (auto &l : links) {
-    nsTypes::AddressType destination = l->getDestination()->getAddress();
+    ns::AddressType destination = l->getDestination()->getAddress();
     if (destination == address) {
       removeLink(l->getSource()->getAddress(), address);
     }
@@ -79,7 +79,7 @@ bool Network::removeNode(nsTypes::AddressType address) {
   return true;
 }
 
-bool Network::removeLink(nsTypes::AddressType source, nsTypes::AddressType destination) {
+bool Network::removeLink(ns::AddressType source, ns::AddressType destination) {
   auto it = links.begin();
   for (auto &l : links) {
     if (l->getSource()->getAddress() == source && l->getDestination()->getAddress() == destination) {
@@ -101,6 +101,6 @@ size_t Network::getLinkCount() {
   return links.size();
 }
 
-const std::vector<nsTypes::AddressType> &Network::getAddresses() const {
+const std::vector<ns::AddressType> &Network::getAddresses() const {
   return addresses;
 }

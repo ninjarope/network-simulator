@@ -9,7 +9,7 @@
 #ifndef __ns_sketch__Node__
 #define __ns_sketch__Node__
 
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../Notifiable.h"
 #include "../packet/Packet.h"
 #include "../link/Link.h"
@@ -21,7 +21,7 @@ public:
     Node();
     
     /** Construct node and give it an address. */
-    Node(nsTypes::AddressType address);
+    Node(ns::AddressType address);
     
     virtual ~Node();
     
@@ -36,13 +36,13 @@ public:
     void removeConnection(Link* link);
 
     /** Return connections (outgoing links). */
-    nsTypes::Connections& getConnections();
+    ns::Connections& getConnections();
     
     /** Return packets currently in queue. */
-    nsTypes::Packets& getPackets();
+    ns::Packets& getPackets();
     
     /** Return address of the node. */
-    nsTypes::AddressType getAddress();
+    ns::AddressType getAddress();
     
     /** Derived classes must define their type and implement this. */
     virtual std::string getType() const = 0;
@@ -51,9 +51,9 @@ public:
     virtual void run(double timeDelta) = 0;
     
 protected:
-    nsTypes::Connections connections;
-    nsTypes::Packets packets;
-    nsTypes::AddressType address;
+    ns::Connections connections;
+    ns::Packets packets;
+    ns::AddressType address;
 };
 
 #endif /** defined(__ns_sketch__Node__) */

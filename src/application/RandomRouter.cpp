@@ -3,21 +3,23 @@
 //
 
 #include "RandomRouter.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <cstdlib>     /* srand, rand */
+#include <ctime>       /* time */
 #include <vector>
+#include <sstream>
 
 RandomRouter::RandomRouter() {
   type = "Random Router";
-  srand(time(NULL));
+  srand((unsigned int) time(NULL));
 }
 
 void RandomRouter::process(double timeDelta) {
   routingTable = hostNode->getConnections();
   connections = std::vector<Link*>();
-  packets = hostNode->getPackets();
-
-  std::cout << "Entering Random router"
+  ns::Packets& packets = hostNode->getPackets();
+  std::stringstream ss; // helper stringstream
+    
+  std::cout << "Entering Random router on node " << hostNode->getAddress()
       << std::endl
       << "packets: "
       << packets.size()
@@ -25,17 +27,17 @@ void RandomRouter::process(double timeDelta) {
 
 
   // Find the connections where this node is source
-  for (auto &c : routingTable) {
+  for (auto& c : routingTable) {
     if (c->getSource()->getAddress() == hostNode->getAddress()) {
 //        || c->getDestination()->getAddress() == hostNode->getAddress()) {
-
       connections.push_back(c);
+      ss << "[" << c->getSource()->getAddress() << "-" << c->getDestination()->getAddress() << "]";
     }
   }
 
-  std::cout << "connections: " << connections.size() << std::endl;
+  std::cout << "connections: " << ss.str() << std::endl;
 
-  for (auto &p : packets) {
+  for (auto& p : packets) {
     int randI = rand() % connections.size();
     Link* targetLink = connections[randI];
 
@@ -52,5 +54,5 @@ void RandomRouter::process(double timeDelta) {
   }
 
   // exhaustive
-  packets.empty();
+  packets.clear();
 }

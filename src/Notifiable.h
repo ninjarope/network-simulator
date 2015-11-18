@@ -13,12 +13,12 @@
 
 #include <list>
 
-#include "nsTypes.h"
+#include "ns.h"
 
 class Notifiable {
 public:
     /** Add notification to pending notifications. */
-    bool notify(nsTypes::Notification) { return true; }
+    bool notify(ns::Notification) { return true; }
 
 protected:
     Notifiable() {}
@@ -26,10 +26,10 @@ protected:
     ~Notifiable() {}
     
     /** Get pending notifications .*/
-    nsTypes::Notifications getNotifications() { return notifications; }
+    ns::Notifications getNotifications() { return notifications; }
     
 private:
-    nsTypes::Notifications notifications;
+    ns::Notifications notifications;
 
 };
 
