@@ -18,7 +18,7 @@ void NetworkSimulatorTestUI::update() {
     }
 
     for (auto &l : networkSimulator->getLinks()) {
-
+        (void) l;
     }
 
     /* Some debugging output... */

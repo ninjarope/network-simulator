@@ -19,7 +19,7 @@ RandomRouter::RandomRouter() {
 void RandomRouter::process(double timeDelta) {
   routingTable = hostNode->getConnections();
   connections = std::vector<Link*>();
-  packets = hostNode->getPackets();
+    auto& packets = hostNode->getPackets();
 
   // Find the connections where this node is source
   for (auto &c : routingTable) {

@@ -42,8 +42,6 @@ int main() {
     ns.getNode("D")->addApplications(new PacketReceiver);
     ns.getNode("D")->addApplications(new PacketGenerator(1, ns.getAddresses()));
     ns.getNode("D")->addApplications(new TestRouter);
-    //ns.getNode("A")->receivePacket(new Packet("A", "C", "P1"));
-    //ns.getNode("A")->receivePacket(new Packet("A", "C", "P2"));
 
 //    // create some links between nodes
 //    ns.addLink("A", "B", new TestLink);
@@ -63,35 +61,4 @@ int main() {
 //
     // run (timer has currently some hard-coded test values)
     ns.startTimer();
-    
-    for (auto& l : ns.getLinks()) {
-        // print traffic logs
-        std::cout
-            << "Transmission log for link "
-            <<l->getSource()->getAddress()
-            << l->getDestination()->getAddress()
-            << " : "
-            << std::endl;
-        for (auto& logEntry : l->getTransmissionLog()) {
-            std::cout
-                << "["
-                << logEntry.first
-                << ", "
-                << logEntry.second / 1000.0
-                << "]"
-                << std::endl;
-        }
-        
-        // print queue lengths
-        std::cout
-        << "Queue length in front of link "
-        <<l->getSource()->getAddress()
-        << l->getDestination()->getAddress()
-        << " : "
-        << l->getQueueLength()
-        << std::endl;
-        
-        std::cout<< std::endl;
-    }
-    
 }
