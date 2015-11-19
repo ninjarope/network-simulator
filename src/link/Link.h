@@ -1,13 +1,13 @@
 //
 //  Link.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__Link__
-#define __ns_sketch__Link__
+#ifndef __NetworkSimulator__Link__
+#define __NetworkSimulator__Link__
 
 #include <map>
 
@@ -82,4 +82,4 @@ protected:
 };
 
 
-#endif /* defined(__ns_sketch__Link__) */
+#endif /* defined(__NetworkSimulator__Link__) */

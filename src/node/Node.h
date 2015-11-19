@@ -1,13 +1,13 @@
 //
 //  Node.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__Node__
-#define __ns_sketch__Node__
+#ifndef __NetworkSimulator__Node__
+#define __NetworkSimulator__Node__
 
 #include "../ns.h"
 #include "../Notifiable.h"
@@ -56,4 +56,4 @@ protected:
     ns::AddressType address;
 };
 
-#endif /** defined(__ns_sketch__Node__) */
+#endif /** defined(__NetworkSimulator__Node__) */

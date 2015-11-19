@@ -1,13 +1,13 @@
 //
 //  NetworkSimulator.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__NetworkSimulator__
-#define __ns_sketch__NetworkSimulator__
+#ifndef __NetworkSimulator__NetworkSimulator__
+#define __NetworkSimulator__NetworkSimulator__
 
 #include <memory>
 
@@ -37,4 +37,4 @@ private:
     NetworkSimulatorUI* ui;
 };
 
-#endif /* defined(__ns_sketch__NetworkSimulator__) */
+#endif /* defined(__NetworkSimulator__NetworkSimulator__) */

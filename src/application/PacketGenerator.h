@@ -1,13 +1,13 @@
 //
 //  PacketGenerator.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__PacketGenerator__
-#define __ns_sketch__PacketGenerator__
+#ifndef __NetworkSimulator__PacketGenerator__
+#define __NetworkSimulator__PacketGenerator__
 
 #include "../application/Application.h"
 #include "../network/Network.h"
@@ -36,4 +36,4 @@ private:
     unsigned int count;
 };
 
-#endif /* defined(__ns_sketch__PacketGenerator__) */
+#endif /* defined(__NetworkSimulator__PacketGenerator__) */

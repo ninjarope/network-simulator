@@ -1,6 +1,6 @@
 //
 //  ns_classes.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //
@@ -36,12 +36,12 @@ int main() {
     ns.getNode("C")->addApplications(new PacketReceiver);
     ns.getNode("C")->addApplications(new TestRouter);
     // ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
-    ns.getNode("A")->receivePacket(new Packet("A", "C", "TESTPACKET1"));
-    ns.getNode("A")->receivePacket(new Packet("A", "C", "TESTPACKET2"));
+    ns.getNode("A")->receivePacket(new Packet("A", "C", "P1"));
+    ns.getNode("A")->receivePacket(new Packet("A", "C", "P2"));
 
     // create some links between nodes
-    ns.addLink("A", "B", 1, new ParametricLink(50.0, 100.0));
-    ns.addLink("B", "C", 1, new ParametricLink(50.0, 100.0));
+    ns.addLink("A", "B", 1, new ParametricLink(10.0, 100.0));
+    ns.addLink("B", "C", 1, new ParametricLink(10.0, 100.0));
 
     // try some node deletion, some issues with this...
     // ns.removeNode("B");

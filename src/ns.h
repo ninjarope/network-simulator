@@ -1,13 +1,13 @@
 //
 //  ns.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__ns__
-#define __ns_sketch__ns__
+#ifndef __NetworkSimulator__ns__
+#define __NetworkSimulator__ns__
 
 #include <string>
 #include <queue>
@@ -38,4 +38,4 @@ namespace ns {
     typedef std::list<Notification> Notifications;
 }
 
-#endif /* defined(__ns_sketch__ns__) */
+#endif /* defined(__NetworkSimulator__ns__) */

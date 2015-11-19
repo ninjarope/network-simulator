@@ -12,7 +12,7 @@
 
 ParametricLink::ParametricLink() {
     previousTime = 0.0;
-    packetToTransitTime = transmissionSpeed;
+    packetToTransitTime = 0.0;
 }
 
 ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay) {
@@ -27,23 +27,20 @@ void ParametricLink::run(double currentTime) {
     std::stringstream ss;
     
     // waiting time until next packet will be picked for transmission
-    packetToTransitTime -= timeDelta;
+    if (!packetsInTransmission.empty()) packetToTransitTime -= timeDelta;
 
-    // add packets to transmission
-    if (packetToTransitTime <= 0.0) {
-        
-        // if there is packets to transmit...
-        if (!packetsWaiting.empty()) {
+    // add packets to transmission if there is some waiting...
+    if (packetToTransitTime <= 0.0 && !packetsWaiting.empty()) {
             // debug output
             std::cout << "Added to transmission..." << std::endl;
             
             auto it = packetsWaiting.begin();
+            // packet size determines total duration of transmission
             packetsInTransmission.insert({*it, propagationDelay});
             packetsWaiting.erase(it);
-        }
-        
-        // reset waiting time
-        packetToTransitTime = transmissionSpeed;
+
+            // reset waiting time (proportional to the size of added packet)
+            packetToTransitTime = transmissionSpeed * (*it)->getSize();
     }
     
     // handle packets being transmitted

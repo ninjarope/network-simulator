@@ -1,13 +1,13 @@
 //
 //  TestRouter.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__TestRouter__
-#define __ns_sketch__TestRouter__
+#ifndef __NetworkSimulator__TestRouter__
+#define __NetworkSimulator__TestRouter__
 
 #include "Application.h"
 #include "../ns.h"
@@ -32,4 +32,4 @@ private:
     ns::ShortestPaths* shortestPaths;
     ns::PathsToDestinationAddress routingTable;
 };
-#endif /* defined(__ns_sketch__TestRouter__) */
+#endif /* defined(__NetworkSimulator__TestRouter__) */

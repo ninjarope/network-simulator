@@ -1,13 +1,13 @@
 //
 //  ApplicationNode.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__ApplicationNode__
-#define __ns_sketch__ApplicationNode__
+#ifndef __NetworkSimulator__ApplicationNode__
+#define __NetworkSimulator__ApplicationNode__
 
 #include <sstream>
 #include <memory>
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif /* defined(__ns_sketch__ApplicationNode__) */
+#endif /* defined(__NetworkSimulator__ApplicationNode__) */
