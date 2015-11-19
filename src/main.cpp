@@ -43,10 +43,10 @@ int main() {
     //ns.getNode("A")->receivePacket(new Packet("A", "C", "P2"));
 
     // create some links between nodes
-    ns.addLink("A", "B", 1, new ParametricLink(10.0, 100.0));
-    ns.addLink("B", "C", 1, new ParametricLink(5.0, 10.0));
-    ns.addLink("C", "D", 1, new ParametricLink(2.0, 10.0));
-    ns.addLink("D", "A", 1, new ParametricLink(1.0, 10.0));
+    ns.addLink("A", "B", 1, new ParametricLink(10.0, 200.0));
+    ns.addLink("B", "C", 1, new ParametricLink(5.0, 100.0));
+    ns.addLink("C", "D", 1, new ParametricLink(2.0, 50.0));
+    ns.addLink("D", "A", 1, new ParametricLink(1.0, 50.0));
 
     // try some node deletion, some issues with this...
     // ns.removeNode("B");
