@@ -1,13 +1,13 @@
 //
 //  PacketReceiver.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__PacketReceiver__
-#define __ns_sketch__PacketReceiver__
+#ifndef __NetworkSimulator__PacketReceiver__
+#define __NetworkSimulator__PacketReceiver__
 
 #include "../application/Application.h"
 
@@ -23,11 +23,11 @@ public:
     /**
      * If host node is recipient of packet, receives (deletes) packet.
      */
-    void process(double timeDelta) override;
+    void process(double currentTime) override;
     
 private:
     unsigned int rate;
     unsigned int count;
 };
 
-#endif /* defined(__ns_sketch__PacketReceiver__) */
+#endif /* defined(__NetworkSimulator__PacketReceiver__) */

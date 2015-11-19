@@ -1,23 +1,23 @@
 //
 //  ApplicationNode.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
 #include "ApplicationNode.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../application/Application.h"
 
 ApplicationNode::ApplicationNode() {}
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address) : Node(address) {}
+ApplicationNode::ApplicationNode(ns::AddressType address) : Node(address) {}
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address, Application* a) : Node(address) { addApplications(a);
+ApplicationNode::ApplicationNode(ns::AddressType address, Application* a) : Node(address) { addApplications(a);
 }
 
-ApplicationNode::ApplicationNode(nsTypes::AddressType address,
+ApplicationNode::ApplicationNode(ns::AddressType address,
                                  std::vector<Application*> applications) : Node(address){
     addApplications(applications);
 }
@@ -52,7 +52,7 @@ std::string ApplicationNode::getType() const {
     return ss.str();
 }
 
-void ApplicationNode::run(double timeDelta) {
+void ApplicationNode::run(double currentTime) {
     for (auto& application : applications)
-        application->process(timeDelta);
+        application->process(currentTime);
 }

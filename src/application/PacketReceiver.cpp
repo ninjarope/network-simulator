@@ -1,6 +1,6 @@
 //
 //  PacketReceiver.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
@@ -11,7 +11,7 @@
 
 PacketReceiver::PacketReceiver() {}
 
-void PacketReceiver::process(double timeDelta) {
+void PacketReceiver::process(double currentTime) {
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {
         if ((*it)->getDestination() == hostNode->getAddress()) {

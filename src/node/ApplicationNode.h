@@ -1,13 +1,13 @@
 //
 //  ApplicationNode.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__ApplicationNode__
-#define __ns_sketch__ApplicationNode__
+#ifndef __NetworkSimulator__ApplicationNode__
+#define __NetworkSimulator__ApplicationNode__
 
 #include <sstream>
 #include <memory>
@@ -23,17 +23,18 @@ public:
     ApplicationNode();
 
     /** Construct ApplicationNode with given address. */
-    ApplicationNode(nsTypes::AddressType address);
+    ApplicationNode(ns::AddressType address);
     
     /** Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(nsTypes::AddressType address, Application* application);
+    ApplicationNode(ns::AddressType address, Application* application);
     
     /** Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(nsTypes::AddressType address, std::vector<Application*> applications);
+    ApplicationNode(ns::AddressType address, std::vector<Application*> applications);
     
     /** Connect new applications to host. Node takes ownership of the application. */
     void addApplications(Application* application);
     
+    /** Connect multiple new applications to host. Node takes ownership of applications. */
     void addApplications(std::vector<Application*> applications);
 
     const std::vector<std::unique_ptr<Application>> &getApplications() const;
@@ -45,11 +46,11 @@ public:
     std::string getType() const override;
     
     /** Run all connected applications. */
-    void run(double timeDelta) override;
+    void run(double currentTime) override;
     
 private:
     std::vector<std::unique_ptr<Application>> applications;
 };
 
 
-#endif /* defined(__ns_sketch__ApplicationNode__) */
+#endif /* defined(__NetworkSimulator__ApplicationNode__) */

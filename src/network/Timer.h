@@ -1,13 +1,15 @@
 //
 //  Timer.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__Timer__
-#define __ns_sketch__Timer__
+#ifndef __NetworkSimulator__Timer__
+#define __NetworkSimulator__Timer__
+
+#include "../ns.h"
 
 /**
  * Cycles the clock for the network simulator state
@@ -39,11 +41,11 @@ public:
     /** Function will be called at set interval when timer is running. */
     virtual void timerCallback() = 0;
     
-private:
+protected:
     bool running;
     int interval;
     double currentTime;
-    double runningTime;
+    double endTime;
 };
 
-#endif /* defined(__ns_sketch__Timer__) */
+#endif /* defined(__NetworkSimulator__Timer__) */

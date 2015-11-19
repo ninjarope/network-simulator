@@ -1,6 +1,6 @@
 //
 //  Link.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
@@ -17,10 +17,15 @@ Link::Link(Node* source, Node* destination) {
     setDestination(destination);
 }
 
-/** Destroys all packets (packets will be lost) when link is removed. */
+Link::Link(Node* source, Node* destination, double weight) {
+    setSource(source);
+    setDestination(destination);
+    setWeight(weight);
+}
+
 Link::~Link() {
     for (auto& packet : packetsWaiting) delete packet;
-    for (auto& packet : packetsInTransmission) delete packet;
+    for (auto& packet : packetsInTransmission) delete packet.first;
     
     // This could be also just notifying source node...
     source->removeConnection(this);
@@ -42,9 +47,44 @@ bool Link::setDestination(Node* destination) {
 
 }
 
-/* Add packet to queue waiting for transmission. */
 void Link::addPacket(Packet* p) { packetsWaiting.push_back(p); }
 
 Node* Link::getSource() { return source; }
 
 Node* Link::getDestination() { return destination; }
+
+void Link::setWeight(double weight) {
+    this->weight = weight;
+}
+
+double Link::getWeight() {
+    return weight;
+}
+
+void Link::setTransmissionSpeed(double speed) {
+    transmissionSpeed = speed;
+}
+
+double Link::getTransmissionSpeed() {
+    return transmissionSpeed;
+}
+
+void Link::setPropagationDelay(double delay) {
+    propagationDelay = delay;
+}
+
+double Link::getPropagationDelay() {
+    return propagationDelay;
+}
+
+const ns::Packets& Link::getPacketsWaiting() const {
+    return packetsWaiting;
+}
+
+size_t Link::getQueueLength() { return packetsWaiting.size(); }
+
+const ns::TransmissionLogType& Link::getTransmissionLog() const {
+    return transmittedPackets;
+}
+
+

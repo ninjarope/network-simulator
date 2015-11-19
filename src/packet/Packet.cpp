@@ -1,21 +1,25 @@
 //
 //  Packet.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
 #include "Packet.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 Packet::Packet() {}
 
-Packet::Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data)
-    : source(s), destination(d), data(data) {}
+Packet::Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data)
+    : id("UUID_PLACEHOLDER"), source(s), destination(d), data(data), size(data.size()) {}
 
-nsTypes::AddressType Packet::getSource() { return source; }
+ns::PacketIdType Packet::getID() { return id; }
 
-nsTypes::AddressType Packet::getDestination() { return destination; }
+ns::AddressType Packet::getSource() { return source; }
 
-nsTypes::PacketDataType Packet::getData() { return data; }
+ns::AddressType Packet::getDestination() { return destination; }
+
+ns::PacketDataType Packet::getData() { return data; }
+
+double Packet::getSize() { return size; }

@@ -6,7 +6,7 @@
 #define __ns1_randomrouter_h__
 
 #include "Application.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 /**
  * Routes packets randomly
@@ -14,14 +14,13 @@
 class RandomRouter : public Application {
 public:
     RandomRouter();
-
-    void process(double timeDelta) override;
+    
+    /** Update state of the router. */
+    void process(double currentTime) override;
 
 private:
-    nsTypes::Connections routingTable;
-    nsTypes::Connections connections;
-    nsTypes::Packets packets;
-
+    ns::Connections routingTable;
+    ns::Connections connections;
 };
 
 

@@ -1,6 +1,6 @@
 //
 //  TestRouter.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
@@ -8,14 +8,14 @@
 
 #include "TestRouter.h"
 #include "../packet/Packet.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 TestRouter::TestRouter() { type = "TestRouter"; }
 
-void TestRouter::process(double timeDelta) {
+void TestRouter::process(double currentTime) {
     Packet* p;
-    nsTypes::AddressType packetDestination;
-    nsTypes::Packets& packets = hostNode->getPackets();
+    ns::AddressType packetDestination;
+    ns::Packets& packets = hostNode->getPackets();
     while (!packets.empty()) {
         p = packets.front();
         packetDestination = p->getDestination();

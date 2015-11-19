@@ -1,15 +1,15 @@
 //
 //  Packet.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__Packet__
-#define __ns_sketch__Packet__
+#ifndef __NetworkSimulator__Packet__
+#define __NetworkSimulator__Packet__
 
-#include "../nsTypes.h"
+#include "../ns.h"
 
 /**
  * Packet that travels between nodes
@@ -18,17 +18,30 @@ class Packet {
 public:
     Packet();
     
-    Packet(nsTypes::AddressType s, nsTypes::AddressType d, nsTypes::PacketDataType data);
+    /** Construct packet that has source & destination addresses and some content (data).
+        The amount of data defines packet size. */
+    Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data);
+
+    /** Return packet ID. */
+    ns::PacketIdType getID();
+
+    /** Return source address. */
+    ns::AddressType getSource();
     
-    nsTypes::AddressType getSource();
+    /** Return destination address. */
+    ns::AddressType getDestination();
     
-    nsTypes::AddressType getDestination();
+    /** Return packet contents. */
+    ns::PacketDataType getData();
     
-    nsTypes::PacketDataType getData();
+    /** Return size of the packet. */
+    double getSize();
     
 private:
-    nsTypes::AddressType source, destination;
-    nsTypes::PacketDataType data;
+    ns::PacketIdType id;
+    ns::AddressType source, destination;
+    ns::PacketDataType data;
+    double size;
 };
 
-#endif /* defined(__ns_sketch__Packet__) */
+#endif /* defined(__NetworkSimulator__Packet__) */

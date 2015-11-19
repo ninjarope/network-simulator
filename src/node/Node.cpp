@@ -1,17 +1,17 @@
 //
 //  Node.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
 #include "Node.h"
-#include "../nsTypes.h"
+#include "../ns.h"
 
 Node::Node() {}
 
-Node::Node(nsTypes::AddressType address) : address(address) {}
+Node::Node(ns::AddressType address) : address(address) {}
 
 Node::~Node() {
     for (auto& packet : packets) delete packet;
@@ -34,8 +34,8 @@ void Node::removeConnection(Link* link) {
     }
 }
 
-nsTypes::Connections& Node::getConnections() { return connections; }
+ns::Connections& Node::getConnections() { return connections; }
 
-nsTypes::Packets& Node::getPackets() { return packets; }
+ns::Packets& Node::getPackets() { return packets; }
 
-nsTypes::AddressType Node::getAddress() { return address; }
+ns::AddressType Node::getAddress() { return address; }

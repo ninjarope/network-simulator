@@ -1,6 +1,6 @@
 //
 //  TestLink.cpp
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
@@ -10,9 +10,7 @@
 
 TestLink::TestLink() {}
 
-TestLink::TestLink(Node* source, Node* destination) : Link(source, destination) {}
-
-void TestLink::run(double timeDelta) {
+void TestLink::run(double currentTime) {
     while (!packetsWaiting.empty()) {
         destination->receivePacket(packetsWaiting.front());
         

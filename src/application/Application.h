@@ -1,17 +1,17 @@
 //
 //  Application.h
-//  ns_sketch
+//  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __ns_sketch__Application__
-#define __ns_sketch__Application__
+#ifndef __NetworkSimulator__Application__
+#define __NetworkSimulator__Application__
 
 #include <iostream>
 
-#include "../nsTypes.h"
+#include "../ns.h"
 #include "../packet/Packet.h"
 #include "../node/Node.h"
 #include "../link/Link.h"
@@ -40,11 +40,11 @@ class Application: public Notifiable {
 
   /** Derived classes implement this - application has access to it's
      host via hostNode pointer. */
-  virtual void process(double timeDelta) = 0;
+  virtual void process(double currentTime) = 0;
 
  protected:
   Node *hostNode;
   std::string type;
 };
 
-#endif /* defined(__ns_sketch__Application__) */
+#endif /* defined(__NetworkSimulator__Application__) */

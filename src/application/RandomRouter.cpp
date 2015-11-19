@@ -3,13 +3,14 @@
 //
 
 #include "RandomRouter.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <cstdlib>     /* srand, rand */
+#include <ctime>       /* time */
 #include <vector>
+#include <sstream>
 
 RandomRouter::RandomRouter() {
-  type = "Random Router";
-  srand(time(NULL));
+    type = "Random Router";
+    srand((unsigned int) time(NULL));
 }
 
 /**
