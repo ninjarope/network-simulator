@@ -9,7 +9,7 @@
 #ifndef __NetworkSimulator__Timer__
 #define __NetworkSimulator__Timer__
 
-#include <chrono>
+#include "../ns.h"
 
 /**
  * Cycles the clock for the network simulator state

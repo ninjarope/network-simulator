@@ -64,7 +64,16 @@ public:
     
     /** Return current propagation delay. */
     double getPropagationDelay();
-
+    
+    /** Return queue in front of the link. */
+    const ns::Packets& getPacketsWaiting() const;
+    
+    /** Return length of queue in front of the link. */
+    size_t getQueueLength();
+    
+    /** Return transmitted packets. */
+    const ns::TransmissionLogType& getTransmissionLog() const;
+    
     /**
      * Update state of the link. Links having speed and delay should consider time between calls
      * (currentTime).
@@ -76,6 +85,7 @@ protected:
     Node* destination;
     ns::Packets packetsWaiting;
     std::map<Packet*, double> packetsInTransmission; // {Packet*, [time to delivery]}
+    ns::TransmissionLogType transmittedPackets; // {packetId, deliveryTime}
     double transmissionSpeed = 0.0;
     double propagationDelay = 0.0;
     double weight = 0.0;

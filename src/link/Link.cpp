@@ -77,3 +77,14 @@ double Link::getPropagationDelay() {
     return propagationDelay;
 }
 
+const ns::Packets& Link::getPacketsWaiting() const {
+    return packetsWaiting;
+}
+
+size_t Link::getQueueLength() { return packetsWaiting.size(); }
+
+const ns::TransmissionLogType& Link::getTransmissionLog() const {
+    return transmittedPackets;
+}
+
+

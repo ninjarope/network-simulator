@@ -13,11 +13,15 @@
 ParametricLink::ParametricLink() {
     previousTime = 0.0;
     packetToTransitTime = 0.0;
+    logging = true;
 }
 
 ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay) {
     this->transmissionSpeed = transmissionSpeed;    // interval
     this->propagationDelay = propagationDelay;      // transmission time per packet
+    previousTime = 0.0;
+    packetToTransitTime = 0.0;
+    logging = true;
 }
 
 
@@ -27,7 +31,7 @@ void ParametricLink::run(double currentTime) {
     std::stringstream ss;
     
     // waiting time until next packet will be picked for transmission
-    if (!packetsInTransmission.empty()) packetToTransitTime -= timeDelta;
+    if (!packetsWaiting.empty()) packetToTransitTime -= timeDelta;
 
     // add packets to transmission if there is some waiting...
     if (packetToTransitTime <= 0.0 && !packetsWaiting.empty()) {
@@ -51,6 +55,9 @@ void ParametricLink::run(double currentTime) {
         if (it->second <= 0.0) {
             // deliver it to destination node
             destination->receivePacket(it->first);
+            
+            // add packet to transmission log {packetId, deliveryTime}
+            if (logging) transmittedPackets.push_back({it->first->getID(), currentTime});
             
             // debug output
             std::cout

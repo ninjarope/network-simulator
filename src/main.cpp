@@ -27,6 +27,7 @@ int main() {
     ns.addNode("A");
     ns.addNode("B");
     ns.addNode("C");
+    ns.addNode("D");
     
     // add some applications running on nodes
     ns.getNode("A")->addApplications(new PacketReceiver);
@@ -35,13 +36,17 @@ int main() {
     ns.getNode("B")->addApplications(new TestRouter);
     ns.getNode("C")->addApplications(new PacketReceiver);
     ns.getNode("C")->addApplications(new TestRouter);
-    // ns.getNode("E")->addApplications(new PacketGenerator(1, ns.getAddresses()));
-    ns.getNode("A")->receivePacket(new Packet("A", "C", "P1"));
-    ns.getNode("A")->receivePacket(new Packet("A", "C", "P2"));
+    ns.getNode("D")->addApplications(new PacketReceiver);
+    ns.getNode("D")->addApplications(new PacketGenerator(1, ns.getAddresses()));
+    ns.getNode("D")->addApplications(new TestRouter);
+    //ns.getNode("A")->receivePacket(new Packet("A", "C", "P1"));
+    //ns.getNode("A")->receivePacket(new Packet("A", "C", "P2"));
 
     // create some links between nodes
     ns.addLink("A", "B", 1, new ParametricLink(10.0, 100.0));
-    ns.addLink("B", "C", 1, new ParametricLink(10.0, 100.0));
+    ns.addLink("B", "C", 1, new ParametricLink(5.0, 10.0));
+    ns.addLink("C", "D", 1, new ParametricLink(2.0, 10.0));
+    ns.addLink("D", "A", 1, new ParametricLink(1.0, 10.0));
 
     // try some node deletion, some issues with this...
     // ns.removeNode("B");
@@ -51,4 +56,35 @@ int main() {
     
     // run (timer has currently some hard-coded test values)
     ns.startTimer();
+    
+    for (auto& l : ns.getLinks()) {
+        // print traffic logs
+        std::cout
+            << "Transmission log for link "
+            <<l->getSource()->getAddress()
+            << l->getDestination()->getAddress()
+            << " : "
+            << std::endl;
+        for (auto& logEntry : l->getTransmissionLog()) {
+            std::cout
+                << "["
+                << logEntry.first
+                << ", "
+                << logEntry.second / 1000.0
+                << "]"
+                << std::endl;
+        }
+        
+        // print queue lengths
+        std::cout
+        << "Queue length in front of link "
+        <<l->getSource()->getAddress()
+        << l->getDestination()->getAddress()
+        << " : "
+        << l->getQueueLength()
+        << std::endl;
+        
+        std::cout<< std::endl;
+    }
+    
 }

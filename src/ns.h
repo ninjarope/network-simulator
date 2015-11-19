@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <chrono>
 
 class Packet;
 class Link;
@@ -32,7 +33,10 @@ namespace ns {
     typedef std::list<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
-
+    typedef std::string PacketIdType;
+    typedef double TimePointType;
+    typedef std::list<std::pair<PacketIdType, TimePointType>> TransmissionLogType;
+    
     /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;

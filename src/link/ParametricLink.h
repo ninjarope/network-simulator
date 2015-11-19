@@ -26,6 +26,7 @@ public:
 private:
     double previousTime;
     double packetToTransitTime;
+    bool logging;
 };
 
 #endif /* defined(__NetworkSimulator__ParametricLink__) */

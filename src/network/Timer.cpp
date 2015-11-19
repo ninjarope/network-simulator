@@ -35,6 +35,7 @@ void Timer::startTimer() {
         returnTime = std::chrono::system_clock::now();
         callbackDuration = returnTime - callTime;
         
+        // delay if necessary
         if (callbackDuration < std::chrono::milliseconds(interval)) {
             std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
         }

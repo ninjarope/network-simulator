@@ -33,7 +33,7 @@ ApplicationNode *Network::getNode(ns::AddressType address) const {
 const Link *Network::getLink(ns::AddressType source, ns::AddressType destination) const {
   // TODO: exception handling
   /** \todo { exception handling } */
-  for (auto &link : nodes.at(source)->getConnections()) {
+  for (auto &link : links) {
     if (link->getDestination()->getAddress() == destination) return link;
   }
   return nullptr;

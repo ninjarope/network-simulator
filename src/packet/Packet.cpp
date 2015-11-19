@@ -12,7 +12,9 @@
 Packet::Packet() {}
 
 Packet::Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data)
-    : source(s), destination(d), data(data), size(data.size()) {}
+    : id("UUID_PLACEHOLDER"), source(s), destination(d), data(data), size(data.size()) {}
+
+ns::PacketIdType Packet::getID() { return id; }
 
 ns::AddressType Packet::getSource() { return source; }
 
