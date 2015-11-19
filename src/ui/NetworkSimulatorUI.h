@@ -24,7 +24,8 @@ public:
     /** NetworkSimulator will call this. */
     void setNetworkSimulator(NetworkSimulator* ns);
 
-    /** Display traffic log for given link in form of [packetID, delivery time] for each
+    /**
+     * Display traffic log for given link in form of [packetID, delivery time] for each
      *  transmitted packet.
      */
     virtual void displayTrafficLog(ns::AddressType source, ns::AddressType destination) = 0;

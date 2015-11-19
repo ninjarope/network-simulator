@@ -8,64 +8,90 @@
 
 #include "NetworkSimulatorTestUI.h"
 
-NetworkSimulatorUI* NetworkSimulatorTestUI::createUI() { return new NetworkSimulatorTestUI(); }
+/**
+ * Enables generic UI supertype and switching of its implementation layer.
+ */
+NetworkSimulatorUI *NetworkSimulatorTestUI::createUI() { return new NetworkSimulatorTestUI(); }
 
+/**
+ * Main function that is called from Network Simulator.
+ * Encapsulates all UI subjects.
+ */
+void NetworkSimulatorTestUI::update() {
+    drawQueues();
+    hr();
+    drawApplications();
+    hr();
+}
+
+/**
+ * Show traffic in a link. Search the link with parameters.
+ *
+ * @source          a node address
+ * @destination     a node address
+ */
 void NetworkSimulatorTestUI::displayTrafficLog(ns::AddressType source, ns::AddressType destination) {
     // print traffic logs
-    const auto& l = networkSimulator->getLink(source, destination);
+    const auto &l = networkSimulator->getLink(source, destination);
     std::cout
         << "Transmission log for link "
         << l->getSource()->getAddress()
         << l->getDestination()->getAddress()
         << " : "
         << std::endl;
-    for (auto& logEntry : l->getTransmissionLog()) {
+    for (auto &logEntry : l->getTransmissionLog()) {
         std::cout
-        << "["
-        << logEntry.first
-        << ", "
-        << logEntry.second / 1000.0
-        << "]"
-        << std::endl;
+            << "["
+            << logEntry.first
+            << ", "
+            << logEntry.second / 1000.0
+            << "]"
+            << std::endl;
     }
 
 }
 
-void NetworkSimulatorTestUI::update() {
-
-    for (auto &node : networkSimulator->getNodes()) {
-        // print applications of each host node
-        std::cout << "Node " << node.first << ": ";
-        for(auto &app : node.second->getApplications()) {
-            std::cout << "[" << app->getType() << "]";
-        }
-        std::cout << std::endl;
-    }
-
+/**
+ * Show queues of links
+ */
+void NetworkSimulatorTestUI::drawQueues() {
     for (auto &l : networkSimulator->getLinks()) {
-            // print queue lengths
-            std::cout
+        // print queue lengths
+        std::cout
             << "Queue length in front of link "
-            <<l->getSource()->getAddress()
+            << l->getSource()->getAddress()
             << l->getDestination()->getAddress()
             << " : "
             << l->getQueueLength()
             << std::endl;
     }
-    
+}
+
+/**
+ * Show applications of all nodes
+ */
+void NetworkSimulatorTestUI::drawApplications() {
+
+    std::cout << "Applications in the Network" << std::endl;
+
+    for (auto &node : networkSimulator->getNodes()) {
+        std::cout << "Node " << node.first << ": ";
+        for (auto &app : node.second->getApplications()) {
+            std::cout << "[" << app->getType() << "]";
+        }
+        std::cout << std::endl;
+    }
+}
+
+/**
+ * Print a horizontal line
+ */
+void NetworkSimulatorTestUI::hr() {
     // separator
     std::cout
         << std::endl
         << "================================================================================"
         << std::endl;
-
-    /* Some debugging output... */
-//    std::cout
-////        << type << ": "
-//        << hostNode->getAddress() << " forwarded "
-//        << p->getData() << " to link "
-//        << targetLink->getSource()->getAddress() << "-"
-//        << targetLink->getDestination()->getAddress()
-//        << std::endl;
-
 }
+
+
