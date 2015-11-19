@@ -24,7 +24,6 @@ public:
     void run(double currentTime) override;
     
 private:
-    std::map<Packet*, double> timeToDelivery;
     double previousTime;
     double packetToTransitTime;
 };

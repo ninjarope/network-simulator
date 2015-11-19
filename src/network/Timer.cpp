@@ -27,14 +27,18 @@ void Timer::startTimer() {
     std::chrono::time_point<std::chrono::system_clock> callTime, returnTime;
     std::chrono::duration<double> callbackDuration;
     while (currentTime < endTime) {
+        // debugging output
         std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
+        
         callTime = std::chrono::system_clock::now();
         timerCallback();
         returnTime = std::chrono::system_clock::now();
         callbackDuration = returnTime - callTime;
+        
         if (callbackDuration < std::chrono::milliseconds(interval)) {
             std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
         }
+        
         currentTime += interval;
     }
     stopTimer();
