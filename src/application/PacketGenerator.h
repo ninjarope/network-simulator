@@ -21,6 +21,7 @@ public:
 
     PacketGenerator(unsigned int rate);
 
+    /** Construct packet generator that generates packets to given destinations at given rate. */
     PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations);
     
     /**

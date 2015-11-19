@@ -34,6 +34,7 @@ public:
     /** Connect new applications to host. Node takes ownership of the application. */
     void addApplications(Application* application);
     
+    /** Connect multiple new applications to host. Node takes ownership of applications. */
     void addApplications(std::vector<Application*> applications);
 
     /** Set applications (clears previous applications). */

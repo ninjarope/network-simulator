@@ -29,13 +29,16 @@ public:
 
     Link(Node* source, Node* destination, double weight);
 
+    /** Destroys all packets (packets will be lost) when link is removed. */
     virtual ~Link();
     
     /** Add packet to queue waiting for transmission. Takes ownership of the packet. */
     void addPacket(Packet* p);
 
+    /** Set source node. */
     bool setSource(Node* source);
     
+    /** Set destination node. */
     bool setDestination(Node* destination);
     
     /** Get pointer to source node. */
@@ -63,7 +66,7 @@ public:
     double getPropagationDelay();
 
     /**
-     * Links having speed and delay should consider time between calls
+     * Update state of the link. Links having speed and delay should consider time between calls
      * (currentTime).
      */
     virtual void run(double currentTime) = 0;
@@ -72,7 +75,7 @@ protected:
     Node* source;
     Node* destination;
     ns::Packets packetsWaiting;
-    std::map<Packet*, double> packetsInTransmission;
+    std::map<Packet*, double> packetsInTransmission; // {Packet*, [time to delivery]}
     double transmissionSpeed = 0.0;
     double propagationDelay = 0.0;
     double weight = 0.0;

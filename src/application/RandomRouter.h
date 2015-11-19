@@ -15,6 +15,7 @@ class RandomRouter : public Application {
 public:
     RandomRouter();
     
+    /** Update state of the router. */
     void process(double currentTime) override;
 
 private:

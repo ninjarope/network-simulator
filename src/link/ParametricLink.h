@@ -13,14 +13,14 @@
 #include <map>
 #include "Link.h"
 
-/** Example implementation of link. */
+/** Link that makes use of transmission speed and propagation delay parameters. */
 class ParametricLink : public Link {
 public:
     ParametricLink();
     
     ParametricLink(double transmissionSpeed, double propagationDelay);
     
-    /** Forward new packets to destination with no delay. */
+    /** Update state of the link. */
     void run(double currentTime) override;
     
 private:
