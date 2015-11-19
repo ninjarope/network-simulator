@@ -9,6 +9,7 @@
 #ifndef __NetworkSimulator__NetworkSimulatorUI__
 #define __NetworkSimulator__NetworkSimulatorUI__
 
+#include "../ns.h"
 #include "../network/NetworkSimulator.h"
 
 /**
@@ -22,7 +23,12 @@ public:
     
     /** NetworkSimulator will call this. */
     void setNetworkSimulator(NetworkSimulator* ns);
-    
+
+    /** Display traffic log for given link in form of [packetID, delivery time] for each
+     *  transmitted packet.
+     */
+    virtual void displayTrafficLog(ns::AddressType source, ns::AddressType destination) = 0;
+
     /** NetworkSimulator will call this in it's timer callbacks. */
     virtual void update() = 0;
 

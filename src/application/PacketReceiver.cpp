@@ -9,14 +9,12 @@
 #include <iostream>
 #include "PacketReceiver.h"
 
-PacketReceiver::PacketReceiver() {}
+PacketReceiver::PacketReceiver() { type = "PacketReceiver"; }
 
 void PacketReceiver::process(double currentTime) {
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {
         if ((*it)->getDestination() == hostNode->getAddress()) {
-            /* Some debugging output... */
-            std::cout << hostNode->getAddress() << " received " << (*it)->getData() << std::endl;
             it = hostNode->getPackets().erase(it);
         } else it++;
         

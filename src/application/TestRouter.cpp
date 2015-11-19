@@ -16,21 +16,21 @@ void TestRouter::process(double currentTime) {
     Packet* p;
     ns::AddressType packetDestination;
     ns::Packets& packets = hostNode->getPackets();
+    
+    // if there is packets to processs
     while (!packets.empty()) {
+        // pick first packet and read it's destination address
         p = packets.front();
         packetDestination = p->getDestination();
+        
+        // if host node has connections
         if (!hostNode->getConnections().empty()) {
+            // forward packet directly to first connection
             Link* targetLink = hostNode->getConnections().front();
             targetLink->addPacket(p);
-            
-            /* Some debugging output... */
-            std::cout
-            << hostNode->getAddress() << " forwarded "
-            << p->getData() << " to link "
-            << targetLink->getSource()->getAddress() << "-"
-            << targetLink->getDestination()->getAddress()
-            << std::endl;
         }
+        
+        // remove packet from queue
         packets.erase(packets.begin());
     }
 }

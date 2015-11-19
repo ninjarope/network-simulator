@@ -42,7 +42,7 @@ public:
     ns::Packets& getPackets();
     
     /** Return address of the node. */
-    ns::AddressType getAddress();
+    ns::AddressType getAddress() const;
     
     /** Derived classes must define their type and implement this. */
     virtual std::string getType() const = 0;

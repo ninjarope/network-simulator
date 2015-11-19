@@ -38,4 +38,4 @@ ns::Connections& Node::getConnections() { return connections; }
 
 ns::Packets& Node::getPackets() { return packets; }
 
-ns::AddressType Node::getAddress() { return address; }
+ns::AddressType Node::getAddress() const { return address; }

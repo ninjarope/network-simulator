@@ -18,11 +18,14 @@ class NetworkSimulatorTestUI : public NetworkSimulatorUI {
 public:
     NetworkSimulatorTestUI() {}
     
+    static NetworkSimulatorUI* createUI();
+    
+    void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override;
+    
     void update() override;
     
 private:
 };
 
-NetworkSimulatorUI *createUI();
 
 #endif /* defined(__NetworkSimulator__NetworkSimulatorTestUI__) */

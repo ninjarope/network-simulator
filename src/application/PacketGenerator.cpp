@@ -14,16 +14,19 @@
 #include "../ns.h"
 
 PacketGenerator::PacketGenerator() {
+    type = "PacketGenerator";
     rate = 1;
     count = 1;
 }
 
 PacketGenerator::PacketGenerator(unsigned int rate) {
+    type = "PacketGenerator";
     this->rate = rate;
     count = 1;
 }
 
 PacketGenerator::PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations) {
+    type = "PacketGenerator";
     this->rate = rate;
     this->destinations = destinations;
     count = 1;

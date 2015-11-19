@@ -49,9 +49,9 @@ bool Link::setDestination(Node* destination) {
 
 void Link::addPacket(Packet* p) { packetsWaiting.push_back(p); }
 
-Node* Link::getSource() { return source; }
+const Node* Link::getSource() const { return source; }
 
-Node* Link::getDestination() { return destination; }
+const Node* Link::getDestination() const { return destination; }
 
 void Link::setWeight(double weight) {
     this->weight = weight;
