@@ -44,7 +44,8 @@ void ParametricLink::run(double currentTime) {
             packetsWaiting.erase(it);
 
             // reset waiting time (proportional to the size of added packet)
-            packetToTransitTime = transmissionSpeed * (*it)->getSize();
+            // "time to transmit a packet == packet size / link speed"
+            packetToTransitTime = (*it)->getSize() / transmissionSpeed;
     }
     
     // handle packets being transmitted
