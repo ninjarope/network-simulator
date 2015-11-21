@@ -27,7 +27,7 @@ namespace ns {
         someNotificationType1,
         someNotificationType2
     };
-    
+
     typedef std::string AddressType;
     typedef std::string PacketDataType;
     typedef std::list<Packet*> Packets;
@@ -36,7 +36,7 @@ namespace ns {
     typedef std::string PacketIdType;
     typedef double TimePointType;
     typedef std::list<std::pair<PacketIdType, TimePointType>> TransmissionLogType;
-    
+    typedef std::multimap<AddressType, AddressType> LinkStorage;
     /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;

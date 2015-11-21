@@ -49,6 +49,7 @@ bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link 
   // TODO: exception handling
   /** \todo { exception handling } */
   if (l) {
+    this->allAvailableLinks.insert({source, destination});
     l->setSource(this->getNode(source));
     l->setDestination(this->getNode(destination));
     links.push_back(l);
@@ -58,6 +59,7 @@ bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link 
 
 bool Network::addLink(ns::AddressType source, ns::AddressType destination, double weight, Link* l) {
     if (addLink(source, destination, l)) {
+        this->allAvailableLinks.insert({source, destination});
         l->setWeight(weight);
         return true;
     } else return false;
@@ -92,6 +94,16 @@ bool Network::removeLink(ns::AddressType source, ns::AddressType destination) {
     if (l->getSource()->getAddress() == source && l->getDestination()->getAddress() == destination) {
       delete l;
       links.erase(it);
+      // removing the link from the storage
+      typedef std::multimap<ns::AddressType, ns::AddressType>::iterator iterator;
+      std::pair<iterator, iterator> iterpair = this->allAvailableLinks.equal_range(source);
+      iterator itr = iterpair.first;
+      for (; itr != iterpair.second; ++itr) {
+        if (itr->second == destination) {
+        this->allAvailableLinks.erase(itr);
+        break;
+        }
+      }
       return true;
     }
     it++;
@@ -111,3 +123,11 @@ size_t Network::getLinkCount() {
 const std::vector<ns::AddressType> &Network::getAddresses() const {
   return addresses;
 }
+
+/** check LinkStorage */
+
+/*void Network::printLinks(){
+  for (auto i : this->allAvailableLinks){
+    std::cout << i.first << "-" << i.second << std::endl;
+  }
+}*/

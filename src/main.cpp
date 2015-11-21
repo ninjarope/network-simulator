@@ -54,10 +54,17 @@ int main() {
     ns.addLink("D", "E", new ParametricLink(1.0, 100.0));
     ns.addLink("E", "A", new ParametricLink(10.0, 100.0));
 
+    /** check LinkStorage */
+    /*ns.printLinks();
+    ns.removeLink("A", "C");
+    std::cout << "--------------------------------" << std::endl;
+    ns.printLinks();*/
+
+
     // run (timer has currently some hard-coded test values)
     ns.startTimer();
-    
+
     // print traffic log for given node (packetID's and time stamps)
     ui->displayTrafficLog("A", "B");
-    
+
 }
