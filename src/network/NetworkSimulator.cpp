@@ -7,6 +7,7 @@
 //
 
 #include "NetworkSimulator.h"
+#include "shortestPath.cpp"
 
 NetworkSimulator::NetworkSimulator() : ui(nullptr) {}
 
@@ -22,4 +23,13 @@ void NetworkSimulator::timerCallback() {
     for (auto& link : getLinks()) link->run(currentTime);
 
     ui->update();
+}
+
+void NetworkSimulator::update(){
+    AllNodess(this->links, this->nodes);
+    for(auto node:this->nodes){
+      this->getNode(node)->updateTable(Permute(node.first));
+    }
+    //this->getNode("A")->updateTable(Permute();
+    //TODO: make loop to update all nodes
 }
