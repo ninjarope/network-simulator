@@ -26,7 +26,7 @@ void NetworkSimulator::timerCallback() {
 }
 
 void NetworkSimulator::update(){
-    AllNodess(this->links, this->nodes);
+    AllNodess(this->nodes, this->links);
     for(auto node:this->nodes){
       this->getNode(node)->updateTable(Permute(node.first));
     }

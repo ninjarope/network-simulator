@@ -49,8 +49,8 @@ public:
 
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
-    void updateTable(map<ns::AddressType,ns::AddressType> rTable);
-    map<ns::AddressType,ns::AddressType> routingTable;
+    void updateTable(std::map<ns::AddressType,ns::AddressType> rTable);
+    std::map<ns::AddressType,ns::AddressType> routingTable;
 protected:
     ns::Connections connections;
     ns::Packets packets;

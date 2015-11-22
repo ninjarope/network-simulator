@@ -25,9 +25,9 @@ void TestRouter::process(double currentTime) {
         //check for the destination in the routingTable and add Packet to the nexthop value from the
         //routingTable
         for(auto key:this->routingTable){
-          if(key==packetDestination){
+          if(key.first==packetDestination){
             for(auto conn:hostNode->getConnections()){
-              if(conn->getDestination()== key){
+              if(conn->getDestination()->getAddress()== key.second){
                 Link* targetLink = conn;
                 targetLink->addPacket(p);
               }

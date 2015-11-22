@@ -13,8 +13,9 @@
 std::string AllNodes[] = {"A","B","C","D","E"};
 int length = sizeof(AllNodes)/sizeof(AllNodes[0]);
 
-int AllNodess(  std::map<ns::AddressType, ApplicationNode*> nodes,std::vector<Link*> links){
+int AllNodess(  std::map<ns::AddressType, ApplicationNode*> nodes ,std::vector<Link*> links){
   //TODO: making the Allnodes array for use in Permute
+  return 0;
 }
 int Permute (ns::AddressType address) {
 

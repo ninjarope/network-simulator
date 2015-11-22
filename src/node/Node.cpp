@@ -8,6 +8,7 @@
 
 #include "Node.h"
 #include "../ns.h"
+#include <map>
 
 Node::Node() {}
 
@@ -40,10 +41,10 @@ ns::Packets& Node::getPackets() { return packets; }
 
 ns::AddressType Node::getAddress() const { return address; }
 
-void Node::updateTable(map<ns::AddressType,ns::AddressType> rTable){
+void Node::updateTable(std::map<ns::AddressType,ns::AddressType> rTable){
   this->routingTable.clear();
   for(auto key:rTable){
-    this->routingTable[key]=rTable[key];
+    this->routingTable[key.first]=rTable[key.second];
   }
 
 }

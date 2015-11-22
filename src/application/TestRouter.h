@@ -11,7 +11,7 @@
 
 #include "Application.h"
 #include "../ns.h"
-
+#include <map>
 
 /**
  * Example implementation of application. Application implementation
@@ -29,7 +29,7 @@ private:
     /** Router could generate routing table based on given shortest paths. ShortestPaths
        can be very large data structure in a large network, hence the pointer.
        These variables are not actually used in this implementation. */
-    map<ns::AddressType,ns::AddressType> routingTable;
+    std::map<ns::AddressType,ns::AddressType> routingTable;
     //ns::PathsToDestinationAddress routingTable;
 };
 #endif /* defined(__NetworkSimulator__TestRouter__) */
