@@ -21,7 +21,7 @@
  */
 int main() {
 
-
+    // initiating the MVC
     NetworkSimulator ns;
     NetworkSimulatorUI *ui = NetworkSimulatorTestUI::createUI();
     ns.setUI(ui);

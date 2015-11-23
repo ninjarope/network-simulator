@@ -17,7 +17,8 @@
 #include "../ui/NetworkSimulatorUI.h"
 
 /**
- * The controller
+ * Inherits the Network and for that this represents
+ * the controller and the model in MVC architecture.
  */
 class NetworkSimulator : public Network, public Timer {
 public:
