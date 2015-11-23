@@ -10,7 +10,7 @@
 #define __NetworkSimulator__NetworkSimulator__
 
 #include <memory>
-
+#include "shortestPath.h"
 #include "../ns.h"
 #include "Timer.h"
 #include "Network.h"
