@@ -6,8 +6,9 @@
 //
 
 #include <iostream>
+
 #include "network/NetworkSimulator.h"
-#include "ui/NetworkSimulatorTestUI.h"
+#include "ui/NetworkSimulatorGUI.h"
 #include "application/TestRouter.h"
 #include "link/TestLink.h"
 #include "link/ParametricLink.h"
@@ -23,7 +24,7 @@ int main() {
 
     // initiating the MVC
     NetworkSimulator ns;
-    NetworkSimulatorUI *ui = NetworkSimulatorTestUI::createUI();
+    NetworkSimulatorUI *ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);
 
     // create some nodes
@@ -54,13 +55,6 @@ int main() {
     ns.addLink("C", "E", new ParametricLink(1.0, 100.0));
     ns.addLink("D", "E", new ParametricLink(1.0, 100.0));
     ns.addLink("E", "A", new ParametricLink(10.0, 100.0));
-
-    /** check LinkStorage */
-    /*ns.printLinks();
-    ns.removeLink("A", "C");
-    std::cout << "--------------------------------" << std::endl;
-    ns.printLinks();*/
-
 
     // run (timer has currently some hard-coded test values)
     ns.startTimer();

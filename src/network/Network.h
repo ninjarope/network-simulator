@@ -62,7 +62,7 @@ public:
     /** Return number of links: */
     size_t getLinkCount();
     /** check LinkStorage */
-    //void printLinks();
+    void printLinks();
 
     /** Get addresses in current network. */
     const std::vector<ns::AddressType>& getAddresses() const;

@@ -126,8 +126,8 @@ const std::vector<ns::AddressType> &Network::getAddresses() const {
 
 /** check LinkStorage */
 
-/*void Network::printLinks(){
+void Network::printLinks(){
   for (auto i : this->allAvailableLinks){
     std::cout << i.first << "-" << i.second << std::endl;
   }
-}*/
+}

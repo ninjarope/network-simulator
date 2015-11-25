@@ -14,10 +14,12 @@
 
 Timer::Timer() {
     interval = 10;
-    endTime = 10000;
+    endTime = 5000;
 }
 
 Timer::~Timer() {}
+
+double Timer::getCurrentTime() { return currentTime; }
 
 void Timer::setTimerInterval(double milliseconds) {}
 
@@ -28,7 +30,7 @@ void Timer::startTimer() {
     std::chrono::duration<double> callbackDuration;
     while (currentTime < endTime) {
         // debugging output
-        std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
+        // std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
 
         callTime = std::chrono::system_clock::now();
         timerCallback();
