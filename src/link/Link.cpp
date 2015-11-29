@@ -26,7 +26,7 @@ Link::Link(Node* source, Node* destination, double weight) {
 Link::~Link() {
     for (auto& packet : packetsWaiting) delete packet;
     for (auto& packet : packetsInTransmission) delete packet.first;
-    
+
     // This could be also just notifying source node...
     source->removeConnection(this);
 }
@@ -86,5 +86,3 @@ size_t Link::getQueueLength() { return packetsWaiting.size(); }
 const ns::TransmissionLogType& Link::getTransmissionLog() const {
     return transmittedPackets;
 }
-
-

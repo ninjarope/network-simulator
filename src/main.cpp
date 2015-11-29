@@ -1,10 +1,8 @@
-//
 //  ns_classes.cpp
 //  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //
-
 #include <iostream>
 #include "network/NetworkSimulator.h"
 #include "ui/NetworkSimulatorTestUI.h"
@@ -14,24 +12,19 @@
 #include "application/PacketGenerator.h"
 #include "application/PacketReceiver.h"
 #include "application/RandomRouter.h"
-
 /**
  * Simple test case.
  */
 int main() {
-
-
     NetworkSimulator ns;
     NetworkSimulatorUI *ui = NetworkSimulatorTestUI::createUI();
-    ns.setUI(ui);
-
+    //ns.setUI(ui);
     // create some nodes
     ns.addNode("A");
     ns.addNode("B");
     ns.addNode("C");
     ns.addNode("D");
-    ns.addNode("E");
-
+    //ns.addNode("E");
     // add some applications running on nodes
     ns.getNode("A")->addApplications(new PacketReceiver);
     ns.getNode("A")->addApplications(new PacketGenerator(2, ns.getAddresses()));
@@ -42,29 +35,30 @@ int main() {
     ns.getNode("C")->addApplications(new RandomRouter);
     ns.getNode("D")->addApplications(new PacketReceiver);
     ns.getNode("D")->addApplications(new RandomRouter);
-    ns.getNode("E")->addApplications(new PacketReceiver);
-    ns.getNode("E")->addApplications(new TestRouter);
-
+    //ns.getNode("E")->addApplications(new PacketReceiver);
+    //ns.getNode("E")->addApplications(new TestRouter);
     // create some links between nodes
-    ns.addLink("A", "B", new ParametricLink(8.0, 16.0));
     ns.addLink("A", "C", new ParametricLink(4.0, 16.0));
-    ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
-    ns.addLink("B", "E", new ParametricLink(1.0, 100.0));
-    ns.addLink("C", "E", new ParametricLink(1.0, 100.0));
-    ns.addLink("D", "E", new ParametricLink(1.0, 100.0));
-    ns.addLink("E", "A", new ParametricLink(10.0, 100.0));
+    ns.addLink("A", "B", new ParametricLink(8.0, 16.0));
+    //ns.addLink("B", "A", new ParametricLink(2.0, 16.0));
+    ns.addLink("B", "C", new ParametricLink(4.0, 16.0));
+
+    //ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
+    //ns.addLink("C", "D", new ParametricLink(2.0, 16.0));
+    ns.addLink("D", "A", new ParametricLink(2.0, 16.0));
+    //ns.addLink("B", "E", new ParametricLink(1.0, 100.0));
+    //ns.addLink("C", "E", new ParametricLink(1.0, 100.0));
+    //ns.addLink("D", "E", new ParametricLink(1.0, 100.0));
+    //ns.addLink("E", "A", new ParametricLink(10.0, 100.0));
 
     /** check LinkStorage */
-    /*ns.printLinks();
-    ns.removeLink("A", "C");
-    std::cout << "--------------------------------" << std::endl;
-    ns.printLinks();*/
-
-
+    //ns.printLinks();
+    //ns.removeLink("A", "C");
+    //std::cout << "--------------------------------" << std::endl;
+    //ns.printLinks();
+    ns.update();
     // run (timer has currently some hard-coded test values)
     ns.startTimer();
-
     // print traffic log for given node (packetID's and time stamps)
-    ui->displayTrafficLog("A", "B");
-
+    //ui->displayTrafficLog("A", "B");
 }
