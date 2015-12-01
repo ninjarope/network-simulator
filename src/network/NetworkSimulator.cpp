@@ -19,10 +19,5 @@ void NetworkSimulator::timerCallback() {
 void NetworkSimulator::update(){
     ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
     s1.alsideperm();
-    //s1.createRoutingTable();
-    //for(auto node:this->nodes){
-    //  this->getNode(node)->updateTable(permute(node.first));
-  //  }
-    //this->getNode("A")->updateTable(Permute();
     //TODO: make loop to update all nodes
 }
