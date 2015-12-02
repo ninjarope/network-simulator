@@ -55,12 +55,12 @@ public:
     void drawLinks();
 
     /**
-     * Show queues of links
+     * Show queues of links.
      */
     void drawQueues();
     
     /**
-     * Show applications of all nodes
+     * Show applications of all nodes.
      */
     void drawApplications();
    
