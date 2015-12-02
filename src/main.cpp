@@ -18,7 +18,7 @@
 int main() {
     NetworkSimulator ns;
     NetworkSimulatorUI *ui = NetworkSimulatorTestUI::createUI();
-    //ns.setUI(ui);
+    ns.setUI(ui);
     // create some nodes
     ns.addNode("A");
     ns.addNode("B");
@@ -42,6 +42,7 @@ int main() {
     ns.addLink("A", "B", new ParametricLink(8.0, 16.0));
     //ns.addLink("B", "A", new ParametricLink(2.0, 16.0));
     ns.addLink("B", "C", new ParametricLink(4.0, 16.0));
+    ns.addLink("C", "D", new ParametricLink(4.0, 16.0));
 
     //ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
     //ns.addLink("C", "D", new ParametricLink(2.0, 16.0));

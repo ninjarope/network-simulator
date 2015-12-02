@@ -17,25 +17,26 @@ RandomRouter::RandomRouter() {
  * Empties the packet queue and routes them randomly
  */
 void RandomRouter::process(double timeDelta) {
-  routingTable = hostNode->getConnections();
-  connections = std::vector<Link*>();
+    routingTable = hostNode->getConnections();
+    connections = std::vector<Link*>();
     auto& packets = hostNode->getPackets();
-
-  // Find the connections where this node is source
-  for (auto &c : routingTable) {
-    if (c->getSource()->getAddress() == hostNode->getAddress()) {
-
-      connections.push_back(c);
+    
+    // Find the connections where this node is source
+    for (auto &c : routingTable) {
+        if (c->getSource()->getAddress() == hostNode->getAddress()) {
+            
+            connections.push_back(c);
+        }
     }
-  }
-
-  // forward packets
-  for (auto &p : packets) {
-    int randI = rand() % connections.size();
-    Link* targetLink = connections[randI];
-
-    targetLink->addPacket(p);
-  }
-
-  packets.clear();
+    
+    // forward packets
+    for (auto &p : packets) {
+        if (connections.size() > 0) {
+            int randI = rand() % connections.size();
+            Link* targetLink = connections[randI];
+            targetLink->addPacket(p);
+        }
+    }
+    
+    packets.clear();
 }
