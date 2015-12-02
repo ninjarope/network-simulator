@@ -14,6 +14,11 @@ ShortestPath::ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,st
         allNodes.push_back(key.first);
     }
 }
+
+const std::vector< std::vector<std::string> >& ShortestPath::getShortestPaths() const {
+    return shortestPaths;
+}
+
 void ShortestPath::alsideperm(){
     std::vector<std::string> permCpyAllNodes;
     std::vector<std::string> tempermCpyAllNodes;
@@ -189,18 +194,18 @@ void ShortestPath::allShortestPaths(){
         double weight = this->getWeightOfEachPath(this->nodeRTableFullPaths[i]);
         auto it = temp.find(srcDest);
         if (it != temp.end() && weight == it->second){
-            this->shortestPATHS.push_back(this->nodeRTableFullPaths[i]);
+            this->shortestPaths.push_back(this->nodeRTableFullPaths[i]);
         }
     }
     std::cout<<"----------------------ALL SHORTEST PATHS------------------"<<std::endl;
-    std::cout<<this->shortestPATHS.size()<<std::endl;
-    for (int i = 0; i < this->shortestPATHS.size() ; i++){
+    std::cout<<this->shortestPaths.size()<<std::endl;
+    for (int i = 0; i < this->shortestPaths.size() ; i++){
         std::cout << "Path: ";
-        for (int j = 0; j < this->shortestPATHS[i].size() ; j++){
-            std::cout << this->shortestPATHS[i][j];
+        for (int j = 0; j < this->shortestPaths[i].size() ; j++){
+            std::cout << this->shortestPaths[i][j];
         }
         std::cout << std::endl;
-        std::cout  <<"Weight:  "<< this->getWeightOfEachPath(this->shortestPATHS[i])<< std::endl;
+        std::cout  <<"Weight:  "<< this->getWeightOfEachPath(this->shortestPaths[i])<< std::endl;
         std::cout << std::endl;
     }
     std::cout << "-----------------TEMP MAP-----------------------" << std::endl;
@@ -215,10 +220,10 @@ void ShortestPath::allShortestPaths(){
 
 void ShortestPath::createMapForNodes(){
     for (auto node: this->nodes){
-        for(unsigned int i=0;i<this->shortestPATHS.size();i++){
-            if(node.first == this->shortestPATHS[i][0]){
-                std::string dest = this->shortestPATHS[i][this->shortestPATHS[i].size()-1];
-                std::string nextHop = this->shortestPATHS[i][1];
+        for(unsigned int i=0;i<this->shortestPaths.size();i++){
+            if(node.first == this->shortestPaths[i][0]){
+                std::string dest = this->shortestPaths[i][this->shortestPaths[i].size()-1];
+                std::string nextHop = this->shortestPaths[i][1];
                 node.second->routingTable.insert({dest, nextHop});
             }
         }

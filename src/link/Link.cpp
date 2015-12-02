@@ -58,7 +58,8 @@ void Link::setWeight(double weight) {
 }
 
 double Link::getWeight() {
-    return weight;
+    return 1.0 / transmissionSpeed;
+    //return weight;
 }
 
 void Link::setTransmissionSpeed(double speed) {

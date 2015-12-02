@@ -22,8 +22,32 @@ void TestRouter::process(double currentTime) {
         // pick first packet and read it's destination address
         p = packets.front();
         packetDestination = p->getDestination();
+        
         //check for the destination in the routingTable and add Packet to the nexthop value from the
         //routingTable
+        bool routingExists = false;
+        
+        for (auto entry : hostNode->routingTable) {
+            if (entry.first == packetDestination) {
+                for (auto l : hostNode->getConnections()) {
+                    if (l->getDestination()->getAddress() == entry.second) {
+                        l->addPacket(p);
+                        packets.erase(packets.begin());
+                        routingExists = true;
+                    }
+                }
+            }
+        }
+        
+        // no routing found
+        if (!routingExists && !hostNode->getConnections().empty()) {
+            // forward packet directly to first connection
+            Link* targetLink = hostNode->getConnections().front();
+            targetLink->addPacket(p);
+            packets.erase(packets.begin());
+        }
+        
+        /*
         for(auto key:this->routingTable){
           if(key.first==packetDestination){
             for(auto conn:hostNode->getConnections()){
@@ -34,16 +58,6 @@ void TestRouter::process(double currentTime) {
             }
           }
         }
-
-        /*
-        // if host node has connections
-        if (!hostNode->getConnections().empty()) {
-            // forward packet directly to first connection
-            Link* targetLink = hostNode->getConnections().front()->;
-            targetLink->addPacket(p);
-        }
         */
-        // remove packet from queue
-        packets.erase(packets.begin());
     }
 }
