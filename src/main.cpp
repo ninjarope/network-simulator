@@ -4,8 +4,9 @@
 //  Created by Tommi Gröhn on 13.11.2015.
 //
 #include <iostream>
+
 #include "network/NetworkSimulator.h"
-#include "ui/NetworkSimulatorTestUI.h"
+#include "ui/NetworkSimulatorGUI.h"
 #include "application/TestRouter.h"
 #include "link/TestLink.h"
 #include "link/ParametricLink.h"
@@ -17,7 +18,7 @@
  */
 int main() {
     NetworkSimulator ns;
-    NetworkSimulatorUI *ui = NetworkSimulatorTestUI::createUI();
+    NetworkSimulatorUI *ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);
     // create some nodes
     ns.addNode("A");
@@ -27,7 +28,7 @@ int main() {
     //ns.addNode("E");
     // add some applications running on nodes
     ns.getNode("A")->addApplications(new PacketReceiver);
-    ns.getNode("A")->addApplications(new PacketGenerator(2, ns.getAddresses()));
+    ns.getNode("A")->addApplications(new PacketGenerator(10, ns.getAddresses()));
     ns.getNode("A")->addApplications(new RandomRouter);
     ns.getNode("B")->addApplications(new PacketReceiver);
     ns.getNode("B")->addApplications(new RandomRouter);
@@ -59,6 +60,7 @@ int main() {
     //ns.printLinks();
     ns.update();
     // run (timer has currently some hard-coded test values)
+    ui->generateGraphLayout();
     ns.startTimer();
     // print traffic log for given node (packetID's and time stamps)
     //ui->displayTrafficLog("A", "B");

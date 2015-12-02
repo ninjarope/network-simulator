@@ -20,9 +20,14 @@ public:
     
     static NetworkSimulatorUI* createUI();
     
+    void generateGraphLayout() override {}
+    
     void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override;
+    
     void drawQueues();
+    
     void drawApplications();
+    
     void hr();
     
     void update() override;

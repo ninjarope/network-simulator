@@ -20,6 +20,9 @@ public:
     
     virtual ~Timer();
     
+    /** Return current running time in milliseconds. */
+    double getCurrentTime();
+
     /** Set timer interval in milliseconds. */
     void setTimerInterval(double milliseconds);
     

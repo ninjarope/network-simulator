@@ -110,4 +110,4 @@ const std::vector<ns::AddressType> &Network::getAddresses() const {
   for (auto i : this->allAvailableLinks){
     std::cout << i.first << "-" << i.second << std::endl;
   }
-}*/
+}
