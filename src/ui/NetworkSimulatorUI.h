@@ -25,6 +25,11 @@ public:
     void setNetworkSimulator(NetworkSimulator* ns);
 
     /**
+     * Generate representation of the graph.
+     */
+    virtual void generateGraphLayout() = 0;
+
+    /**
      * Display traffic log for given link in form of [packetID, delivery time] for each
      *  transmitted packet.
      */

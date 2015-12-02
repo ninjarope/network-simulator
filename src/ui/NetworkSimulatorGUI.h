@@ -13,6 +13,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <sstream>
+#include <map>
 
 #include "NetworkSimulatorUI.h"
 
@@ -25,12 +26,48 @@ public:
 
     ~NetworkSimulatorGUI();
 
+    /**
+     * Enables generic UI supertype and switching of its implementation layer.
+     */
     static NetworkSimulatorUI* createUI();
     
-    void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override;
-    void drawQueues();
-    void drawApplications();
+    /**
+     * Generate layout based on network structure.
+     */
+    void generateGraphLayout() override;
     
+    /**
+     * Show traffic in a link. Search the link with parameters.
+     *
+     * @source          a node address
+     * @destination     a node address
+     */
+    void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override;
+
+    /**
+     * Render nodes.
+     */
+    void drawNodes();
+
+    /**
+     * Render links.
+     */
+    void drawLinks();
+
+    /**
+     * Show queues of links
+     */
+    void drawQueues();
+    
+    /**
+     * Show applications of all nodes
+     */
+    void drawApplications();
+   
+    /**
+     * Main function that is called from Network Simulator.
+     * Encapsulates all UI subjects.
+     */
     void update() override;
     
 private:
@@ -38,6 +75,16 @@ private:
     sf::Font font;
     sf::Text text;
     unsigned int fontSize;
+    unsigned int nodeRadius;
+    unsigned int width;
+    unsigned int height;
+    
+    // Helper struct
+    struct point {
+        unsigned int x;
+        unsigned int y;
+    };
+    std::map<ns::AddressType, point> visibleNodes;
 };
 
 

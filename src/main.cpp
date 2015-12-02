@@ -36,7 +36,7 @@ int main() {
 
     // add some applications running on nodes
     ns.getNode("A")->addApplications(new PacketReceiver);
-    ns.getNode("A")->addApplications(new PacketGenerator(2, ns.getAddresses()));
+    ns.getNode("A")->addApplications(new PacketGenerator(10, ns.getAddresses()));
     ns.getNode("A")->addApplications(new RandomRouter);
     ns.getNode("B")->addApplications(new PacketReceiver);
     ns.getNode("B")->addApplications(new RandomRouter);
@@ -57,6 +57,7 @@ int main() {
     ns.addLink("E", "A", new ParametricLink(10.0, 100.0));
 
     // run (timer has currently some hard-coded test values)
+    ui->generateGraphLayout();
     ns.startTimer();
 
     // print traffic log for given node (packetID's and time stamps)
