@@ -14,7 +14,7 @@
 
 Timer::Timer() {
     interval = 10;
-    endTime = 5000;
+    endTime = 10000;
 }
 
 Timer::~Timer() {}
