@@ -5,6 +5,7 @@
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
+
 #include "Network.h"
 Network::Network() { }
 Network::~Network() {
@@ -106,7 +107,7 @@ const std::vector<ns::AddressType> &Network::getAddresses() const {
   return addresses;
 }
 /** check LinkStorage */
-/*void Network::printLinks(){
+void Network::printLinks(){
   for (auto i : this->allAvailableLinks){
     std::cout << i.first << "-" << i.second << std::endl;
   }
