@@ -9,6 +9,7 @@
 #include "NetworkSimulatorGUI.h"
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
+#include <cmath>
 
 NetworkSimulatorGUI::NetworkSimulatorGUI() {
     // Create window
@@ -45,7 +46,8 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     statsVisible = false;
     distributionVisible = false;
     distributionMode = Traffic;
-
+    transformX = width / 2.0;
+    transformY = height / 2.0;
     
     // Set random seed
     srand((unsigned int) time(NULL));
@@ -61,9 +63,41 @@ NetworkSimulatorUI *NetworkSimulatorGUI::createUI() { return new NetworkSimulato
 void NetworkSimulatorGUI::generateGraphLayout() {
     std::cout << "Generating layout..." << std::endl;
     visibleNodes.clear();
+    
+    double xMax = -DBL_MAX;
+    double yMax = -DBL_MAX;
+    double xSum = 0.0;
+    double ySum = 0.0;
+    int count = 0;
+    
     for (auto &n : networkSimulator->getNodes()) {
-        unsigned int x = rand() % (width - nodeRadius * 2);
-        unsigned int y = rand() % (height - nodeRadius * 2);
+        double x = n.second->getX();
+        double y = n.second->getY();
+        xSum += x;
+        ySum += y;
+        
+        if (std::abs(x) > xMax) xMax = x;
+        if (std::abs(y) > yMax) yMax = y;
+        
+        count++;
+    }
+
+    // Mid point
+    double centerX = xSum / count;
+    double centerY = ySum / count;
+    
+    // Apply scaling so that original aspect ratio is retained
+    // and everything fits on the screen
+    double xRatio = 0.5 * (width) / (xMax != 0.0 ? xMax : width);
+    double yRatio = 0.5 * (height) / (yMax != 0.0 ? yMax : height);
+    double scaleRatio;
+    
+    if (xRatio < yRatio) scaleRatio = xRatio;
+    else scaleRatio = yRatio;
+    
+    for (auto &n : networkSimulator->getNodes()) {
+        double x = scaleRatio * (n.second->getX() - centerX); // rand() % (width - nodeRadius * 2);
+        double y = scaleRatio * (n.second->getY() - centerY); // rand() % (height - nodeRadius * 2);
         visibleNodes.insert({n.first, {x, y}});
     }
 }
@@ -92,8 +126,8 @@ void NetworkSimulatorGUI::displayTrafficLog(ns::AddressType source, ns::AddressT
 void NetworkSimulatorGUI::drawNodes() {
     for (auto &n : visibleNodes) {
         const ns::AddressType& address = n.first;
-        const int& x = n.second.x;
-        const int& y = n.second.y;
+        const int& x = n.second.x + transformX;
+        const int& y = n.second.y + transformY;
         
         sf::CircleShape nodeShape(nodeRadius);
         
@@ -136,8 +170,8 @@ void NetworkSimulatorGUI::drawLinks() {
         // Line between nodes
         sf::Vertex line[] =
         {
-            sf::Vertex(sf::Vector2f(n1.x + nodeRadius, n1.y + nodeRadius), sourceColor),
-            sf::Vertex(sf::Vector2f(n2.x + nodeRadius, n2.y + nodeRadius), destinationColor)
+            sf::Vertex(sf::Vector2f(n1.x + nodeRadius + transformX, n1.y + nodeRadius + transformY), sourceColor),
+            sf::Vertex(sf::Vector2f(n2.x + nodeRadius + transformX, n2.y + nodeRadius + transformY), destinationColor)
         };
         
         window->draw(line, 2, sf::Lines);
@@ -146,6 +180,8 @@ void NetworkSimulatorGUI::drawLinks() {
 
 void NetworkSimulatorGUI::drawTime() {
     std::stringstream ss;
+    ss.precision(2);
+    ss.setf(std::ios::fixed);
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
@@ -163,7 +199,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[ESC] Exit   "
         << "[Enter] Restart   "
         << "[Space] Pause   "
-        << "[G] Regenerate layout  "
+        << "[G] Regenerate layout   "
         << "[S] Stats   "
         << "[D] Distribution   "
         << "[Q] Switch distribution mode";
@@ -272,7 +308,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
     }
 
     // Draw global label
-    text.setString("Traffic distribution");
+    text.setString("Total traffic distribution");
     xOffset = (int) (width - text.getLocalBounds().width) / 2;
     text.setPosition(xOffset, fontSize);
     window->draw(text);
@@ -368,6 +404,22 @@ void NetworkSimulatorGUI::update() {
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
                         networkSimulator->start();
+                        break;
+
+                    case sf::Keyboard::Left:
+                        transformX -= 10.0;
+                        break;
+
+                    case sf::Keyboard::Right:
+                        transformX += 10.0;
+                        break;
+
+                    case sf::Keyboard::Up:
+                        transformY -= 10.0;
+                        break;
+                        
+                    case sf::Keyboard::Down:
+                        transformY += 10.0;
                         break;
 
                     case sf::Keyboard::Space:

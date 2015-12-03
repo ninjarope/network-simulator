@@ -27,7 +27,7 @@ void TestRouter::process(double currentTime) {
         //routingTable
         bool routingExists = false;
         
-        for (auto entry : hostNode->routingTable) {
+        for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
                 for (auto l : hostNode->getConnections()) {
                     if (l->getDestination()->getAddress() == entry.second) {

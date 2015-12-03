@@ -79,7 +79,7 @@ void testXMLReader(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
         std::cerr << msg << std::endl;
     }
 }
-int main() {
+int main(int argc, char** argv) {
     NetworkSimulator ns;
     NetworkSimulatorUI* ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);

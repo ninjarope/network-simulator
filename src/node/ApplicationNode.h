@@ -20,13 +20,10 @@
  */
 class ApplicationNode : public Node {
 public:
-    ApplicationNode();
+    ApplicationNode(double x = 0.0, double y = 0.0);
 
     /** Construct ApplicationNode with given address. */
-    ApplicationNode(ns::AddressType address);
-    
-    /** Construct ApplicationNode with given address and initial application. */
-    ApplicationNode(ns::AddressType address, Application* application);
+    ApplicationNode(double x, double y, ns::AddressType address);
     
     /** Construct ApplicationNode with given address and initial application. */
     ApplicationNode(ns::AddressType address, std::vector<Application*> applications);

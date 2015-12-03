@@ -10,11 +10,14 @@
 #include "../ns.h"
 #include "../application/Application.h"
 
-ApplicationNode::ApplicationNode() {}
+ApplicationNode::ApplicationNode(double x, double y) {
+    this->x = x;
+    this->y = y;
+}
 
-ApplicationNode::ApplicationNode(ns::AddressType address) : Node(address) {}
-
-ApplicationNode::ApplicationNode(ns::AddressType address, Application* a) : Node(address) { addApplications(a);
+ApplicationNode::ApplicationNode(double x, double y, ns::AddressType address) : Node(address) {
+    this->x = x;
+    this->y = y;
 }
 
 ApplicationNode::ApplicationNode(ns::AddressType address,

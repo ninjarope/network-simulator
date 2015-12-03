@@ -32,9 +32,14 @@ const Link *Network::getLink(ns::AddressType source, ns::AddressType destination
   return nullptr;
 }
 bool Network::addNode(ns::AddressType address) {
-  nodes.insert({address, new ApplicationNode(address)});
+  nodes.insert({address, new ApplicationNode(0.0, 0.0, address)});
   addresses.push_back(address);
   return true;
+}
+bool Network::addNode(double x, double y, ns::AddressType address) {
+    nodes.insert({address, new ApplicationNode(x, y, address)});
+    addresses.push_back(address);
+    return true;
 }
 bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link *l) {
   // TODO: exception handling

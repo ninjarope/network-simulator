@@ -31,6 +31,7 @@ void Timer::startTimer() {
     
     currentTime = 0.0;
     running = true;
+    paused = false;
     
     while (running) {
         // debugging output
