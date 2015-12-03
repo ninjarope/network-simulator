@@ -25,7 +25,7 @@ int main() {
     NetworkSimulatorUI *ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);
 
-    test1(ns, ui);
+//    test1(ns, ui);
 }
 
 void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {

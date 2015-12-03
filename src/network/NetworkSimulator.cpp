@@ -24,4 +24,10 @@ void NetworkSimulator::update(){
     ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
     s1.alsideperm();
     //TODO: make loop to update all nodes
+    for (auto& path : s1.getShortestPaths()) {
+        getNode(path.front())->updateTable(path);
+        // for (auto s : path) std::cout << s;
+        //std::cout << std::endl;
+    }
+    
 }

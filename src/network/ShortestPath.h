@@ -10,6 +10,8 @@ class ShortestPath {
 public:
     ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,std::vector<Link*> links,ns::LinkStorage allAvailableLinks);
     
+    const std::vector< std::vector<std::string> >& getShortestPaths() const;
+    
     void alsideperm();
     
     void nextPerm(std::vector<std::string> permCpyAllNodes,std::string nod);
@@ -29,7 +31,7 @@ public:
 private:
     std::vector<Link*> allLinks;
     std::vector< std::vector<std::string> > nodeRTableFullPaths;
-    std::vector< std::vector<std::string> > shortestPATHS;
+    std::vector< std::vector<std::string> > shortestPaths;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;

@@ -9,6 +9,7 @@
 #include "Node.h"
 #include "../ns.h"
 #include <map>
+#include <iostream>
 
 Node::Node() {}
 
@@ -41,10 +42,12 @@ ns::Packets& Node::getPackets() { return packets; }
 
 ns::AddressType Node::getAddress() const { return address; }
 
-void Node::updateTable(std::map<ns::AddressType,ns::AddressType> rTable){
-  this->routingTable.clear();
-  for(auto key:rTable){
-    this->routingTable[key.first]=rTable[key.second];
-  }
-
+void Node::updateTable(std::vector<ns::AddressType> shortestPath){
+    // this->routingTable.clear();
+    // For given destination (last address in path) associate next node in path (check that first is this node)
+    if (shortestPath.front() == this->address) {
+        this->routingTable.at(shortestPath.back()) = shortestPath[1];
+        std::cout << "TABLE UPDATED!" << std::endl;
+    }
+    
 }

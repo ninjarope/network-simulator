@@ -106,14 +106,15 @@ void NetworkSimulatorGUI::drawLinks() {
         
         // Color changes to red as queue grows
         sf::Color linkColor = sf::Color(std::min((int) l->getQueueLength(), 255),
-                                        255 - std::min((int) l->getQueueLength(), 255),
-                                        0);
+                                        0,
+                                        0,
+                                        std::min((int) l->getQueueLength(), 255));
         
         // Line between nodes
         sf::Vertex line[] =
         {
             sf::Vertex(sf::Vector2f(n1.x + nodeRadius, n1.y + nodeRadius), linkColor),
-            sf::Vertex(sf::Vector2f(n2.x + nodeRadius, n2.y + nodeRadius), linkColor)
+            sf::Vertex(sf::Vector2f(n2.x + nodeRadius, n2.y + nodeRadius), sf::Color(196,196,196,128))
         };
         
         window->draw(line, 2, sf::Lines);

@@ -18,7 +18,7 @@ class ParametricLink : public Link {
 public:
     ParametricLink();
     
-    ParametricLink(double transmissionSpeed, double propagationDelay);
+    ParametricLink(double transmissionSpeed, double propagationDelay, double weight = 1.0);
     
     /** Update state of the link. */
     void run(double currentTime) override;
