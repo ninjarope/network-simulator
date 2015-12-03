@@ -11,6 +11,23 @@
     </node>
 
     <node address="C" x="3.0" y="1.0">
+        <application type="PacketGenerator" rate="100.0"/>
+        <application type="PacketReceiver"/>
+        <application type="RandomRouter"/>
+    </node>
+
+    <node address="D" x="11.0" y="11.0">
+        <application type="PacketReceiver"/>
+        <application type="RandomRouter"/>
+    </node>
+
+    <node address="E" x="12.0" y="13.0">
+        <application type="PacketReceiver"/>
+        <application type="RandomRouter"/>
+    </node>
+
+    <node address="F" x="13.0" y="11.0">
+        <application type="PacketGenerator" rate="100.0"/>
         <application type="PacketReceiver"/>
         <application type="RandomRouter"/>
     </node>

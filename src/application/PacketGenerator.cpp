@@ -46,7 +46,14 @@ void PacketGenerator::process(double currentTime) {
             if (!destinations.empty()) {
                 destination = destinations[rand() % destinations.size()];
             } else {
-                destination = "NOT DEFINED";
+                size_t n = hostNode->getRoutingTable().size();
+                if (n > 0) {
+                    auto it = hostNode->getRoutingTable().begin();
+                    std::advance(it, rand() % n);
+                    destination = it->first; // routing map is in form <destination, nextHop>
+                } else {
+                    destination = "NOT DEFINED";
+                }
             }
             
             /* Generate and forward packet. */

@@ -43,19 +43,32 @@ public:
 
     /** Return address of the node. */
     ns::AddressType getAddress() const;
+    
+    /** Return x coordinate. */
+    double getX();
+
+    /** Return y coordinate. */
+    double getY();
 
     /** Derived classes must define their type and implement this. */
     virtual std::string getType() const = 0;
 
+    void updateTable(std::vector<ns::AddressType> shortestPath);
+    std::map<ns::AddressType,ns::AddressType> getRoutingTable();
+    
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
-    void updateTable(std::vector<ns::AddressType> shortestPath);
-    std::map<ns::AddressType,ns::AddressType> routingTable;
+    
 protected:
     ns::Connections connections;
     ns::Packets packets;
     ns::AddressType address;
 
+    // <destination, nextHop>
+    std::map<ns::AddressType,ns::AddressType> routingTable;
+
+    double x = 0;
+    double y = 0;
 
 };
 

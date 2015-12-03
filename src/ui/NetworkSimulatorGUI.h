@@ -112,11 +112,13 @@ private:
     unsigned int nodeRadius;
     unsigned int width;
     unsigned int height;
+    double transformX;
+    double transformY;
     
     // Helper struct
     struct point {
-        unsigned int x;
-        unsigned int y;
+        double x;
+        double y;
     };
     std::map<ns::AddressType, point> visibleNodes;
     

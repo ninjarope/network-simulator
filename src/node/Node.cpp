@@ -42,6 +42,10 @@ ns::Packets& Node::getPackets() { return packets; }
 
 ns::AddressType Node::getAddress() const { return address; }
 
+double Node::getX() { return x; }
+
+double Node::getY() { return y; }
+
 void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     // this->routingTable.clear();
     // For given destination (last address in path) associate next node in path (check that first is this node)
@@ -51,3 +55,6 @@ void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     }
     
 }
+
+std::map<ns::AddressType,ns::AddressType> Node::getRoutingTable() { return routingTable; }
+
