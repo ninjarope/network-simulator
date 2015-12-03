@@ -20,7 +20,8 @@ public:
     
     ParametricLink(double transmissionSpeed, double propagationDelay, double weight = 1.0);
     
-    /** Update state of the link. */
+    void reset() override;
+    
     void run(double currentTime) override;
     
 private:

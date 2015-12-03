@@ -22,6 +22,11 @@ ApplicationNode::ApplicationNode(ns::AddressType address,
     addApplications(applications);
 }
 
+void ApplicationNode::reset() {
+    packets.clear();
+    for (auto& a : applications) a->reset();
+}
+
 void ApplicationNode::addApplications(Application* application) {
     if (application) {
         application->setHost(this);

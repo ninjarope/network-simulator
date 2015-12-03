@@ -55,6 +55,11 @@ public:
     void drawLinks();
 
     /**
+     * Show current time.
+     */
+    void drawTime();
+    
+    /**
      * Show queues of links.
      */
     void drawQueues();
@@ -63,7 +68,32 @@ public:
      * Show applications of all nodes.
      */
     void drawApplications();
-   
+
+    /**
+     * Show distribution of traffic.
+     */
+    void drawTrafficDistribution();
+
+    /**
+     * Show distribution of queue lengths.
+     */
+    void drawQueueDistribution();
+
+    /**
+     * Stat display on / off.
+     */
+    void toggleStatVisibility();
+
+    /**
+     * Distribution display on / off.
+     */
+    void toggleDistributionVisibility();
+
+    /**
+     * Change between different distribution views.
+     */
+    void changeDistributionView();
+
     /**
      * Main function that is called from Network Simulator.
      * Encapsulates all UI subjects.
@@ -72,8 +102,12 @@ public:
     
 private:
     sf::RenderWindow* window;
+    sf::Event event;
     sf::Font font;
     sf::Text text;
+    sf::Color defaultNodeColor;
+    sf::Color defaultDistColor;
+    
     unsigned int fontSize;
     unsigned int nodeRadius;
     unsigned int width;
@@ -85,6 +119,13 @@ private:
         unsigned int y;
     };
     std::map<ns::AddressType, point> visibleNodes;
+    
+    bool statsVisible;
+    bool distributionVisible;
+    enum {
+        Traffic,
+        Queue
+    } distributionMode ;
 };
 
 

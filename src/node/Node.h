@@ -24,7 +24,7 @@ public:
     Node(ns::AddressType address);
 
     virtual ~Node();
-
+    
     /** Receive new packet and assign it to queue. Takes ownership of the packet. */
     void receivePacket(Packet* p);
 

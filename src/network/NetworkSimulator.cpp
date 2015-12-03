@@ -5,25 +5,36 @@
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 #include "NetworkSimulator.h"
+
 NetworkSimulator::NetworkSimulator() : ui(nullptr) {}
 void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
     this->ui = ui;
     ui->setNetworkSimulator(this);
 }
-NetworkSimulator::~NetworkSimulator() {}
+
+NetworkSimulator::~NetworkSimulator() { }
+
+void NetworkSimulator::start() {
+    for (auto& node : getNodes()) node.second->reset();
+    for (auto& link : getLinks()) link->reset();
+    startTimer();
+}
+
 void NetworkSimulator::timerCallback() {
     for (auto& node : getNodes()) node.second->run(currentTime);
     for (auto& link : getLinks()) link->run(currentTime);
-    ui->update();
+    if (ui) ui->update();
 }
-void NetworkSimulator::update(){
+
+void NetworkSimulator::updateRouting(){
     ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
     s1.alsideperm();
-    //TODO: make loop to update all nodes
+    // Update routings of all nodes
     for (auto& path : s1.getShortestPaths()) {
         getNode(path.front())->updateTable(path);
-        // for (auto s : path) std::cout << s;
-        //std::cout << std::endl;
     }
-    
+}
+
+void NetworkSimulator::quit() {
+    stopTimer();
 }
