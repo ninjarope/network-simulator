@@ -22,7 +22,7 @@
 #include "../link/ParametricLink.h"
 
 // dependency for xml parsing
-#include "xml/tinyxml2.h"
+#include "tinyxml2.h"
 
 // Reducing the risk of carpal tunnel syndrome
 using namespace tinyxml2;
