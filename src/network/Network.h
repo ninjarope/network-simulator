@@ -15,7 +15,6 @@
 #include "../Notifiable.h"
 #include "../node/ApplicationNode.h"
 #include "../link/Link.h"
-#include "../application/ApplicationFactory.h"
 
 /**
  * Network class. This class should control all additions and removals
@@ -67,13 +66,10 @@ class Network: public Notifiable {
     /** Get addresses in current network. */
     const std::vector <ns::AddressType>& getAddresses() const;
 
-    /** Factory that spawns applications */
-    ApplicationFactory* getApplicationFactory() const { return applicationFactory; }
   protected:
     std::vector <ns::AddressType> addresses;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;
-    ApplicationFactory* applicationFactory;
 };
 #endif /* defined(__NetworkSimulator__Network__) */

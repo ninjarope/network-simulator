@@ -31,7 +31,9 @@ public:
     //updates the routing table of each node
     void update();
 
+    ApplicationFactory* getApplicationFactory() const { return applicationFactory; }
 private:
     NetworkSimulatorUI* ui;
+    ApplicationFactory* applicationFactory;
 };
 #endif /* defined(__NetworkSimulator__NetworkSimulator__) */

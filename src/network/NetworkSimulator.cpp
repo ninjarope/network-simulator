@@ -14,7 +14,9 @@ void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
     ui->setNetworkSimulator(this);
 }
 
-NetworkSimulator::~NetworkSimulator() {}
+NetworkSimulator::~NetworkSimulator() {
+    delete applicationFactory;
+}
 
 void NetworkSimulator::timerCallback() {
     for (auto& node : getNodes()) node.second->run(currentTime);

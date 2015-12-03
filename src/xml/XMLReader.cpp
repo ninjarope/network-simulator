@@ -38,6 +38,7 @@ void XMLReader::process() {
         nodeElement = neHandle.NextSiblingElement("node").ToElement();
     }
 
+    // Not checking for links, if there's only one node
     if (ns.getNodeCount() < 2)
         return;
 
@@ -52,45 +53,45 @@ void XMLReader::process() {
 }
 
 void XMLReader::buildNode(XMLElement* nodeElement) {
-    // make a node
-    ns::AddressType address;
+    // Variables for a node
+    ns::AddressType address = "";
     double x = 0.0;
     double y = 0.0;
 
-    std::cout << "building node "
-        << address << std::endl;
-
+    // Read attributes to variables
     address = nodeElement->Attribute("address");
     nodeElement->QueryDoubleAttribute("x", &x);
     nodeElement->QueryDoubleAttribute("y", &y);
+
     ns.addNode(address);
 
-    // add applications
-    XMLHandle aeHandle(nodeElement);
+    // Add applications
+    XMLHandle aeHandle(nodeElement); // nullptr handling
     XMLElement* applicationElement = aeHandle.FirstChildElement("application").ToElement();
     while (applicationElement) {
         std::string appType = applicationElement->Attribute("type");
 
         if (appType == "PacketReceiver") {
-            ns.getNode(address)->addApplications(
-                ns.getApplicationFactory()->create(PACKET_RECEIVER));
+            ns.getNode(address)->
+                addApplications(applicationFactory->create(PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
-            ns.getNode(address)->addApplications(applicationFactory->create(PACKET_GENERATOR));
+            ns.getNode(address)->
+                addApplications(applicationFactory->create(PACKET_GENERATOR));
         } else if (appType == "RandomRouter") {
-            ns.getNode(address)->addApplications(applicationFactory->create(RANDOM_ROUTER));
+            ns.getNode(address)->
+                addApplications(applicationFactory->create(RANDOM_ROUTER));
         } else if (appType == "TestRouter") {
-            ns.getNode(address)->addApplications(applicationFactory->create(TEST_ROUTER));
+            ns.getNode(address)->
+                addApplications(applicationFactory->create(TEST_ROUTER));
         }
 
-        XMLHandle aeHandle(applicationElement);
+        XMLHandle aeHandle(applicationElement); // while-loop scope
         applicationElement = aeHandle.NextSiblingElement("application").ToElement();
     }
-
 }
 
 void XMLReader::buildLink(XMLElement* e) {
     // make a link
-    // Link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
     ns::AddressType source = "";
     ns::AddressType destination = "";
     double speed = 0.0;
