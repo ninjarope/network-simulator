@@ -1,6 +1,6 @@
 <network>
     <node address="A" x="1.0" y="1.0">
-        <application type="PacketReceiver"/>
+        <application type="PacketGenerator"/>
         <application type="RandomRouter"/>
     </node>
 

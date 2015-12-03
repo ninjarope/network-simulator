@@ -116,15 +116,15 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     ns.getNode("E")->addApplications(new TestRouter);
 
     // create some links between nodes
-    ns.addLink("A", "B", new ParametricLink(8.0, 16.0, 4.0));
-    ns.addLink("B", "A", new ParametricLink(8.0, 16.0, 4.0));
-
+    ns.addLink("A", "B", new ParametricLink(1.0, 160.0, 4.0));
+    ns.addLink("B", "A", new ParametricLink(1.0, 160.0, 4.0));
+    
     ns.addLink("B", "C", new ParametricLink(1.0, 16.0));
     ns.addLink("C", "B", new ParametricLink(1.0, 16.0));
 
-    ns.addLink("C", "D", new ParametricLink(4.0, 16.0));
-    ns.addLink("D", "C", new ParametricLink(4.0, 16.0));
-
+    ns.addLink("C", "D", new ParametricLink(1.0, 160.0));
+    ns.addLink("D", "C", new ParametricLink(1.0, 160.0));
+    
     ns.addLink("D", "A", new ParametricLink(2.0, 16.0));
     ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
 
@@ -139,8 +139,8 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 
 
     // Update routing tables
-    ns.update();
-
+    ns.updateRouting();
+   
     // run (timer has currently some hard-coded test values)
 
     ui->generateGraphLayout();

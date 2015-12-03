@@ -14,13 +14,19 @@ void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
 
 NetworkSimulator::~NetworkSimulator() {}
 
+void NetworkSimulator::start() {
+    for (auto& node : getNodes()) node.second->reset();
+    for (auto& link : getLinks()) link->reset();
+    startTimer();
+}
+
 void NetworkSimulator::timerCallback() {
     for (auto& node : getNodes()) node.second->run(currentTime);
     for (auto& link : getLinks()) link->run(currentTime);
     if (ui) ui->update();
 }
 
-void NetworkSimulator::update(){
+void NetworkSimulator::updateRouting(){
     ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
     s1.alsideperm();
     // Update routings of all nodes
