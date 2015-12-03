@@ -58,7 +58,7 @@ void testNodesInGui(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 
 void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     // Update routing tables
-    // ns.update();  // comment this out if only one node or no links.. until Shortest Path gets error handling
+    // ns.updateRouting();  // comment this out if only one node or no links.. until Shortest Path gets error handling
 
     // run (timer has currently some hard-coded test values)
 

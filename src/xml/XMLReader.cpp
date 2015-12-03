@@ -63,7 +63,7 @@ void XMLReader::buildNode(XMLElement* nodeElement) {
     nodeElement->QueryDoubleAttribute("x", &x);
     nodeElement->QueryDoubleAttribute("y", &y);
 
-    ns.addNode(address);
+    ns.addNode(x, y, address);
 
     // Add applications
     XMLHandle aeHandle(nodeElement); // nullptr handling
@@ -75,8 +75,11 @@ void XMLReader::buildNode(XMLElement* nodeElement) {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
+            double rate = 0.0;
+            applicationElement->QueryDoubleAttribute("rate", &rate);
             ns.getNode(address)->
                 addApplications(applicationFactory->create(PACKET_GENERATOR));
+            ns.getNode(address)->getApplications().back()->setParameters({rate});
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(RANDOM_ROUTER));
@@ -94,16 +97,19 @@ void XMLReader::buildLink(XMLElement* e) {
     // make a link
     ns::AddressType source = "";
     ns::AddressType destination = "";
+    bool directed = false;
     double speed = 0.0;
     double delay = 0.0;
     double weight = 0.0;
-
+    
     // get attributes
     source = e->Attribute("source");
     destination = e->Attribute("destination");
+    e->QueryBoolAttribute("directed", &directed);
     e->QueryDoubleAttribute("speed", &speed);
     e->QueryDoubleAttribute("delay", &delay);
     e->QueryDoubleAttribute("weight", &weight);
-
+    
     ns.addLink(source, destination, new ParametricLink(speed, delay, weight));
+    if (!directed) ns.addLink(destination, source, new ParametricLink(speed, delay, weight));
 }

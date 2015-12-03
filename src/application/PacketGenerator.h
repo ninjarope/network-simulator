@@ -24,6 +24,12 @@ public:
     /** Construct packet generator that generates packets to given destinations at given rate. */
     PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations);
     
+    /** Set parameters of the application. 
+     *  
+     *  @rate
+     */
+    void setParameters(std::vector<double> parameters) override { if (!parameters.empty()) rate = parameters[0]; }
+
     /**
      * Generates packets at given rate and adds them to host node
      * packet queue.

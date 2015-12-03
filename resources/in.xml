@@ -1,7 +1,6 @@
 <network>
     <node address="A" x="1.0" y="1.0">
         <application type="PacketReceiver"/>
-        <application type="PacketGenerator"/>
         <application type="RandomRouter"/>
     </node>
 
@@ -31,14 +30,15 @@
         <application type="PacketReceiver"/>
         <application type="RandomRouter"/>
     </node>
-    <node address="D" x="3.0" y="1.0">
-        <application type="PacketReceiver"/>
-        <application type="RandomRouter"/>
-    </node>
 
     <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="A" destination="C" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="C" destination="D" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="B" destination="C" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="D" destination="A" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="A" destination="C" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
+    <link source="C" destination="B" directed="false" type="Wireless" speed="8.0" delay="1.0" weight="1.0"/>
+
+    <link source="D" destination="E" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="D" destination="F" directed="false" type="Wireless" speed="3.0" delay="1.0" weight="1.0"/>
+    <link source="F" destination="E" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
+
+    <link source="D" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+
 </network>

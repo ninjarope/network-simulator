@@ -21,6 +21,9 @@ class TestRouter : public Application {
 public:
     TestRouter();
 
+    /** Set parameters of the application. */
+    void setParameters(std::vector<double> parameters) override { (void) parameters; }
+
     /** Simply forwards queued packets to the first link in host node connections
        with no delay. */
     void process(double currentTime) override;

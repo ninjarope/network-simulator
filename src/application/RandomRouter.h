@@ -15,6 +15,9 @@ class RandomRouter : public Application {
 public:
     RandomRouter();
     
+    /** Set parameters of the application. */
+    void setParameters(std::vector<double> parameters) override { (void) parameters; }
+
     /** Update state of the router. */
     void process(double currentTime) override;
 

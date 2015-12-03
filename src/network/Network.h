@@ -41,7 +41,7 @@ class Network: public Notifiable {
 
     /** Add new node to network. Network takes ownership of the node. */
     bool addNode(ns::AddressType address);
-
+    bool addNode(double x, double y, ns::AddressType address);
     /** Add new link between nodes. Network takes ownership of the link. */
     bool addLink(ns::AddressType source, ns::AddressType destination, Link* l);
 

@@ -41,6 +41,9 @@ public:
     /** Return type identifier of the application. */
     std::string getType() const;
     
+    /** Set parameters of the application. */
+    virtual void setParameters(std::vector<double> parameters) = 0;
+
     /** Derived classes implement this - application has access to it's
      host via hostNode pointer. */
     virtual void process(double currentTime) = 0;

@@ -45,7 +45,7 @@ class ApplicationFactory {
             case PACKET_RECEIVER:
                 return new PacketReceiver();
             case PACKET_GENERATOR:
-                return new PacketGenerator(10);
+                return new PacketGenerator();
             case RANDOM_ROUTER:
                 return new RandomRouter();
             case TEST_ROUTER:
