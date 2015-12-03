@@ -30,7 +30,7 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     fontSize = 13;
     text.setFont(font);
     text.setCharacterSize(fontSize); // in pixels
-    text.setColor(sf::Color(255, 255, 255, 128));
+    text.setColor(sf::Color(255, 255, 255, 96));
     text.setStyle(sf::Text::Regular);
     
     // Node properties
@@ -84,7 +84,9 @@ void NetworkSimulatorGUI::drawNodes() {
         sf::CircleShape nodeShape(nodeRadius);
         
         // set color and transfrom
-        nodeShape.setFillColor(sf::Color(150, 0, 0));
+        nodeShape.setOutlineColor(sf::Color(128, 0, 196));
+        nodeShape.setOutlineThickness(1);
+        nodeShape.setFillColor(sf::Color::Black);
         nodeShape.setPosition(x, y);
         window->draw(nodeShape);
         
@@ -105,16 +107,17 @@ void NetworkSimulatorGUI::drawLinks() {
         auto n2 = visibleNodes.at(l->getDestination()->getAddress());
         
         // Color changes to red as queue grows
-        sf::Color linkColor = sf::Color(std::min((int) l->getQueueLength(), 255),
-                                        0,
-                                        0,
-                                        std::min((int) l->getQueueLength(), 255));
+        int queueLength = std::min((int) l->getQueueLength(), 255);
+        sf::Color linkColor = sf::Color(128 + 0.5 * queueLength,
+                                        128 - 0.5 * queueLength,
+                                        128 - 0.5 * queueLength,
+                                        128 + 0.5 * queueLength);
         
         // Line between nodes
         sf::Vertex line[] =
         {
             sf::Vertex(sf::Vector2f(n1.x + nodeRadius, n1.y + nodeRadius), linkColor),
-            sf::Vertex(sf::Vector2f(n2.x + nodeRadius, n2.y + nodeRadius), sf::Color(196,196,196,128))
+            sf::Vertex(sf::Vector2f(n2.x + nodeRadius, n2.y + nodeRadius), sf::Color(255, 255, 255, 0))
         };
         
         window->draw(line, 2, sf::Lines);
