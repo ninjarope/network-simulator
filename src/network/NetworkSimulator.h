@@ -24,9 +24,17 @@ public:
      * Calls run() method (in multiple threads?) of all nodes and links.
      * In final implementation this function should be private.
      */
+    
+    void start();
+    
     void timerCallback() override;
-    //updates the routing table of each node
-    void update();
+    
+    /** Updates the routing table of each node. */
+    void updateRouting();
+
+    /** Terminate controller and UI. */
+    void quit();
+    
 private:
     NetworkSimulatorUI* ui;
 };

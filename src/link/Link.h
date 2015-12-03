@@ -32,6 +32,9 @@ public:
     /** Destroys all packets (packets will be lost) when link is removed. */
     virtual ~Link();
 
+    /** Reset link. */
+    virtual void reset() = 0;
+    
     /** Add packet to queue waiting for transmission. Takes ownership of the packet. */
     void addPacket(Packet* p);
 

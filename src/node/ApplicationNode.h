@@ -31,6 +31,9 @@ public:
     /** Construct ApplicationNode with given address and initial application. */
     ApplicationNode(ns::AddressType address, std::vector<Application*> applications);
     
+    /** Clear all packets and reset applications. */
+    void reset();
+    
     /** Connect new applications to host. Node takes ownership of the application. */
     void addApplications(Application* application);
     

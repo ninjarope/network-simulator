@@ -13,7 +13,7 @@
 #include "Timer.h"
 
 Timer::Timer() {
-    interval = 10;
+    interval = 20;
     endTime = 10000;
 }
 
@@ -28,7 +28,11 @@ double Timer::getTimerInterval() { return interval; }
 void Timer::startTimer() {
     std::chrono::time_point<std::chrono::system_clock> callTime, returnTime;
     std::chrono::duration<double> callbackDuration;
-    while (currentTime < endTime) {
+    
+    currentTime = 0.0;
+    running = true;
+    
+    while (running) {
         // debugging output
         // std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
 
@@ -42,11 +46,15 @@ void Timer::startTimer() {
             std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
         }
 
-        currentTime += interval;
+        if (currentTime < endTime and !paused) currentTime += interval;
     }
-    stopTimer();
 }
 
-void Timer::stopTimer() {}
+void Timer::toggleTimer() {
+    if (paused) paused = false;
+    else paused = true;
+}
+
+void Timer::stopTimer() { running = false; }
 
 void Timer::setRunningTime(double milliseconds) {}

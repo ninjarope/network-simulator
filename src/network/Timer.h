@@ -46,6 +46,7 @@ public:
     
 protected:
     bool running;
+    bool paused;
     int interval;
     double currentTime;
     double endTime;
