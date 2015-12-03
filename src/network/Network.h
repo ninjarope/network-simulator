@@ -18,8 +18,8 @@
  * Network class. This class should control all additions and removals
  * of nodes and links.
  */
-class Network : public Notifiable {
-public:
+class Network: public Notifiable {
+  public:
     Network();
     ~Network();
     /** Return all network nodes. */
@@ -48,9 +48,9 @@ public:
     /** check LinkStorage */
     void printLinks();
     /** Get addresses in current network. */
-    const std::vector<ns::AddressType>& getAddresses() const;
-protected:
-    std::vector<ns::AddressType> addresses;
+    const std::vector <ns::AddressType>& getAddresses() const;
+  protected:
+    std::vector <ns::AddressType> addresses;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;

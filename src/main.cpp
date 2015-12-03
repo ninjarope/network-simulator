@@ -4,6 +4,7 @@
 //  Created by Tommi Gröhn on 13.11.2015.
 //
 #include <iostream>
+#include <string>
 
 #include "network/NetworkSimulator.h"
 #include "ui/NetworkSimulatorGUI.h"
@@ -15,18 +16,73 @@
 #include "application/PacketReceiver.h"
 #include "application/TestRouter.h"
 
+// dependency for xml parsing
+#include "xml/tinyxml2.h"
+#include "xml/XMLReader.h"
+
 /**
  * Simple test case.
  */
 void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui);
+void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui);
 
+/**
+ * test case for loading xml
+ *
+ * @filepath relative filepath to xml file
+ */
+void testXMLFileLoad(const char* filepath) {
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(filepath);
+    switch (doc.ErrorID()) {
+        case 0:
+            std::cout << "OK. No problem! XML File loaded." << std::endl;
+            break;
+        default:
+            std::cout << "XML file loading error! Error code: "
+                << doc.ErrorID()
+                << std::endl;
+    }
+}
+
+void testNodesInGui(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
+    // create some nodes
+    ns.addNode("A");
+    ns.addNode("B");
+    ns.addNode("C");
+    ns.addNode("D");
+    ns.addNode("E");
+
+    runUI(ns, ui);
+}
+
+void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
+    // Update routing tables
+   // ns.update();  // comment this out if only one node or no links.. until Shortest Path gets error handling
+
+    // run (timer has currently some hard-coded test values)
+
+    ui->generateGraphLayout();
+    ns.startTimer();
+}
+
+void testXMLReader(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
+    XMLReader r;
+    r.load(ns, "resources/simple.xml");
+
+    runUI(ns, ui);
+}
 int main() {
     NetworkSimulator ns;
-    NetworkSimulatorUI *ui = NetworkSimulatorGUI::createUI();
+    NetworkSimulatorUI* ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);
 
-    test1(ns, ui);
+    testXMLReader(ns, ui);
+//    testNodesInGui(ns, ui);
+//    testXMLFileLoad("resources/in.xml");
+//    test1(ns, ui);
 }
+
 
 void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     // TODO Clear the out commented parts, that aren't necessary..
@@ -51,17 +107,17 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     ns.getNode("D")->addApplications(new TestRouter);
     ns.getNode("E")->addApplications(new PacketReceiver);
     ns.getNode("E")->addApplications(new TestRouter);
-    
+
     // create some links between nodes
     ns.addLink("A", "B", new ParametricLink(8.0, 16.0, 4.0));
     ns.addLink("B", "A", new ParametricLink(8.0, 16.0, 4.0));
-    
+
     ns.addLink("B", "C", new ParametricLink(1.0, 16.0));
     ns.addLink("C", "B", new ParametricLink(1.0, 16.0));
 
     ns.addLink("C", "D", new ParametricLink(4.0, 16.0));
     ns.addLink("D", "C", new ParametricLink(4.0, 16.0));
-    
+
     ns.addLink("D", "A", new ParametricLink(2.0, 16.0));
     ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
 
@@ -73,7 +129,7 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 
     // Update routing tables
     ns.update();
-   
+
     // run (timer has currently some hard-coded test values)
 
     ui->generateGraphLayout();
