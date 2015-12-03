@@ -13,13 +13,23 @@
 #include "application/PacketGenerator.h"
 #include "application/PacketReceiver.h"
 #include "application/RandomRouter.h"
+
 /**
  * Simple test case.
  */
+void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui);
+
 int main() {
     NetworkSimulator ns;
     NetworkSimulatorUI *ui = NetworkSimulatorGUI::createUI();
     ns.setUI(ui);
+
+    test1(ns, ui);
+}
+
+void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
+    // TODO Clear the out commented parts, that aren't necessary..
+
     // create some nodes
     ns.addNode("A");
     ns.addNode("B");
@@ -60,6 +70,7 @@ int main() {
     //ns.printLinks();
     ns.update();
     // run (timer has currently some hard-coded test values)
+
     ui->generateGraphLayout();
     ns.startTimer();
     // print traffic log for given node (packetID's and time stamps)
