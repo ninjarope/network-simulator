@@ -103,12 +103,12 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 
     // add some applications running on nodes
     ns.getNode("A")->addApplications(new PacketReceiver);
-    ns.getNode("A")->addApplications(new PacketGenerator(10, ns.getAddresses()));
+    ns.getNode("A")->addApplications(new PacketGenerator(1000, ns.getAddresses()));
     ns.getNode("A")->addApplications(new TestRouter);
     ns.getNode("B")->addApplications(new PacketReceiver);
     ns.getNode("B")->addApplications(new TestRouter);
     ns.getNode("C")->addApplications(new PacketReceiver);
-    ns.getNode("C")->addApplications(new PacketGenerator(10, ns.getAddresses()));
+    ns.getNode("C")->addApplications(new PacketGenerator(800, ns.getAddresses()));
     ns.getNode("C")->addApplications(new TestRouter);
     ns.getNode("D")->addApplications(new PacketReceiver);
     ns.getNode("D")->addApplications(new TestRouter);
@@ -116,31 +116,35 @@ void test1(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     ns.getNode("E")->addApplications(new TestRouter);
 
     // create some links between nodes
-    ns.addLink("A", "B", new ParametricLink(8.0, 16.0, 4.0));
-    ns.addLink("B", "A", new ParametricLink(8.0, 16.0, 4.0));
-
+    ns.addLink("A", "B", new ParametricLink(1.0, 160.0, 4.0));
+    ns.addLink("B", "A", new ParametricLink(1.0, 160.0, 4.0));
+    
     ns.addLink("B", "C", new ParametricLink(1.0, 16.0));
     ns.addLink("C", "B", new ParametricLink(1.0, 16.0));
 
-    ns.addLink("C", "D", new ParametricLink(4.0, 16.0));
-    ns.addLink("D", "C", new ParametricLink(4.0, 16.0));
-
+    ns.addLink("C", "D", new ParametricLink(1.0, 160.0));
+    ns.addLink("D", "C", new ParametricLink(1.0, 160.0));
+    
     ns.addLink("D", "A", new ParametricLink(2.0, 16.0));
     ns.addLink("A", "D", new ParametricLink(2.0, 16.0));
+
+    ns.addLink("A", "E", new ParametricLink(1.0, 160.0));
+    ns.addLink("E", "A", new ParametricLink(1.0, 160.0));
+    
+    ns.addLink("B", "E", new ParametricLink(2.0, 16.0));
+    ns.addLink("E", "B", new ParametricLink(2.0, 16.0));
 
     ns.addLink("D", "E", new ParametricLink(2.0, 16.0));
     ns.addLink("E", "D", new ParametricLink(2.0, 16.0));
 
-    ns.addLink("B", "E", new ParametricLink(2.0, 16.0));
-    ns.addLink("E", "B", new ParametricLink(2.0, 16.0));
 
     // Update routing tables
-    ns.update();
-
+    ns.updateRouting();
+   
     // run (timer has currently some hard-coded test values)
 
     ui->generateGraphLayout();
-    ns.startTimer();
+    ns.start();
 
     // print traffic log for given node (packetID's and time stamps)
     //ui->displayTrafficLog("A", "B");

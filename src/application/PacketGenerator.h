@@ -34,6 +34,7 @@ private:
     std::vector<ns::AddressType> destinations;
     unsigned int rate;
     unsigned int count;
+    double passedTime;
 };
 
 #endif /* defined(__NetworkSimulator__PacketGenerator__) */

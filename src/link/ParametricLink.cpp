@@ -25,6 +25,14 @@ ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay
     logging = true;
 }
 
+void ParametricLink::reset() {
+    packetsWaiting.clear();
+    packetsInTransmission.clear();
+    transmittedPackets.clear();
+    
+    previousTime = 0.0;
+    packetToTransitTime = 0.0;
+}
 
 void ParametricLink::run(double currentTime) {
     double timeDelta = currentTime - previousTime;
