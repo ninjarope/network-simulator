@@ -3,7 +3,6 @@
 //  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 14.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
 #include "NetworkSimulatorTestUI.h"
@@ -11,7 +10,7 @@
 /**
  * Enables generic UI supertype and switching of its implementation layer.
  */
-NetworkSimulatorUI *NetworkSimulatorTestUI::createUI() { return new NetworkSimulatorTestUI(); }
+NetworkSimulatorUI* NetworkSimulatorTestUI::createUI() { return new NetworkSimulatorTestUI(); }
 
 /**
  * Main function that is called from Network Simulator.
@@ -32,14 +31,14 @@ void NetworkSimulatorTestUI::update() {
  */
 void NetworkSimulatorTestUI::displayTrafficLog(ns::AddressType source, ns::AddressType destination) {
     // print traffic logs
-    const auto &l = networkSimulator->getLink(source, destination);
+    const auto& l = networkSimulator->getLink(source, destination);
     std::cout
         << "Transmission log for link "
         << l->getSource()->getAddress()
         << l->getDestination()->getAddress()
         << " : "
         << std::endl;
-    for (auto &logEntry : l->getTransmissionLog()) {
+    for (auto& logEntry : l->getTransmissionLog()) {
         std::cout
             << "["
             << logEntry.first
@@ -55,7 +54,7 @@ void NetworkSimulatorTestUI::displayTrafficLog(ns::AddressType source, ns::Addre
  * Show queues of links
  */
 void NetworkSimulatorTestUI::drawQueues() {
-    for (auto &l : networkSimulator->getLinks()) {
+    for (auto& l : networkSimulator->getLinks()) {
         // print queue lengths
         std::cout
             << "Queue length in front of link "
@@ -74,9 +73,9 @@ void NetworkSimulatorTestUI::drawApplications() {
 
     std::cout << "Applications in the Network" << std::endl;
 
-    for (auto &node : networkSimulator->getNodes()) {
+    for (auto& node : networkSimulator->getNodes()) {
         std::cout << "Node " << node.first << ": ";
-        for (auto &app : node.second->getApplications()) {
+        for (auto& app : node.second->getApplications()) {
             std::cout << "[" << app->getType() << "]";
         }
         std::cout << std::endl;

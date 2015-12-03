@@ -407,7 +407,7 @@ private:
     union Chunk {
         Chunk*  next;
         char    mem[SIZE];
-    };
+        };
     struct Block {
         Chunk chunk[COUNT];
     };

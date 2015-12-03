@@ -58,7 +58,7 @@ void testNodesInGui(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 
 void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
     // Update routing tables
-   // ns.update();  // comment this out if only one node or no links.. until Shortest Path gets error handling
+    // ns.update();  // comment this out if only one node or no links.. until Shortest Path gets error handling
 
     // run (timer has currently some hard-coded test values)
 
@@ -67,10 +67,17 @@ void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
 }
 
 void testXMLReader(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
-    XMLReader r;
-    r.load(ns, "resources/simple.xml");
+    XMLReader r(ns);
 
-    runUI(ns, ui);
+    try {
+        r.load("resources/in.xml");
+        std::cout << "xml loaded" << std::endl;
+        r.process();
+
+        runUI(ns, ui);
+    } catch (const char* msg) {
+        std::cerr << msg << std::endl;
+    }
 }
 int main() {
     NetworkSimulator ns;

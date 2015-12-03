@@ -5,59 +5,144 @@
 #ifndef NS1_XMLREADER_H
 #define NS1_XMLREADER_H
 
+#include <iostream>
+#include <string>
 
 #include "../ns.h"
 #include "../network/NetworkSimulator.h"
+#include "../node/ApplicationNode.h"
+
+// TODO This shit should be handled with a factory..
+//#include "../application/ApplicationFactory.h"
+#include "../application/PacketReceiver.h"
+#include "../application/PacketGenerator.h"
+#include "../application/RandomRouter.h"
+#include "../application/TestRouter.h"
+
+#include "../link/ParametricLink.h"
 
 // dependency for xml parsing
 #include "xml/tinyxml2.h"
 
-
+// Reducing the risk of carpal tunnel syndrome
 using namespace tinyxml2;
 
+/**
+ * Handles the parsing of an xml into a network graph
+ */
 class XMLReader {
   public:
-    bool load(NetworkSimulator& ns, const char* filepath) {
-        bool failed = true;
-        tinyxml2::XMLDocument doc;
+    XMLReader(NetworkSimulator& ns_) : ns(ns_) { }
+    ~XMLReader() { }
+
+    /**
+     * Load a xml into memory
+     *
+     * @filepath relative path for the xml file
+     * @throw exception if load is unsuccesful
+     */
+    void load(const char* filepath) {
         doc.LoadFile(filepath);
 
-        switch (doc.ErrorID()) {
-            case 0:
-                std::cout << "OK. No problem! XML File loaded." << std::endl;
-                failed = false;
-                break;
-            default:
-                std::cout << "XML file loading error! Error code: "
-                    << doc.ErrorID()
-                    << std::endl;
+        if (doc.ErrorID() != 0) {
+            // TODO Better error reporting
+            throw "XML document loading error.";
+        }
+    }
+
+    void process() {
+        // Load first node and test for error
+        // XMLHandle enables checking for nullptr's / in other words error handling
+        XMLHandle docHandle(&doc);
+        XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
+        if (!nodeElement)
+            throw "No nodes defined.";
+
+        buildNode(nodeElement);
+
+        // Load consequtive nodes
+        XMLHandle neHandle(docHandle.FirstChild().FirstChildElement("node"));
+        nodeElement = neHandle.NextSiblingElement("node").ToElement();
+        while (nodeElement) {
+            buildNode(nodeElement);
+            XMLHandle neHandle(nodeElement);
+            nodeElement = neHandle.NextSiblingElement("node").ToElement();
         }
 
-        // TODO throw exception
-//        if (failed) {
-//            throw Exception;
-//        }
+        if (ns.getNodeCount() < 2)
+            return;
 
+        // Load links
+        XMLHandle leHandle(docHandle.FirstChild().FirstChildElement("link"));
+        XMLElement* linkElement = neHandle.NextSiblingElement("link").ToElement();
+        while (linkElement) {
+            buildLink(linkElement);
+            XMLHandle leHandle(linkElement);
+            linkElement = leHandle.NextSiblingElement("link").ToElement();
+        }
+    }
+
+  private:
+    tinyxml2::XMLDocument doc;
+    NetworkSimulator& ns;
+//    ApplicationFactory applicationFactory;
+
+    /**
+     * Creates nodes from xml elements and attributes and adds them to the network
+     */
+    void buildNode(XMLElement* nodeElement) {
         // make a node
         ns::AddressType address;
         double x = 0.0;
         double y = 0.0;
 
-        XMLHandle docHandle( &doc );
-        XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement( "node" ).ToElement();
-        if ( nodeElement )
-        {
-            address = nodeElement->Attribute("address");
+        std::cout << "building node "
+            << address << std::endl;
+
+        address = nodeElement->Attribute("address");
+        nodeElement->QueryDoubleAttribute("x", &x);
+        nodeElement->QueryDoubleAttribute("y", &y);
+        ns.addNode(address);
+
+        // add applications
+        XMLHandle aeHandle(nodeElement);
+        XMLElement* applicationElement = aeHandle.FirstChildElement("application").ToElement();
+        while (applicationElement) {
+            std::string appType = applicationElement->Attribute("type");
+
+            if (appType == "PacketReceiver") {
+                ns.getNode(address)->addApplications(new PacketReceiver);
+            } else if (appType == "RandomRouter") {
+                ns.getNode(address)->addApplications(new RandomRouter);
+            }
+
+            XMLHandle aeHandle(applicationElement);
+            applicationElement = aeHandle.NextSiblingElement("application").ToElement();
         }
 
-        nodeElement->QueryDoubleAttribute( "x", &x );
-        nodeElement->QueryDoubleAttribute( "y", &y );
-
-        ns.addNode(address);
     }
 
-  private:
+    /**
+    * Creates nodes from xml elements and attributes and adds them to the network
+    */
+    void buildLink(XMLElement* e) {
+        // make a link
+        // Link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+        ns::AddressType source = "";
+        ns::AddressType destination = "";
+        double speed = 0.0;
+        double delay = 0.0;
+        double weight = 0.0;
 
+        // get attributes
+        source = e->Attribute("source");
+        destination = e->Attribute("destination");
+        e->QueryDoubleAttribute("speed", &speed);
+        e->QueryDoubleAttribute("delay", &delay);
+        e->QueryDoubleAttribute("weight", &weight);
+
+        ns.addLink(source, destination, new ParametricLink(speed, delay, weight));
+    }
 };
 
 #endif //NS1_XMLREADER_H
