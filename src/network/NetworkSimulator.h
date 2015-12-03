@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "Network.h"
 #include "../ui/NetworkSimulatorUI.h"
+#include "../application/ApplicationFactory.h"
 /**
  * The controller
  */
@@ -20,13 +21,16 @@ public:
     NetworkSimulator();
     ~NetworkSimulator();
     void setUI(NetworkSimulatorUI* ui);
+
     /**
      * Calls run() method (in multiple threads?) of all nodes and links.
      * In final implementation this function should be private.
      */
     void timerCallback() override;
+
     //updates the routing table of each node
     void update();
+
 private:
     NetworkSimulatorUI* ui;
 };

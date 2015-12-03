@@ -5,7 +5,9 @@
 //
 #include "NetworkSimulator.h"
 
-NetworkSimulator::NetworkSimulator() : ui(nullptr) {}
+NetworkSimulator::NetworkSimulator() : ui(nullptr) {
+    applicationFactory = new ApplicationFactory(*this);
+}
 
 void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
     this->ui = ui;

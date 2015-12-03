@@ -42,18 +42,26 @@ enum ApplicationType {
 //    return map_init_helper<T>(item);
 //}
 
-//class ApplicationFactory {
-//  public:
-//    ApplicationFactory() {}
-//    ~ApplicationFactory() {}
-//
-//    Application* create(ApplicationType t) {
-//        switch (t) {
-//            case PACKET_RECEIVER:
-//            std::cout << "creating packetreceiver" << std::endl;
-//                return new PacketReceiver;
-//        }
-//    };
-//};
+class ApplicationFactory {
+  public:
+    ApplicationFactory(NetworkSimulator& ns_) : ns(ns_) { }
+    ~ApplicationFactory() { }
+
+    Application* create(ApplicationType t) {
+        switch (t) {
+            case PACKET_RECEIVER:
+                return new PacketReceiver();
+            case PACKET_GENERATOR:
+                return new PacketGenerator(10);
+            case RANDOM_ROUTER:
+                return new RandomRouter();
+            case TEST_ROUTER:
+                return new TestRouter();
+
+        }
+    };
+  private:
+    NetworkSimulator& ns;
+};
 
 #endif //NS1_APPLICATIONFACTORY_H
