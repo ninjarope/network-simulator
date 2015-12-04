@@ -132,9 +132,21 @@ void NetworkSimulatorGUI::drawNodes() {
         sf::CircleShape nodeShape(nodeRadius);
         
         // set color and transfrom
-        nodeShape.setOutlineColor(defaultNodeColor);
-        nodeShape.setOutlineThickness(1);
-        nodeShape.setFillColor(sf::Color::Black);
+        sf::Color outlineColor = defaultNodeColor;
+        sf::Color fillColor = sf::Color::Black;
+        int thickness = 1;
+        
+        if (selectedNodes.front() == n.first) fillColor = defaultNodeColor;
+        if (selectedNodes.back() == n.first && selectedNodes.size() > 1) fillColor = sf::Color(64, 64, 128);
+        
+        if (n.first == focusNode) {
+            outlineColor = sf::Color::White;
+        }
+        
+        nodeShape.setOutlineColor(outlineColor);
+        nodeShape.setOutlineThickness(thickness);
+        nodeShape.setFillColor(fillColor);
+        nodeShape.setOrigin(nodeRadius, nodeRadius);
         nodeShape.setPosition(x, y);
         window->draw(nodeShape);
         
@@ -143,7 +155,7 @@ void NetworkSimulatorGUI::drawNodes() {
         
         // Draw to rendering buffer
         text.setOrigin(fontSize / 2, fontSize / 2);
-        text.setPosition(x + nodeRadius, y + nodeRadius);
+        text.setPosition(x, y);
 
         window->draw(text);
     }
@@ -170,8 +182,8 @@ void NetworkSimulatorGUI::drawLinks() {
         // Line between nodes
         sf::Vertex line[] =
         {
-            sf::Vertex(sf::Vector2f(n1.x + nodeRadius + transformX, n1.y + nodeRadius + transformY), sourceColor),
-            sf::Vertex(sf::Vector2f(n2.x + nodeRadius + transformX, n2.y + nodeRadius + transformY), destinationColor)
+            sf::Vertex(sf::Vector2f(n1.x + transformX, n1.y + transformY), sourceColor),
+            sf::Vertex(sf::Vector2f(n2.x + transformX, n2.y + transformY), destinationColor)
         };
         
         window->draw(line, 2, sf::Lines);
@@ -371,7 +383,6 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     
 }
 
-
 void NetworkSimulatorGUI::toggleStatVisibility() {
     if (statsVisible) statsVisible = false;
     else statsVisible = true;
@@ -387,6 +398,41 @@ void NetworkSimulatorGUI::changeDistributionView() {
     else distributionMode = Traffic;
 }
 
+void NetworkSimulatorGUI::checkMouseOverNode(int x, int y) {
+    focusNode = "";
+    
+    for (auto n : visibleNodes) {
+        int nx = n.second.x + transformX;
+        int ny = n.second.y + transformY;
+        if (std::sqrt(std::pow((double) nx - x, 2) + std::pow((double) ny - y, 2)) < nodeRadius) {
+            focusNode = n.first;
+        }
+    }
+}
+
+void NetworkSimulatorGUI::toggleSelect(ns::AddressType address) {
+    if (selectedNodes.empty()) selectedNodes.push_back(address);
+    else if (selectedNodes.size() == 1) {
+        for (auto it = selectedNodes.begin(); it != selectedNodes.end(); it++) {
+            if (*it == address) {
+                selectedNodes.erase(it);
+                return;
+            }
+        }
+        selectedNodes.push_back(address);
+    } else if (selectedNodes.size() > 1) {
+        for (auto it = selectedNodes.begin(); it != selectedNodes.end(); it++) {
+            if (*it == address) {
+                if (it == selectedNodes.begin()) selectedNodes.clear();
+                else selectedNodes.pop_back();
+                return;
+            }
+        }
+        selectedNodes.pop_back();
+        selectedNodes.push_back(address);
+    }
+}
+
 void NetworkSimulatorGUI::update() {
     // Event handling
     while (window->pollEvent(event))
@@ -399,7 +445,19 @@ void NetworkSimulatorGUI::update() {
                 networkSimulator->quit();
                 break;
                 
-                // key pressed
+            case sf::Event::MouseMoved:
+                checkMouseOverNode(event.mouseMove.x, event.mouseMove.y);
+                break;
+            
+            case sf::Event::MouseButtonPressed:
+                if (altDown) selectedNodes.clear();
+                checkMouseOverNode(event.mouseButton.x, event.mouseButton.y);
+                if (focusNode.size() > 0) {
+                    toggleSelect(focusNode);
+                }
+                break;
+                
+            // key pressed
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
@@ -445,7 +503,21 @@ void NetworkSimulatorGUI::update() {
                     case sf::Keyboard::Escape:
                         networkSimulator->quit();
                         break;
+
+                    case sf::Keyboard::LAlt:
+                        altDown = true;
+                        break;
                 
+                    default:
+                        break;
+                }
+                break;
+            
+            case sf::Event::KeyReleased:
+                switch (event.key.code) {
+                    case sf::Keyboard::LAlt:
+                        altDown = false;
+                        break;
                     default:
                         break;
                 }
