@@ -93,6 +93,16 @@ public:
      * Change between different distribution views.
      */
     void changeDistributionView();
+    
+    /**
+     * Sets focus on node if mouse cursor is on it.
+     */
+    void checkMouseOverNode(int x, int y);
+
+    /**
+     * Toggles select state of given node.     
+     */
+    void toggleSelect(ns::AddressType address);
 
     /**
      * Main function that is called from Network Simulator.
@@ -120,7 +130,10 @@ private:
         double x;
         double y;
     };
+    
     std::map<ns::AddressType, point> visibleNodes;
+    std::list<ns::AddressType> selectedNodes;
+    ns::AddressType focusNode;
     
     bool statsVisible;
     bool distributionVisible;
@@ -128,6 +141,8 @@ private:
         Traffic,
         Queue
     } distributionMode ;
+    
+    bool altDown = false;
 };
 
 
