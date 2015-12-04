@@ -52,21 +52,21 @@ void XMLReader::process() {
     }
 }
 
-void XMLReader::buildNode(XMLElement* nodeElement) {
+void XMLReader::buildNode(XMLElement* e) {
     // Variables for a node
     ns::AddressType address = "";
     double x = 0.0;
     double y = 0.0;
 
     // Read attributes to variables
-    address = nodeElement->Attribute("address");
-    nodeElement->QueryDoubleAttribute("x", &x);
-    nodeElement->QueryDoubleAttribute("y", &y);
+    address = e->Attribute("address");
+    e->QueryDoubleAttribute("x", &x);
+    e->QueryDoubleAttribute("y", &y);
 
     ns.addNode(x, y, address);
 
     // Add applications
-    XMLHandle aeHandle(nodeElement); // nullptr handling
+    XMLHandle aeHandle(e); // nullptr handling
     XMLElement* applicationElement = aeHandle.FirstChildElement("application").ToElement();
     while (applicationElement) {
         std::string appType = applicationElement->Attribute("type");

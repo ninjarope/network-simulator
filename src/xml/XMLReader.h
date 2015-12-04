@@ -13,12 +13,7 @@
 #include "../network/NetworkSimulator.h"
 #include "../node/ApplicationNode.h"
 
-// TODO This shit should be handled with a factory..
 #include "../application/ApplicationFactory.h"
-#include "../application/PacketReceiver.h"
-#include "../application/PacketGenerator.h"
-#include "../application/RandomRouter.h"
-#include "../application/TestRouter.h"
 
 #include "../link/ParametricLink.h"
 
@@ -41,7 +36,7 @@ class XMLReader {
     ~XMLReader();
 
     /**
-     * Load a xml into memory
+     * Load an xml into memory
      *
      * @filepath relative path for the xml file
      * @throw exception if load is unsuccesful
