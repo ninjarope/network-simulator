@@ -69,6 +69,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >```
 >network.getNode("some address")
 >```
+>
 
 #### Timer
 
@@ -133,7 +134,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >
 >Doxygen documentation can be generated with these configuration by running:
 >
->```bash    
+>```    
 >   doxygen <doxygen-conf-file>
 >```
 
@@ -167,9 +168,9 @@ Doxygen understands many variations of commenting. We should use these conventio
 
 This repository contains three subdirectories:
 
-* plan/ for the plan 
-* doc/  for the final documentation
-* src/  for all the source code
++ plan/ for the plan 
++ doc/  for the final documentation
++ src/  for all the source code
 
 ---
 
