@@ -16,6 +16,7 @@
 #include <map>
 
 #include "NetworkSimulatorUI.h"
+//#include "NSGUIStateContext.h"
 
 /**
  * Concrete UI class / GUI
@@ -43,6 +44,18 @@ public:
      * @destination     a node address
      */
     void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override;
+
+    /**
+     * Helper function for node drawing.
+     */
+    template <typename K, typename V>
+    sf::CircleShape createNodeShape(std::pair<K, V>&);
+
+    /**
+     * Text rendering helper for node drawing
+     */
+    template <typename K, typename V>
+    void updateText(std::pair<K, V>& n);
 
     /**
      * Render nodes.
@@ -111,6 +124,8 @@ public:
     void update() override;
     
 private:
+//    NSGUIStateContext guiState;
+
     sf::RenderWindow* window;
     sf::Event event;
     sf::Font font;
