@@ -14,27 +14,29 @@ Simulator for network connection points, paths between them and packets flowing 
 >```
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.
 + To modify the network, use xml files (resources directory).
->Basic xml layout:
-```
-<network>
-    <node address="somename" x="1.0" y="1.0">
-        <application type="PacketReceiver"/>
-        <application type="PacketGenerator"/>
-           <destination address="A"/>
-           ... more destinations ...
-        
-        ... more applications ...
-
-    </node>
-
-    ... more nodes ...
-
-    <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    
-    ... more links ...
-
-</network>
-```
+Basic xml layout:
+>
+>```xml
+><network>
+>    <node address="somename" x="1.0" y="1.0">
+>        <application type="PacketReceiver"/>
+>        <application type="PacketGenerator"/>
+>           <destination address="A"/>
+>           ... more destinations ...
+>        
+>        ... more applications ...
+>
+>    </node>
+>
+>    ... more nodes ...
+>
+>    <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+>    
+>    ... more links ...
+>
+></network>
+>```
+>
 + Applications to be used are 
     + PacketReceiver
     + PacketGenerator - defines the destinations for the generated packets
