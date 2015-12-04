@@ -31,9 +31,18 @@ PacketGenerator::PacketGenerator(unsigned int rate, std::vector<ns::AddressType>
     count = 1;
 }
 
-/**
- * Generates packets and forwards them to host node.
- * */
+Application* PacketGenerator::setParameters(std::vector<std::string> parameters) {
+    if (!parameters.empty()) {
+        rate = std::stod(parameters[0]);
+        parameters.erase(parameters.begin());
+    }
+    for (auto s : parameters) {
+        destinations.push_back(s);
+    };
+    
+    return this;
+}
+
 void PacketGenerator::process(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
@@ -45,6 +54,7 @@ void PacketGenerator::process(double currentTime) {
             ns::AddressType destination;
             if (!destinations.empty()) {
                 destination = destinations[rand() % destinations.size()];
+                std::cout << destination << std::endl;
             } else {
                 size_t n = hostNode->getRoutingTable().size();
                 if (n > 0) {

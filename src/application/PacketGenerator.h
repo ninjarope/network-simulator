@@ -26,10 +26,11 @@ public:
     
     /** Set parameters of the application. 
      *  
-     *  @rate
+     *  1   rate
+     *  2-n possible destination addresses
      */
-    void setParameters(std::vector<double> parameters) override { if (!parameters.empty()) rate = parameters[0]; }
-
+    Application* setParameters(std::vector<std::string> parameters) override;
+    
     /**
      * Generates packets at given rate and adds them to host node
      * packet queue.

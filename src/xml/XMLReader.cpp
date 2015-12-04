@@ -75,11 +75,21 @@ void XMLReader::buildNode(XMLElement* nodeElement) {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
-            double rate = 0.0;
-            applicationElement->QueryDoubleAttribute("rate", &rate);
-            ns.getNode(address)->
-                addApplications(applicationFactory->create(PACKET_GENERATOR));
-            ns.getNode(address)->getApplications().back()->setParameters({rate});
+            std::vector<std::string> parameters;
+            parameters.push_back(applicationElement->Attribute("rate"));
+            
+            XMLHandle pHandle(applicationElement);
+            XMLElement* parameterElement = pHandle.FirstChildElement("destination").ToElement();
+            while (parameterElement)  {
+                parameters.push_back(parameterElement->Attribute("address"));
+                
+                XMLHandle pHandle(parameterElement);
+                parameterElement = pHandle.NextSiblingElement("destination").ToElement();
+            }
+            
+            ns.getNode(address)->addApplications(applicationFactory
+                                                 ->create(PACKET_GENERATOR)
+                                                 ->setParameters(parameters));
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(RANDOM_ROUTER));

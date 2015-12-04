@@ -22,7 +22,10 @@ public:
     TestRouter();
 
     /** Set parameters of the application. */
-    void setParameters(std::vector<double> parameters) override { (void) parameters; }
+    Application* setParameters(std::vector<std::string> parameters) override {
+        (void) parameters;
+        return this;
+    }
 
     /** Simply forwards queued packets to the first link in host node connections
        with no delay. */

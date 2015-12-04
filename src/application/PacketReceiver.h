@@ -21,8 +21,10 @@ public:
     PacketReceiver();
     
     /** Set parameters of the application. */
-    void setParameters(std::vector<double> parameters) override { (void) parameters; }
-
+    Application* setParameters(std::vector<std::string> parameters) override {
+        (void) parameters;
+        return this;
+    }
     /**
      * If host node is recipient of packet, receives (deletes) packet.
      */

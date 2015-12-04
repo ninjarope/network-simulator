@@ -202,7 +202,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[G] Regenerate layout   "
         << "[S] Stats   "
         << "[D] Distribution   "
-        << "[Q] Switch distribution mode";
+        << "[M] Switch distribution mode";
 
     
     text.setString(ss.str());
@@ -438,7 +438,7 @@ void NetworkSimulatorGUI::update() {
                         toggleStatVisibility();
                         break;
 
-                    case sf::Keyboard::Q:
+                    case sf::Keyboard::M:
                         changeDistributionView();
                         break;
                         
