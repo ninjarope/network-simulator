@@ -66,10 +66,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >
 >Example of getting a specific node by address:
 >
->```
->network.getNode("some address")
->```
->
+>`network.getNode("some address")`
 
 #### Timer
 
@@ -134,9 +131,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >
 >Doxygen documentation can be generated with these configuration by running:
 >
->```    
->   doxygen <doxygen-conf-file>
->```
+>`doxygen <doxygen-conf-file>`
 
 This will create documentation in html by default of the classes and their related material
 
