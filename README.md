@@ -63,10 +63,10 @@ Simulator for network connection points, paths between them and packets flowing 
 #### Network
 
 + Network has function which returns pointers to all links / nodes in network
->
->Example of getting a specific node by address:
->
->`network.getNode("some address")`
+
+Example of getting a specific node by address:
+
+    `network.getNode("some address")`
 
 #### Timer
 
@@ -128,10 +128,10 @@ Simulator for network connection points, paths between them and packets flowing 
 ## Documentation
 
 + Included in the root folder are two doxygen configuration files. 
->
->Doxygen documentation can be generated with these configuration by running:
->
->`doxygen <doxygen-conf-file>`
+
+Doxygen documentation can be generated with these configuration by running:
+
+    `doxygen <doxygen-conf-file>`
 
 This will create documentation in html by default of the classes and their related material
 
