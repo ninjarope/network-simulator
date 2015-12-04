@@ -54,7 +54,6 @@ void PacketGenerator::process(double currentTime) {
             ns::AddressType destination;
             if (!destinations.empty()) {
                 destination = destinations[rand() % destinations.size()];
-                std::cout << destination << std::endl;
             } else {
                 size_t n = hostNode->getRoutingTable().size();
                 if (n > 0) {
