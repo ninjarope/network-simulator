@@ -11,15 +11,15 @@
 #include <iostream>
 #include <string>
 
-#include "network/NetworkSimulator.h"
-#include "ui/NetworkSimulatorGUI.h"
-#include "application/RandomRouter.h"
-#include "application/TestRouter.h"
-#include "link/TestLink.h"
-#include "link/ParametricLink.h"
-#include "application/PacketGenerator.h"
-#include "application/PacketReceiver.h"
-#include "application/TestRouter.h"
+#include "../network/NetworkSimulator.h"
+#include "../ui/NetworkSimulatorGUI.h"
+#include "../application/RandomRouter.h"
+#include "../application/TestRouter.h"
+#include "../link/TestLink.h"
+#include "../link/ParametricLink.h"
+#include "../application/PacketGenerator.h"
+#include "../application/PacketReceiver.h"
+#include "../application/TestRouter.h"
 
 
 /**
