@@ -12,6 +12,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >```
 >./ns [relative-xml-file-path]
 >```
+
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.
 + To modify the network, use xml files (resources directory).
 >
