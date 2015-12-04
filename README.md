@@ -9,6 +9,7 @@ Simulator for network connection points, paths between them and packets flowing 
 + Build with make (Makefile included and should handle most platforms)
 >
 > Running the executive:
+>
 >```
 >./ns [relative-xml-file-path]
 >```
