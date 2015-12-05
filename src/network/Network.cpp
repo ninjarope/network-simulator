@@ -139,7 +139,6 @@ bool Network::routingExists() {
     for (auto& n : nodes) {
         exists |= !n.second->getRoutingTable().empty();
     }
-    std::cout << exists << std::endl;
     return exists;
 }
 
