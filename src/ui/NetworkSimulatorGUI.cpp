@@ -208,7 +208,7 @@ void NetworkSimulatorGUI::drawTime() {
     text.setPosition(fontSize, fontSize);
     window->draw(text);
     
-    ss = std::stringstream();
+    ss.str("");
     
     ss
         << "[ESC] Exit   "
@@ -311,7 +311,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
 
         // Draw total packet count
         double percentage = traffic / totalTraffic * 100;
-        ss = std::stringstream();
+        ss.str("");
         ss.setf(std::ios::fixed);
         ss.precision(1);
         ss << (percentage > 1.0 ? percentage : 0) << " %";
@@ -367,7 +367,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
         
         // Draw total packet count
         double percentage = queueLength / queueSum * 100;
-        ss = std::stringstream();
+        ss.str("");
         ss.setf(std::ios::fixed);
         ss.precision(1);
         ss << (percentage > 1.0 ? percentage : 0) << " %";
