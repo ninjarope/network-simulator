@@ -65,11 +65,22 @@ class Network: public Notifiable {
 
     /** Get addresses in current network. */
     const std::vector <ns::AddressType>& getAddresses() const;
+    
+    /** Updates the routing table of each node. */
+    void updateRouting();
 
+    /** Clears the routing table of each node. */
+    void clearRouting();
+
+    /** Clears the routing table of each node. */
+    bool routingExists();
+
+    
   protected:
     std::vector <ns::AddressType> addresses;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;
+
 };
 #endif /* defined(__NetworkSimulator__Network__) */

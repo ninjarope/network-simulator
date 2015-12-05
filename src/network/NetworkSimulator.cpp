@@ -30,15 +30,6 @@ void NetworkSimulator::timerCallback() {
     if (ui) ui->update();
 }
 
-void NetworkSimulator::updateRouting(){
-    ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
-    s1.alsideperm();
-    // Update routings of all nodes
-    for (auto& path : s1.getShortestPaths()) {
-        getNode(path.front())->updateTable(path);
-    }
-}
-
 void NetworkSimulator::quit() {
     stopTimer();
 }

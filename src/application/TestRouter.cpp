@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
+#include <cstdlib>     /* srand, rand */
+#include <ctime>       /* time */
+
 #include "TestRouter.h"
 #include "../packet/Packet.h"
 #include "../ns.h"
@@ -36,31 +39,24 @@ void TestRouter::process(double currentTime) {
                         routingExists = true;
                     }
                 }
-            }else {
-              //Out put for packet drop 
-              std::cout << "PACKET: "<<  p->getID() << " DROPPED"  << std::endl;
             }
         }
 
-        // no routing found
+        // No routing found, route randomly
+//        if (!routingExists && !hostNode->getConnections().empty()) {
+//            // forward packet directly to first connection
+//            Link* targetLink = hostNode->getConnections().front();
+//            targetLink->addPacket(p);
+//            packets.erase(packets.begin());
+//        }
         if (!routingExists && !hostNode->getConnections().empty()) {
-            // forward packet directly to first connection
-            Link* targetLink = hostNode->getConnections().front();
+            auto& connections = hostNode->getConnections();
+            int randI = rand() % connections.size();
+            Link* targetLink = connections[randI];
             targetLink->addPacket(p);
             packets.erase(packets.begin());
         }
+        
 
-        /*
-        for(auto key:this->routingTable){
-          if(key.first==packetDestination){
-            for(auto conn:hostNode->getConnections()){
-              if(conn->getDestination()->getAddress()== key.second){
-                Link* targetLink = conn;
-                targetLink->addPacket(p);
-              }
-            }
-          }
-        }
-        */
     }
 }
