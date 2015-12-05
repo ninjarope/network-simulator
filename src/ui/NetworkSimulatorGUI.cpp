@@ -211,7 +211,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[ESC] Exit   "
         << "[Enter] Restart   "
         << "[Space] Pause   "
-        << "[G] Regenerate layout   "
+        << "[G] Generate routing   "
         << "[S] Stats   "
         << "[D] Distribution   "
         << "[M] Switch distribution mode";
@@ -489,6 +489,7 @@ void NetworkSimulatorGUI::update() {
                         break;
 
                     case sf::Keyboard::G:
+                        //networkSimulator->updateRouting();
                         generateGraphLayout();
                         break;
 

@@ -50,7 +50,11 @@ void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     // this->routingTable.clear();
     // For given destination (last address in path) associate next node in path (check that first is this node)
     if (shortestPath.front() == this->address) {
-        this->routingTable.at(shortestPath.back()) = shortestPath[1];
+        try {
+            this->routingTable.at(shortestPath.back()) = shortestPath[1];
+        } catch (std::out_of_range) {
+            this->routingTable.insert({shortestPath.back(), shortestPath[1]});
+        }
         std::cout << "TABLE UPDATED!" << std::endl;
     }
     

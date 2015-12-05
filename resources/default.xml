@@ -1,5 +1,7 @@
 <network>
     <node address="A" x="1.0" y="1.0">
+        <application type="PacketGenerator" rate="100.0">
+        </application>
         <application type="PacketReceiver"/>
         <application type="RandomRouter"/>
     </node>
@@ -16,7 +18,6 @@
 
     <node address="D" x="11.0" y="11.0">
         <application type="PacketGenerator" rate="100.0">
-            <destination address="B"/>
         </application>
         <application type="PacketReceiver"/>
         <application type="RandomRouter"/>
@@ -41,5 +42,6 @@
     <link source="F" destination="E" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
 
     <link source="D" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="C" destination="E" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
 
 </network>
