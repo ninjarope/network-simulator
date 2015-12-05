@@ -135,28 +135,28 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
     bool check = false;
     //permutation and valid paths
     while(permCpyAllNodes.size()!=0 && check == false){
-      std::cout<<"permcpy"<<std::endl;
-      std::cout<<"node is "<<nod<<std::endl;
-      for(auto m:permCpyAllNodes){
-        std::cout<<m;
-      }
-      std::cout<<"----------------"<<std::endl;
+      ////std::cout<<"permcpy"<<std::endl;
+      ////std::cout<<"node is "<<nod<<std::endl;
+      ////for(auto m:permCpyAllNodes){
+      ////  std::cout<<m;
+      ////}
+      ////std::cout<<"----------------"<<std::endl;
 
         if(permCpyAllNodes.size()==1){
             permCpyAllNodes.clear();
             permCpyAllNodes.push_back(f);
             permCpyAllNodes.push_back(l);
             check=true;
-            std::cout<<"permcpy size 1"<<std::endl;
-            std::cout<<"node is "<<nod<<std::endl;
-            for(auto m:permCpyAllNodes){
-              std::cout<<m;
-            }
-              std::cout<<"----------------"<<std::endl;
+            ////std::cout<<"permcpy size 1"<<std::endl;
+            ////std::cout<<"node is "<<nod<<std::endl;
+            ////for(auto m:permCpyAllNodes){
+            ////  std::cout<<m;
+            ////}
+            ////  std::cout<<"----------------"<<std::endl;
         }
 
       //  std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
-        std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
+        ////std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
         do
         {
             cpyAllNodes.push_back(nod);
@@ -168,9 +168,9 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
             }
             std::reverse(revCpyAllNodes.begin(),revCpyAllNodes.end());
             for(auto t:cpyAllNodes){
-              std::cout<<t;
+            ////  std::cout<<t;
             }
-            std::cout<<std::endl;
+            ////std::cout<<std::endl;
             //std::cout<<"----------------REV CPY---------"<<std::endl;
             for(auto m:revCpyAllNodes){
               //std::cout<<m;
@@ -179,8 +179,8 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
 
 
             //validate all the paths and rev path
-            for(int count =1;count <=2;count++){
-            if(count==1){
+            //for(int count =1;count <=2;count++){
+          //////  if(count==1){
               cpyAllNodes=this->validate(cpyAllNodes);
 
               if(!cpyAllNodes.empty()){
@@ -192,7 +192,8 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
                     }
                   }
                   cpyAllNodes.clear();
-                }
+            //////    }
+            /*
               else{
                 revCpyAllNodes=this->validate(revCpyAllNodes);
 
@@ -207,13 +208,14 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
                     revCpyAllNodes.clear();
 
               }
+              */
 
 
-          }
+          //for loop bracket}
 
         }  while ( std::next_permutation(permCpyAllNodes.begin(), permCpyAllNodes.end()) );
       //  std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
-        std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
+      ////  std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
         permCpyAllNodes.pop_back();
     }
 }
