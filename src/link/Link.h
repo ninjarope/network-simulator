@@ -74,6 +74,9 @@ public:
     /** Return length of queue in front of the link. */
     size_t getQueueLength();
 
+    /** Return packets in transmission. */
+    const std::map<Packet*, double>& getPacketsInTransmission() const;
+
     /** Return transmitted packets. */
     const ns::TransmissionLogType& getTransmissionLog() const;
 

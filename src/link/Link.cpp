@@ -84,6 +84,10 @@ const ns::Packets& Link::getPacketsWaiting() const {
 
 size_t Link::getQueueLength() { return packetsWaiting.size(); }
 
+const std::map<Packet*, double>& Link::getPacketsInTransmission() const {
+    return packetsInTransmission;
+}
+
 const ns::TransmissionLogType& Link::getTransmissionLog() const {
     return transmittedPackets;
 }
