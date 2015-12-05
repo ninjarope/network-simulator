@@ -36,6 +36,9 @@ void ShortestPath::alsideperm(){
     std::vector<std::string> permCpyAllNodes;
     std::vector<std::string> tempermCpyAllNodes;
     std::string nod="";
+
+    //do{
+
     for(auto val:this->allNodes){
         permCpyAllNodes.push_back(val);
     }
@@ -48,9 +51,15 @@ void ShortestPath::alsideperm(){
         }
         this->nextPerm(tempermCpyAllNodes,nod);
         tempermCpyAllNodes.clear();
+        //permCpyAllNodes.clear();
     }
+    permCpyAllNodes.clear();
+
+  //}while ( std::next_permutation(this->allNodes.begin(), this->allNodes.end()) );
+
+
     //Print out NodeRtable
-    std::cout<<"-----------------ALL POSSIBLE PATHS----------------:"<<std::endl;
+    //Filling up 2 node links from available links
     for(auto val:this->allAvailableLinks){
         std::vector<std::string> temp;
         temp.push_back(val.first);
@@ -64,6 +73,34 @@ void ShortestPath::alsideperm(){
             temp.clear();
         }
     }
+    //rev
+      std::vector<std::string> tempRev;
+      std::vector< std::vector<std::string> > revNodeRTableFullPaths;
+    for(auto val:this->nodeRTableFullPaths){
+      std::vector<std::string> temp;
+      for(auto val2 : val){
+        temp.push_back(val2);
+      }
+        std::reverse(  temp.begin(),  temp.end());
+        //check validity and fill up revNod
+        bool is_equal=this->checkSimilarPath(nodeRTableFullPaths,temp);
+        if(is_equal==1){
+            temp.clear();
+        }
+        else{
+            revNodeRTableFullPaths.push_back(temp);
+            temp.clear();
+        }
+        //done revNod
+      }
+      //filling up Nodetable with rev node
+      for(auto valVec:revNodeRTableFullPaths){
+        this->nodeRTableFullPaths.push_back(valVec);
+      }
+
+
+    //Print out NodeRtable
+    std::cout<<"-----------------ALL POSSIBLE PATHS----------------:"<<std::endl;
     std::cout<<nodeRTableFullPaths.size()<<std::endl;
     for(unsigned int i=0;i<this->nodeRTableFullPaths.size();i++){
         for(unsigned int j=0;j<nodeRTableFullPaths[i].size();j++){
@@ -91,38 +128,92 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
     and while doing this it will call validate and validate the paths as per our configured map
 
   */
+    std::vector<std::string> revCpyAllNodes;
     std::vector<std::string> cpyAllNodes;
     std::string f=permCpyAllNodes.at(0);
     std::string l=permCpyAllNodes.at(permCpyAllNodes.size()-1);
     bool check = false;
     //permutation and valid paths
     while(permCpyAllNodes.size()!=0 && check == false){
+      std::cout<<"permcpy"<<std::endl;
+      std::cout<<"node is "<<nod<<std::endl;
+      for(auto m:permCpyAllNodes){
+        std::cout<<m;
+      }
+      std::cout<<"----------------"<<std::endl;
+
         if(permCpyAllNodes.size()==1){
             permCpyAllNodes.clear();
             permCpyAllNodes.push_back(f);
             permCpyAllNodes.push_back(l);
             check=true;
+            std::cout<<"permcpy size 1"<<std::endl;
+            std::cout<<"node is "<<nod<<std::endl;
+            for(auto m:permCpyAllNodes){
+              std::cout<<m;
+            }
+              std::cout<<"----------------"<<std::endl;
         }
+
+      //  std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
+        std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
         do
         {
             cpyAllNodes.push_back(nod);
+            revCpyAllNodes.push_back(nod);
             //print allnodes
             for(auto i:permCpyAllNodes){
                 cpyAllNodes.push_back(i);
+                revCpyAllNodes.push_back(i);
             }
-            //validate all the paths
-            cpyAllNodes=this->validate(cpyAllNodes);
+            std::reverse(revCpyAllNodes.begin(),revCpyAllNodes.end());
+            for(auto t:cpyAllNodes){
+              std::cout<<t;
+            }
+            std::cout<<std::endl;
+            //std::cout<<"----------------REV CPY---------"<<std::endl;
+            for(auto m:revCpyAllNodes){
+              //std::cout<<m;
+            }
+            //std::cout<<std::endl;
 
-            if(!cpyAllNodes.empty()){
-                //eliminating simmilar paths
-                bool is_equal=this->checkSimilarPath(this->nodeRTableFullPaths,cpyAllNodes);
-                if(is_equal!=1){
 
-                    this->nodeRTableFullPaths.push_back(cpyAllNodes);
+            //validate all the paths and rev path
+            for(int count =1;count <=2;count++){
+            if(count==1){
+              cpyAllNodes=this->validate(cpyAllNodes);
+
+              if(!cpyAllNodes.empty()){
+                  //eliminating simmilar paths
+                  bool is_equal=this->checkSimilarPath(this->nodeRTableFullPaths,cpyAllNodes);
+                  if(is_equal!=1){
+
+                      this->nodeRTableFullPaths.push_back(cpyAllNodes);
+                    }
+                  }
+                  cpyAllNodes.clear();
                 }
-            }
-            cpyAllNodes.clear();
+              else{
+                revCpyAllNodes=this->validate(revCpyAllNodes);
+
+                if(!revCpyAllNodes.empty()){
+                    //eliminating simmilar paths
+                    bool is_equal=this->checkSimilarPath(this->nodeRTableFullPaths,revCpyAllNodes);
+                    if(is_equal!=1){
+
+                        this->nodeRTableFullPaths.push_back(revCpyAllNodes);
+                      }
+                    }
+                    revCpyAllNodes.clear();
+
+              }
+
+
+          }
+
         }  while ( std::next_permutation(permCpyAllNodes.begin(), permCpyAllNodes.end()) );
+      //  std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
+        std::cout<<"////////////////////////////////////////////////////////"<<std::endl;
         permCpyAllNodes.pop_back();
     }
 }
