@@ -53,6 +53,11 @@ public:
      * Render links.
      */
     void drawLinks();
+    
+    /**
+     * Render text boxes.
+     */
+    void drawTextBoxes();
 
     /**
      * Show current time.
@@ -121,12 +126,13 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Color defaultNodeColor;
+    sf::Color defaultFillColor;
     sf::Color defaultDistColor;
     
     unsigned int fontSize;
     unsigned int nodeRadius;
-    unsigned int width;
-    unsigned int height;
+    unsigned int windowWidth;
+    unsigned int windowHeight;
     double transformX;
     double transformY;
     
