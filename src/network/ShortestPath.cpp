@@ -10,8 +10,13 @@ ShortestPath::ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,st
     this->allAvailableLinks = allAvailableLinks;
     this->nodes = nodes;
     this->links = links;
+
     for(auto key:this->nodes){
-        allNodes.push_back(key.first);
+      // secluded nodes are not taken into cnsideration for finding shortest path
+      auto it = allAvailableLinks.find(key.first);
+      if (it != allAvailableLinks.end()){
+          allNodes.push_back(key.first);
+      }
     }
 }
 

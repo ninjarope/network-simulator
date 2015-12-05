@@ -22,11 +22,11 @@ void TestRouter::process(double currentTime) {
         // pick first packet and read it's destination address
         p = packets.front();
         packetDestination = p->getDestination();
-        
+
         //check for the destination in the routingTable and add Packet to the nexthop value from the
         //routingTable
         bool routingExists = false;
-        
+
         for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
                 for (auto l : hostNode->getConnections()) {
@@ -36,9 +36,12 @@ void TestRouter::process(double currentTime) {
                         routingExists = true;
                     }
                 }
+            }else {
+              //Out put for packet drop 
+              std::cout << "PACKET: "<<  p->getID() << " DROPPED"  << std::endl;
             }
         }
-        
+
         // no routing found
         if (!routingExists && !hostNode->getConnections().empty()) {
             // forward packet directly to first connection
@@ -46,7 +49,7 @@ void TestRouter::process(double currentTime) {
             targetLink->addPacket(p);
             packets.erase(packets.begin());
         }
-        
+
         /*
         for(auto key:this->routingTable){
           if(key.first==packetDestination){
