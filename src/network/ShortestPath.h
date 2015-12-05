@@ -3,11 +3,13 @@
 #include <cfloat> // for DBL_MAX the greatest amount of a double used in finding shortest path
 
 #include "../ns.h"
-#include "Network.h"
-#include "NetworkSimulator.h"
+#include "../node/ApplicationNode.h"
+#include "../link/Link.h"
 
 class ShortestPath {
 public:
+    ShortestPath() = default;
+    
     ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,std::vector<Link*> links,ns::LinkStorage allAvailableLinks);
 
     const std::vector< std::vector<std::string> >& getShortestPaths() const;
