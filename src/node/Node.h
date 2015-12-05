@@ -54,7 +54,9 @@ public:
     virtual std::string getType() const = 0;
 
     void updateTable(std::vector<ns::AddressType> shortestPath);
-    std::map<ns::AddressType,ns::AddressType> getRoutingTable();
+    
+    /** Return modifiable routing table. */
+    std::map<ns::AddressType,ns::AddressType>& getRoutingTable();
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;

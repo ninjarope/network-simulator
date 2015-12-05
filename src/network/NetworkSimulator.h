@@ -7,7 +7,6 @@
 #ifndef __NetworkSimulator__NetworkSimulator__
 #define __NetworkSimulator__NetworkSimulator__
 #include <memory>
-#include "ShortestPath.h"
 #include "../ns.h"
 #include "Timer.h"
 #include "Network.h"
@@ -30,9 +29,6 @@ public:
     void start();
     
     void timerCallback() override;
-
-    /** Updates the routing table of each node. */
-    void updateRouting();
 
     /** Terminate controller and UI. */
     void quit();

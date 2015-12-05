@@ -7,6 +7,7 @@
 //
 
 #include "Network.h"
+#include "ShortestPath.h"
 
 Network::Network() {
 
@@ -116,7 +117,32 @@ size_t Network::getLinkCount() {
 const std::vector <ns::AddressType>& Network::getAddresses() const {
     return addresses;
 }
-/** check LinkStorage */
+
+void Network::updateRouting(){
+    ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
+    s1.alsideperm();
+    // Update routings of all nodes
+    for (auto& path : s1.getShortestPaths()) {
+        getNode(path.front())->updateTable(path);
+    }
+}
+
+void Network::clearRouting(){
+    for (auto& n : nodes) {
+        n.second->getRoutingTable().clear();
+    }
+}
+
+/** Clears the routing table of each node. */
+bool Network::routingExists() {
+    bool exists = false;
+    for (auto& n : nodes) {
+        exists |= !n.second->getRoutingTable().empty();
+    }
+    return exists;
+}
+
+
 void Network::printLinks() {
     for (auto i : this->allAvailableLinks) {
         std::cout << i.first << "-" << i.second << std::endl;

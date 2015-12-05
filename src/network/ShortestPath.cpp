@@ -10,8 +10,13 @@ ShortestPath::ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,st
     this->allAvailableLinks = allAvailableLinks;
     this->nodes = nodes;
     this->links = links;
+
     for(auto key:this->nodes){
-        allNodes.push_back(key.first);
+      // secluded nodes are not taken into cnsideration for finding shortest path
+      auto it = allAvailableLinks.find(key.first);
+      if (it != allAvailableLinks.end()){
+          allNodes.push_back(key.first);
+      }
     }
 }
 
@@ -20,6 +25,14 @@ const std::vector< std::vector<std::string> >& ShortestPath::getShortestPaths() 
 }
 
 void ShortestPath::alsideperm(){
+  /*
+  this function selects one node at a time and make combination of the rest of the nodes and sends the info to next perm
+  eg: if we have nodes A B C D
+  it will choose A
+  make a combination of B C D and send to next perm
+  note: it will keep on repeating this process until the chosen node is the last node in the graph
+  i.e D for this example
+  */
     std::vector<std::string> permCpyAllNodes;
     std::vector<std::string> tempermCpyAllNodes;
     std::string nod="";
@@ -58,12 +71,26 @@ void ShortestPath::alsideperm(){
         }
         std::cout<<std::endl;
     }
-    
+
     this->allShortestPaths();
     this->createMapForNodes();
-    
+
 }
 void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::string nod){
+  /*
+  This function works in the following steps
+  it makes combination of all paths keeping nod common
+    eg: taking last example
+    chosen node A
+    rest of the nodes B C D
+    combinations
+    A B C D
+    A C B D
+    A D C B
+    ... etc
+    and while doing this it will call validate and validate the paths as per our configured map
+
+  */
     std::vector<std::string> cpyAllNodes;
     std::string f=permCpyAllNodes.at(0);
     std::string l=permCpyAllNodes.at(permCpyAllNodes.size()-1);
@@ -85,12 +112,12 @@ void ShortestPath::nextPerm (std::vector<std::string> permCpyAllNodes, std::stri
             }
             //validate all the paths
             cpyAllNodes=this->validate(cpyAllNodes);
-            
+
             if(!cpyAllNodes.empty()){
                 //eliminating simmilar paths
                 bool is_equal=this->checkSimilarPath(this->nodeRTableFullPaths,cpyAllNodes);
                 if(is_equal!=1){
-                    
+
                     this->nodeRTableFullPaths.push_back(cpyAllNodes);
                 }
             }
@@ -152,6 +179,7 @@ bool ShortestPath::checkSimilarPath(std::vector< std::vector<std::string> > node
     return is_equal;
 }
 
+// takes the vector of the nodes involved in the and returns the weight of the path
 double ShortestPath::getWeightOfEachPath(std::vector<std::string> path){
     double weight = 0;
     for(unsigned int i=0;i<path.size();i++){
@@ -168,15 +196,27 @@ double ShortestPath::getWeightOfEachPath(std::vector<std::string> path){
     return weight;
 }
 
+//Creating the vector of all shortest paths for the whole network
 void ShortestPath::allShortestPaths(){
     std::map<std::string, double> temp;
     this->minWeight = DBL_MAX;
+
+    /*
+    filling a temporary map
+    key is the address of source and destination together value is DBL_MAX
+    */
+
     for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
         srcDest += this->nodeRTableFullPaths[i][this->nodeRTableFullPaths[i].size()-1];
         temp.insert({srcDest, this->minWeight});
     }
+
+    /*
+    changing the value of the temporary map to minimum one
+    */
+
     for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
@@ -187,6 +227,12 @@ void ShortestPath::allShortestPaths(){
             it->second = weight;
         }
     }
+    /*
+    comparing the tem map and the all possible paths
+    if the key (source and destination) is equal to the source and destination of the path
+     and the value of the temp (minimum weight) is equal to the weight of the path
+     then that path added to the vector of shortestPaths
+    */
     for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
@@ -197,6 +243,7 @@ void ShortestPath::allShortestPaths(){
             this->shortestPaths.push_back(this->nodeRTableFullPaths[i]);
         }
     }
+    //printing for test
     std::cout<<"----------------------ALL SHORTEST PATHS------------------"<<std::endl;
     std::cout<<this->shortestPaths.size()<<std::endl;
     for (int i = 0; i < this->shortestPaths.size() ; i++){
@@ -208,6 +255,7 @@ void ShortestPath::allShortestPaths(){
         std::cout  <<"Weight:  "<< this->getWeightOfEachPath(this->shortestPaths[i])<< std::endl;
         std::cout << std::endl;
     }
+    //printing for test
     std::cout << "-----------------TEMP MAP-----------------------" << std::endl;
     for (auto t : temp){
         std::cout << "SOURCE AND DESTINATION: " ;
@@ -218,6 +266,7 @@ void ShortestPath::allShortestPaths(){
     }
 }
 
+//fill a variable "routingTable" which every node has
 void ShortestPath::createMapForNodes(){
     for (auto node: this->nodes){
         for(unsigned int i=0;i<this->shortestPaths.size();i++){
@@ -228,6 +277,7 @@ void ShortestPath::createMapForNodes(){
             }
         }
     }
+    //printing the routing table for test
     std::cout << "---------------------------MAP----------------------------" << std::endl;
     for (auto node : this->nodes){
         for (auto z : node.second->getRoutingTable()){
@@ -237,4 +287,3 @@ void ShortestPath::createMapForNodes(){
         std::cout << "*********----------------------------------------------------------------**********" << std::endl;
     }
 }
-

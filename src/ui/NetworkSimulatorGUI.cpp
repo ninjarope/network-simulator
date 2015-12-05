@@ -10,6 +10,7 @@
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 #include <cmath>
+#include <cfloat>       /* DBL_MAX */
 
 NetworkSimulatorGUI::NetworkSimulatorGUI() {
     // Create window
@@ -197,7 +198,9 @@ void NetworkSimulatorGUI::drawTime() {
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
-        << " s ";
+        << " s   "
+        << " ROUTING: "
+        << (networkSimulator->routingExists() ? "shortest paths" : "random");
     
     text.setString(ss.str());
 
@@ -205,13 +208,13 @@ void NetworkSimulatorGUI::drawTime() {
     text.setPosition(fontSize, fontSize);
     window->draw(text);
     
-    ss = std::stringstream();
+    ss.str("");
     
     ss
         << "[ESC] Exit   "
         << "[Enter] Restart   "
         << "[Space] Pause   "
-        << "[G] Generate routing   "
+        << "[G] Switch routing   "
         << "[S] Stats   "
         << "[D] Distribution   "
         << "[M] Switch distribution mode";
@@ -265,7 +268,7 @@ void NetworkSimulatorGUI::drawApplications() {
     text.setString(ss.str());
     
     // Draw to rendering buffer
-    text.setPosition(fontSize, fontSize + (networkSimulator->getLinks().size() + 3) * fontSize);
+    text.setPosition(fontSize, fontSize + (networkSimulator->getLinks().size() + 3) * (fontSize + 1));
     window->draw(text);
 }
 
@@ -308,7 +311,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
 
         // Draw total packet count
         double percentage = traffic / totalTraffic * 100;
-        ss = std::stringstream();
+        ss.str("");
         ss.setf(std::ios::fixed);
         ss.precision(1);
         ss << (percentage > 1.0 ? percentage : 0) << " %";
@@ -364,7 +367,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
         
         // Draw total packet count
         double percentage = queueLength / queueSum * 100;
-        ss = std::stringstream();
+        ss.str("");
         ss.setf(std::ios::fixed);
         ss.precision(1);
         ss << (percentage > 1.0 ? percentage : 0) << " %";
@@ -489,8 +492,9 @@ void NetworkSimulatorGUI::update() {
                         break;
 
                     case sf::Keyboard::G:
-                        //networkSimulator->updateRouting();
-                        generateGraphLayout();
+                        if (!networkSimulator->routingExists()) networkSimulator->updateRouting();
+                        else networkSimulator->clearRouting();
+                        //generateGraphLayout();
                         break;
 
                     case sf::Keyboard::S:
