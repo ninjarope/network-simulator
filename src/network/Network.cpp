@@ -7,11 +7,12 @@
 //
 
 #include "Network.h"
-#include "ShortestPath.h"
+
 
 Network::Network() {
 
 }
+
 Network::~Network() {
     for (auto& link : links) delete link;
     for (auto& node : nodes) delete node.second;
@@ -119,15 +120,16 @@ const std::vector <ns::AddressType>& Network::getAddresses() const {
 }
 
 void Network::updateRouting(){
-    ShortestPath s1(this->nodes, this->links,this->allAvailableLinks);
-    s1.alsideperm();
+    shortestPath = ShortestPath(this->nodes, this->links,this->allAvailableLinks);
+    shortestPath.alsideperm();
     // Update routings of all nodes
-    for (auto& path : s1.getShortestPaths()) {
+    for (auto& path : shortestPath.getShortestPaths()) {
         getNode(path.front())->updateTable(path);
     }
 }
 
 void Network::clearRouting(){
+    shortestPath = ShortestPath();
     for (auto& n : nodes) {
         n.second->getRoutingTable().clear();
     }

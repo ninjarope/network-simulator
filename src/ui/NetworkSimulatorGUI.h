@@ -80,6 +80,11 @@ public:
     void drawQueueDistribution();
 
     /**
+     * Show routing between two nodes.
+     */
+    void drawRouting();
+
+    /**
      * Stat display on / off.
      */
     void toggleStatVisibility();

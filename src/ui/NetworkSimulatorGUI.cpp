@@ -11,6 +11,7 @@
 #include <ctime>       /* time */
 #include <cmath>
 #include <cfloat>       /* DBL_MAX */
+#include <algorithm>
 
 NetworkSimulatorGUI::NetworkSimulatorGUI() {
     // Create window
@@ -383,7 +384,40 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     xOffset = (int) (width - text.getLocalBounds().width) / 2;
     text.setPosition(xOffset, fontSize);
     window->draw(text);
+}
+
+void NetworkSimulatorGUI::drawRouting() {
+    // Check if there is source and destination selected
+    if (selectedNodes.size() == 2) {
+        ns::AddressType source = selectedNodes.front();
+        ns::AddressType dest = selectedNodes.back();
     
+        auto& paths = networkSimulator->getPaths();
+        std::vector<ns::AddressType> path;
+        for (auto& p : paths) {
+            if (p.front() == source && p.back() == dest) path = p;
+        }
+
+        if (path.size() > 1) {
+            for (unsigned int i = 0; i < path.size() - 1; i++) {
+                
+                auto n1 = visibleNodes.at(path[i]);
+                auto n2 = visibleNodes.at(path[i + 1]);
+                
+                // Color changes to red as queue grows
+                sf::Color pathColor = sf::Color::Green;
+
+                // Line between nodes
+                sf::Vertex line[] =
+                {
+                    sf::Vertex(sf::Vector2f(n1.x + transformX, n1.y + transformY), pathColor),
+                    sf::Vertex(sf::Vector2f(n2.x + transformX, n2.y + transformY), pathColor)
+                };
+                
+                window->draw(line, 2, sf::Lines);
+            }
+        }
+    }
 }
 
 void NetworkSimulatorGUI::toggleStatVisibility() {
@@ -539,6 +573,7 @@ void NetworkSimulatorGUI::update() {
     
     // Rendering subtasks
     drawLinks();
+    drawRouting();
     drawNodes();
     
     if (distributionVisible) {

@@ -15,12 +15,15 @@
 #include "../Notifiable.h"
 #include "../node/ApplicationNode.h"
 #include "../link/Link.h"
+#include "ShortestPath.h"
+
+
 
 /**
  * Network class. This class should control all additions and removals
  * of nodes and links.
  */
-class Network: public Notifiable {
+class Network : public Notifiable {
   public:
     Network();
     ~Network();
@@ -75,12 +78,15 @@ class Network: public Notifiable {
     /** Clears the routing table of each node. */
     bool routingExists();
 
-    
+    /** Clears the routing table of each node. */
+    const std::vector< std::vector<std::string>>& getPaths() const { return shortestPath.getShortestPaths(); }
+
   protected:
     std::vector <ns::AddressType> addresses;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;
+    ShortestPath shortestPath;
 
 };
 #endif /* defined(__NetworkSimulator__Network__) */
