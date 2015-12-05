@@ -19,9 +19,9 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     settings.antialiasingLevel = 0;
     
     sf::VideoMode videoMode = sf::VideoMode::getDesktopMode();
-    width = videoMode.width;
-    height = videoMode.height;
-    window = new sf::RenderWindow(sf::VideoMode(width, height), "Network Simulator", sf::Style::Fullscreen, settings);
+    windowWidth = videoMode.width;
+    windowHeight = videoMode.height;
+    window = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Network Simulator", sf::Style::Fullscreen, settings);
     
     // Load font and set font properties
     if (!font.loadFromFile("fonts/arial.ttf"))
@@ -39,6 +39,7 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     
     // Colors
     defaultNodeColor = sf::Color(128, 0, 196);
+    defaultFillColor = sf::Color(0, 0, 0, 255);
     defaultDistColor = sf::Color(64, 32, 128, 215);
     
     // Node properties
@@ -48,8 +49,8 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     statsVisible = false;
     distributionVisible = false;
     distributionMode = Traffic;
-    transformX = width / 2.0;
-    transformY = height / 2.0;
+    transformX = windowWidth / 2.0;
+    transformY = windowHeight / 2.0;
     
     // Set random seed
     srand((unsigned int) time(NULL));
@@ -90,16 +91,16 @@ void NetworkSimulatorGUI::generateGraphLayout() {
     
     // Apply scaling so that original aspect ratio is retained
     // and everything fits on the screen
-    double xRatio = 0.5 * (width) / (xMax != 0.0 ? xMax : width);
-    double yRatio = 0.5 * (height) / (yMax != 0.0 ? yMax : height);
+    double xRatio = 0.5 * (windowWidth) / (xMax != 0.0 ? xMax : windowWidth);
+    double yRatio = 0.5 * (windowHeight) / (yMax != 0.0 ? yMax : windowHeight);
     double scaleRatio;
     
     if (xRatio < yRatio) scaleRatio = xRatio;
     else scaleRatio = yRatio;
     
     for (auto &n : networkSimulator->getNodes()) {
-        double x = scaleRatio * (n.second->getX() - centerX); // rand() % (width - nodeRadius * 2);
-        double y = scaleRatio * (n.second->getY() - centerY); // rand() % (height - nodeRadius * 2);
+        double x = scaleRatio * (n.second->getX() - centerX); // rand() % (windowWidth - nodeRadius * 2);
+        double y = scaleRatio * (n.second->getY() - centerY); // rand() % (windowHeight - nodeRadius * 2);
         visibleNodes.insert({n.first, {x, y}});
     }
 }
@@ -135,11 +136,13 @@ void NetworkSimulatorGUI::drawNodes() {
         
         // set color and transfrom
         sf::Color outlineColor = defaultNodeColor;
-        sf::Color fillColor = sf::Color::Black;
+        sf::Color fillColor = defaultFillColor;
         int thickness = 1;
         
-        if (selectedNodes.front() == n.first) fillColor = defaultNodeColor;
-        if (selectedNodes.back() == n.first && selectedNodes.size() > 1) fillColor = sf::Color(64, 64, 128);
+        if (selectedNodes.front() == n.first || selectedNodes.back() == n.first) {
+            fillColor = sf::Color(48, 0, 64, 255);
+            outlineColor = sf::Color::White;
+        }
         
         if (n.first == focusNode) {
             outlineColor = sf::Color::White;
@@ -156,8 +159,8 @@ void NetworkSimulatorGUI::drawNodes() {
         text.setString(address);
         
         // Draw to rendering buffer
-        text.setOrigin(fontSize / 2, fontSize / 2);
-        text.setPosition(x, y);
+        //text.setOrigin(fontSize / 2, fontSize / 2);
+        text.setPosition(x - fontSize / 2, y - fontSize / 2);
 
         window->draw(text);
     }
@@ -192,6 +195,51 @@ void NetworkSimulatorGUI::drawLinks() {
     }
 }
 
+void NetworkSimulatorGUI::drawTextBoxes() {
+    // Pop-up boxes for selected nodes
+    int i = 0;
+    double margin = fontSize / 2;
+    sf::Color boxColor = sf::Color(128, 128, 128);
+    for (auto n : selectedNodes) {
+        // Draw to rendering buffer
+        text.setString(i++ == 0 ? "SOURCE" : "DESTINATION");
+        sf::FloatRect textBounds = text.getLocalBounds();
+        
+        // Node center point
+        int x = visibleNodes.at(n).x + transformX - textBounds.width / 2;
+        int y = visibleNodes.at(n).y + transformY - textBounds.height / 2 - fontSize * 4;
+
+        text.setPosition(x, y);
+        
+        // Box
+        sf::RectangleShape rec(sf::Vector2f(textBounds.width + margin * 2,
+                                            textBounds.height * 2.0 + margin * 2));
+        
+        rec.setFillColor(sf::Color(0, 0, 0, 128));
+        rec.setOutlineColor(boxColor);
+        rec.setOutlineThickness(1);
+        rec.setPosition(x - margin, y - margin);
+        
+        // Pointing triangle
+        sf::ConvexShape triangle(3);
+        
+        sf::FloatRect recBounds = rec.getLocalBounds();
+        triangle.setPoint(0, sf::Vector2f(-5, 0));
+        triangle.setPoint(1, sf::Vector2f(5, 0));
+        triangle.setPoint(2, sf::Vector2f(0, 5));
+        triangle.setPosition(x - margin + recBounds.width / 2, y - margin + recBounds.height);
+    
+        triangle.setFillColor(boxColor);
+        triangle.setOutlineColor(boxColor);
+        triangle.setOutlineThickness(1);
+        
+        window->draw(triangle);
+        window->draw(rec);
+        window->draw(text);
+    }
+}
+
+
 void NetworkSimulatorGUI::drawTime() {
     std::stringstream ss;
     ss.precision(2);
@@ -224,7 +272,7 @@ void NetworkSimulatorGUI::drawTime() {
     text.setString(ss.str());
     
     // Draw to rendering buffer
-    text.setPosition(fontSize, height - fontSize);
+    text.setPosition(fontSize, windowHeight - fontSize * 2);
     window->draw(text);
 
 
@@ -276,7 +324,7 @@ void NetworkSimulatorGUI::drawApplications() {
 void NetworkSimulatorGUI::drawTrafficDistribution() {
     const auto& links = networkSimulator->getLinks();
     size_t n = links.size();
-    double w = width / n;
+    double w = windowWidth / n;
     double xOffset;
   
     // Get max traffic
@@ -289,12 +337,12 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
     // Draw relative bar graph showing distribution of traffic between the links
     for (auto i = 0; i < n; ++i) {
         size_t traffic = links[i]->getTransmissionLog().size();
-        double h = height * traffic / totalTraffic;
+        double h = windowHeight * traffic / totalTraffic;
         
         // Draw bar
         sf::RectangleShape rec(sf::Vector2f(w - 2, h));
         rec.setFillColor(defaultDistColor);
-        rec.setPosition(i * w, height - h);
+        rec.setPosition(i * w, windowHeight - h);
         window->draw(rec);
         
         // Generate label text
@@ -307,7 +355,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
         // Draw label
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
-        text.setPosition(i * w + xOffset, height - fontSize * 4);
+        text.setPosition(i * w + xOffset, windowHeight - fontSize * 5);
         window->draw(text);
 
         // Draw total packet count
@@ -319,13 +367,13 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
 
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
-        text.setPosition(i * w + xOffset, height - fontSize * 3);
+        text.setPosition(i * w + xOffset, windowHeight - fontSize * 4);
         window->draw(text);
     }
 
     // Draw global label
     text.setString("Total traffic distribution");
-    xOffset = (int) (width - text.getLocalBounds().width) / 2;
+    xOffset = (int) (windowWidth - text.getLocalBounds().width) / 2;
     text.setPosition(xOffset, fontSize);
     window->draw(text);
 
@@ -334,7 +382,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
 void NetworkSimulatorGUI::drawQueueDistribution() {
     const auto& links = networkSimulator->getLinks();
     size_t n = links.size();
-    double w = width / n;
+    double w = windowWidth / n;
     double xOffset;
     
     // Get max queueLength
@@ -347,12 +395,12 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     // Draw relative bar graph showing distribution of queueLength between the links
     for (auto i = 0; i < n; ++i) {
         size_t queueLength = links[i]->getQueueLength();
-        double h = height * queueLength / queueSum;
+        double h = windowHeight * queueLength / queueSum;
         
         // Draw bar
         sf::RectangleShape rec(sf::Vector2f(w - 2, h));
-        rec.setFillColor(sf::Color(128, 0, 0, 196));
-        rec.setPosition(i * w, height - h);
+        rec.setFillColor(sf::Color(128, 0, 96, 196));
+        rec.setPosition(i * w, windowHeight - h);
         window->draw(rec);
         
         // Draw label
@@ -363,7 +411,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
 
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
-        text.setPosition(i * w + xOffset, height - fontSize * 4);
+        text.setPosition(i * w + xOffset, windowHeight - fontSize * 5);
         window->draw(text);
         
         // Draw total packet count
@@ -375,22 +423,22 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
         
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
-        text.setPosition(i * w + xOffset, height - fontSize * 3);
+        text.setPosition(i * w + xOffset, windowHeight - fontSize * 4);
         window->draw(text);
     }
     
     // Draw global label
     text.setString("Queue distribution");
-    xOffset = (int) (width - text.getLocalBounds().width) / 2;
+    xOffset = (int) (windowWidth - text.getLocalBounds().width) / 2;
     text.setPosition(xOffset, fontSize);
     window->draw(text);
 }
 
 void NetworkSimulatorGUI::drawRouting() {
     // Check if there is source and destination selected
-    if (selectedNodes.size() == 2) {
+    if (!selectedNodes.empty()) {
         ns::AddressType source = selectedNodes.front();
-        ns::AddressType dest = selectedNodes.back();
+        ns::AddressType dest = (selectedNodes.size() == 1 ? focusNode : selectedNodes.back());
     
         auto& paths = networkSimulator->getPaths();
         std::vector<ns::AddressType> path;
@@ -399,23 +447,32 @@ void NetworkSimulatorGUI::drawRouting() {
         }
 
         if (path.size() > 1) {
-            for (unsigned int i = 0; i < path.size() - 1; i++) {
-                
-                auto n1 = visibleNodes.at(path[i]);
-                auto n2 = visibleNodes.at(path[i + 1]);
-                
-                // Color changes to red as queue grows
-                sf::Color pathColor = sf::Color::Green;
-
-                // Line between nodes
-                sf::Vertex line[] =
-                {
-                    sf::Vertex(sf::Vector2f(n1.x + transformX, n1.y + transformY), pathColor),
-                    sf::Vertex(sf::Vector2f(n2.x + transformX, n2.y + transformY), pathColor)
-                };
-                
-                window->draw(line, 2, sf::Lines);
-            }
+            try {
+                Node* n1 = networkSimulator->getNode(source);
+                while (n1) {
+                    ns::AddressType next = n1->getRoutingTable().at(dest);
+                    Node* n2 = networkSimulator->getNode(next);
+                    
+                    // Color changes to red as queue grows
+                    sf::Color pathColor = sf::Color(255, 255, 255);
+    
+                    // Line between nodes
+                    double x1 = visibleNodes.at(n1->getAddress()).x;
+                    double y1 = visibleNodes.at(n1->getAddress()).y;
+                    double x2 = visibleNodes.at(n2->getAddress()).x;
+                    double y2 = visibleNodes.at(n2->getAddress()).y;
+                    
+                    sf::Vertex line[] =
+                    {
+                        sf::Vertex(sf::Vector2f(x1 + transformX, y1 + transformY), pathColor),
+                        sf::Vertex(sf::Vector2f(x2 + transformX, y2 + transformY), pathColor)
+                    };
+                    
+                    window->draw(line, 2, sf::Lines);
+                    next = n2->getRoutingTable().at(dest);
+                    n1 = n2;
+                }
+            } catch (std::out_of_range) {}
         }
     }
 }
@@ -489,7 +546,7 @@ void NetworkSimulatorGUI::update() {
             case sf::Event::MouseButtonPressed:
                 if (altDown) selectedNodes.clear();
                 checkMouseOverNode(event.mouseButton.x, event.mouseButton.y);
-                if (focusNode.size() > 0) {
+                if (!focusNode.empty()) {
                     toggleSelect(focusNode);
                 }
                 break;
@@ -528,7 +585,6 @@ void NetworkSimulatorGUI::update() {
                     case sf::Keyboard::G:
                         if (!networkSimulator->routingExists()) networkSimulator->updateRouting();
                         else networkSimulator->clearRouting();
-                        //generateGraphLayout();
                         break;
 
                     case sf::Keyboard::S:
@@ -572,16 +628,12 @@ void NetworkSimulatorGUI::update() {
     window->clear();
     
     // Rendering subtasks
-    drawLinks();
-    drawRouting();
-    drawNodes();
-    
     if (distributionVisible) {
         switch (distributionMode) {
             case Traffic:
                 drawTrafficDistribution();
                 break;
-
+                
             case Queue:
                 drawQueueDistribution();
                 
@@ -589,6 +641,11 @@ void NetworkSimulatorGUI::update() {
                 break;
         }
     }
+
+    drawLinks();
+    drawRouting();
+    drawNodes();
+    drawTextBoxes();
 
     if (statsVisible) {
         drawQueues();
