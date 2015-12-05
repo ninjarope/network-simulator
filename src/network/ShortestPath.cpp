@@ -8,9 +8,9 @@
 //shortest path on the basis of weights. So another function will be added.
 ShortestPath::ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,std::vector<Link*> links,ns::LinkStorage allAvailableLinks){
     allAvailableLinks = allAvailableLinks;
-    nodes = nodes;
-    links = links;
-    for(auto key:nodes){
+    this->nodes = nodes;
+    this->links = links;
+    for(auto key : nodes){
         allNodes.push_back(key.first);
     }
 }
@@ -43,7 +43,7 @@ void ShortestPath::alsideperm() {
         temp.push_back(val.first);
         temp.push_back(val.second);
         bool isEqual = checkSimilarPath(nodeRTableFullPaths, temp);
-        if (isEqual == 1) {
+        if (isEqual) {
             temp.clear();
         }
         else {
@@ -69,7 +69,7 @@ void ShortestPath::nextPerm(std::vector <std::string> permCpyAllNodes, std::stri
     std::string l = permCpyAllNodes.at(permCpyAllNodes.size() - 1);
     bool check = false;
     //permutation and valid paths
-    while (permCpyAllNodes.size() != 0 && check == false) {
+    while (permCpyAllNodes.size() != 0 && check) {
         if (permCpyAllNodes.size() == 1) {
             permCpyAllNodes.clear();
             permCpyAllNodes.push_back(f);
@@ -124,7 +124,7 @@ std::vector <std::string> ShortestPath::validate(std::vector <std::string> cpyAl
                 validLink = false;
             }
         }
-        if (validLink == false) {
+        if (validLink) {
             it++;
             while (it != cpyAllNodes.end()) {
                 cpyAllNodes.pop_back();

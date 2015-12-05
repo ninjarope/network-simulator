@@ -501,6 +501,7 @@ void NetworkSimulatorGUI::update() {
                         break;
 
                     case sf::Keyboard::G:
+                        // networkSimulator->updateRouting();
                         generateGraphLayout();
                         break;
 
