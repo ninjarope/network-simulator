@@ -12,6 +12,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >
 >```
 >./ns [relative-xml-file-path]
+>./ns random [node-count] [edge-count] [packet-generator-count]
 >```
 
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.

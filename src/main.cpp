@@ -20,23 +20,13 @@
 #include "application/PacketReceiver.h"
 #include "application/TestRouter.h"
 
+#include "network/RandomNetworkGenerator.h"
 
 // dependency for xml parsing
 #include "xml/tinyxml2.h"
 #include "xml/XMLReader.h"
 
 #include "test/Tests.h"
-
-void runUI(NetworkSimulator& ns, NetworkSimulatorUI* ui) {
-    // TODO fix this or clear comments
-    // Update routing tables
-    // ns.updateRouting();  // comment this out if only one node or no links.. until Shortest Path gets error handling
-
-    // run (timer has currently some hard-coded test values)
-
-    ui->generateGraphLayout();
-    ns.startTimer();
-}
 
 int main(int argc, char** argv) {
     NetworkSimulator ns;
@@ -54,7 +44,11 @@ int main(int argc, char** argv) {
     // Load configuration for network and launch UI
     try {
         // Arguments override behaviour -> testing
-        if (argc > 2) {
+        bool args = argc > 1;
+        std::string firstArg;
+        
+        if (args) firstArg = argv[1];
+        if (firstArg != "random" && argc > 2) {
             // Run tests
             result = Catch::Session().run(argc, argv);
         } else {
@@ -67,12 +61,18 @@ int main(int argc, char** argv) {
             }
 
             // load xml
-            r.load(filepath);
-            std::cout << "Log: Xml file loaded" << std::endl;
-            r.process();
-
-            // Graphics!
-            runUI(ns, ui);
+            if (argc == 5 && firstArg == "random") {
+                RandomNetworkGenerator g(ns, std::stoi(argv[2]), std::stoi(argv[3]), std::stoi(argv[4]));
+                g.generate();
+            } else {
+                r.load(filepath);
+                std::cout << "Log: Xml file loaded" << std::endl;
+                r.process();
+            }
+            
+            
+            // Let's go!
+            ns.restart();
         }
     } catch (const char* msg) {
         std::cerr << msg << std::endl;
