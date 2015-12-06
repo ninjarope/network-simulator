@@ -96,6 +96,9 @@ void XMLReader::buildNode(XMLElement* e) {
         } else if (appType == "TestRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(TEST_ROUTER));
+        } else if (appType == "RoutingGenerator") {
+            ns.getNode(address)->
+            addApplications(applicationFactory->create(ROUTING_GENERATOR));
         }
 
         XMLHandle aeHandle(applicationElement); // while-loop scope

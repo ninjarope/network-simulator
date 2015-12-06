@@ -40,7 +40,7 @@ ns::Connections& Node::getConnections() { return connections; }
 
 ns::Packets& Node::getPackets() { return packets; }
 
-ns::AddressType Node::getAddress() const { return address; }
+ns::AddressType Node::getAddress() { return address; }
 
 double Node::getX() { return x; }
 
@@ -51,16 +51,16 @@ void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     // For given destination (last address in path) associate next node in path (check that first is this node)
     try {
         if (shortestPath.front() == this->address) {
-            this->routingTable.at(shortestPath.back()) = shortestPath[1];
+            this->routingTable.at(shortestPath.back()) = {shortestPath[1], 0.0};
             std::cout << "TABLE UPDATED!" << std::endl;
         }
     } catch (std::out_of_range) {
-        this->routingTable.insert({shortestPath.back(), shortestPath[1]});
+        this->routingTable.insert({shortestPath.back(), {shortestPath[1], 0.0}});
         std::cout << "Inserted " << shortestPath.back() << ", " << shortestPath[1] << std::endl;
         // std::cout << "Key " << shortestPath.back() << " not found!" << std::endl;
     }
     
 }
 
-std::map<ns::AddressType,ns::AddressType>& Node::getRoutingTable() { return routingTable; }
+ns::RoutingTable& Node::getRoutingTable() { return routingTable; }
 

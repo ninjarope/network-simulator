@@ -45,10 +45,10 @@ public:
     bool setDestination(Node* destination);
 
     /** Get pointer to source node. */
-    const Node* getSource() const;
+    Node* getSource();
 
     /** Get pointer to destination node. */
-    const Node* getDestination() const;
+    Node* getDestination();
 
     /** Set weight of the link. */
     void setWeight(double weight);

@@ -364,7 +364,7 @@ void ShortestPath::createMapForNodes(){
             if(node.first == this->shortestPaths[i][0]){
                 std::string dest = this->shortestPaths[i][this->shortestPaths[i].size()-1];
                 std::string nextHop = this->shortestPaths[i][1];
-                node.second->getRoutingTable().insert({dest, nextHop});
+                node.second->getRoutingTable().insert({dest, {nextHop, 0.0}});
             }
         }
     }
@@ -373,7 +373,7 @@ void ShortestPath::createMapForNodes(){
     for (auto node : this->nodes){
         for (auto z : node.second->getRoutingTable()){
             std::cout << node.first << ": " << std::endl;
-            std::cout << "Destination: " << z.first << " NextHop: " << z.second << std::endl;
+            std::cout << "Destination: " << z.first << " NextHop: " << z.second.nextHop << std::endl;
         }
         std::cout << "*********----------------------------------------------------------------**********" << std::endl;
     }

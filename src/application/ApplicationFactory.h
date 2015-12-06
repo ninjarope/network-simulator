@@ -10,6 +10,7 @@
 #include "PacketGenerator.h"
 #include "RandomRouter.h"
 #include "TestRouter.h"
+#include "RoutingGenerator.h"
 #include "../network/NetworkSimulator.h"
 
 
@@ -21,7 +22,8 @@ enum ApplicationType {
     PACKET_RECEIVER,
     PACKET_GENERATOR,
     RANDOM_ROUTER,
-    TEST_ROUTER
+    TEST_ROUTER,
+    ROUTING_GENERATOR
 };
 
 /**
@@ -50,6 +52,8 @@ class ApplicationFactory {
                 return new RandomRouter();
             case TEST_ROUTER:
                 return new TestRouter();
+            case ROUTING_GENERATOR:
+                return new RoutingGenerator();
             default:
                 ;
                 // intentionally left as fall through
