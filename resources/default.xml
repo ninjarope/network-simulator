@@ -38,16 +38,16 @@
         <application type="TestRouter"/>
     </node>
 
-    <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="B" destination="C" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
-    <link source="D" destination="E" directed="false" type="Wireless" speed="3.0" delay="1.0" weight="1.0"/>
+    <link source="A" destination="B" directed="false" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="B" destination="C" directed="false" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="D" destination="E" directed="false" speed="3.0" delay="1.0" weight="1.0"/>
 
-    <link source="A" destination="D" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
-    <link source="D" destination="F" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
-    <link source="C" destination="E" directed="false" type="Wireless" speed="8.0" delay="1.0" weight="1.0"/>
-    <link source="E" destination="F" directed="false" type="Wireless" speed="16.0" delay="1.0" weight="1.0"/>
+    <link source="A" destination="D" directed="false" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="D" destination="F" directed="false" speed="4.0" delay="1.0" weight="1.0"/>
+    <link source="C" destination="E" directed="false" speed="8.0" delay="1.0" weight="1.0"/>
+    <link source="E" destination="F" directed="false" speed="16.0" delay="1.0" weight="1.0"/>
 
-    <link source="B" destination="D" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
-    <link source="B" destination="E" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="B" destination="D" directed="false" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="B" destination="E" directed="false" speed="1.0" delay="1.0" weight="1.0"/>
 
 </network>

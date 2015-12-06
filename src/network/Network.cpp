@@ -36,7 +36,8 @@ Link* Network::getLink(ns::AddressType source, ns::AddressType destination) {
     // TODO: exception handling
     /** \todo { exception handling } */
     for (auto& link : links) {
-        if (link->getDestination()->getAddress() == destination) return link;
+        if (link->getSource()->getAddress() == source &&
+            link->getDestination()->getAddress() == destination) return link;
     }
     return nullptr;
 }

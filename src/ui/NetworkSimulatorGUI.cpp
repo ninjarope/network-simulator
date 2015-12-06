@@ -39,8 +39,8 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     
     // Colors
     defaultNodeColor = sf::Color(128, 0, 196);
-    defaultFillColor = sf::Color(0, 0, 0, 255);
-    defaultDistColor = sf::Color(64, 32, 128, 215);
+    defaultFillColor = sf::Color(0, 0, 0, 160);
+    defaultDistColor = sf::Color(64, 32, 128, 160);
     
     // Node properties
     nodeRadius = 20;
@@ -51,6 +51,7 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() {
     distributionMode = Traffic;
     transformX = windowWidth / 2.0;
     transformY = windowHeight / 2.0;
+    zoom = 1.0;
     
     // Set random seed
     srand((unsigned int) time(NULL));
@@ -128,9 +129,13 @@ void NetworkSimulatorGUI::displayTrafficLog(ns::AddressType source, ns::AddressT
 
 void NetworkSimulatorGUI::drawNodes() {
     for (auto &n : visibleNodes) {
+        // Hide others if two nodes selected
+        if (selectedNodes.size() != 2
+            || n.first == selectedNodes.front()
+            || n.first == selectedNodes.back()) {
         const ns::AddressType& address = n.first;
-        const int& x = n.second.x + transformX;
-        const int& y = n.second.y + transformY;
+        const int& x = n.second.x * zoom + transformX;
+        const int& y = n.second.y * zoom + transformY;
         
         sf::CircleShape nodeShape(nodeRadius);
         
@@ -163,6 +168,7 @@ void NetworkSimulatorGUI::drawNodes() {
         text.setPosition(x - fontSize / 2, y - fontSize / 2);
 
         window->draw(text);
+        }
     }
 }
 
@@ -187,8 +193,8 @@ void NetworkSimulatorGUI::drawLinks() {
         // Line between nodes
         sf::Vertex line[] =
         {
-            sf::Vertex(sf::Vector2f(n1.x + transformX, n1.y + transformY), sourceColor),
-            sf::Vertex(sf::Vector2f(n2.x + transformX, n2.y + transformY), destinationColor)
+            sf::Vertex(sf::Vector2f(n1.x * zoom + transformX, n1.y * zoom + transformY), sourceColor),
+            sf::Vertex(sf::Vector2f(n2.x * zoom + transformX, n2.y * zoom + transformY), destinationColor)
         };
         
         window->draw(line, 2, sf::Lines);
@@ -206,8 +212,8 @@ void NetworkSimulatorGUI::drawTextBoxes() {
         sf::FloatRect textBounds = text.getLocalBounds();
         
         // Node center point
-        int x = visibleNodes.at(n).x + transformX - textBounds.width / 2;
-        int y = visibleNodes.at(n).y + transformY - textBounds.height / 2 - fontSize * 4;
+        int x = visibleNodes.at(n).x * zoom + transformX - textBounds.width / 2;
+        int y = visibleNodes.at(n).y * zoom + transformY - textBounds.height / 2 - fontSize * 4;
 
         text.setPosition(x, y);
         
@@ -326,22 +332,27 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
     size_t n = links.size();
     double w = windowWidth / n;
     double xOffset;
+    double maxTraffic = 0;
+    sf::Color outlineColor = sf::Color::Black;
   
     // Get max traffic
     long double totalTraffic = 1.0e-6;
     for (auto l : links) {
         size_t traffic = l->getTransmissionLog().size();
         totalTraffic += traffic;
+        if (traffic > maxTraffic) maxTraffic = traffic;
     }
     
     // Draw relative bar graph showing distribution of traffic between the links
     for (auto i = 0; i < n; ++i) {
         size_t traffic = links[i]->getTransmissionLog().size();
-        double h = windowHeight * traffic / totalTraffic;
+        double h = (double) windowHeight * traffic / maxTraffic;
         
         // Draw bar
         sf::RectangleShape rec(sf::Vector2f(w - 2, h));
         rec.setFillColor(defaultDistColor);
+        rec.setOutlineColor(outlineColor);
+        rec.setOutlineThickness(0.5);
         rec.setPosition(i * w, windowHeight - h);
         window->draw(rec);
         
@@ -356,7 +367,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
         text.setPosition(i * w + xOffset, windowHeight - fontSize * 5);
-        window->draw(text);
+        if (n < 20) window->draw(text);
 
         // Draw total packet count
         double percentage = traffic / totalTraffic * 100;
@@ -368,7 +379,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
         text.setPosition(i * w + xOffset, windowHeight - fontSize * 4);
-        window->draw(text);
+        if (n < 20) window->draw(text);
     }
 
     // Draw global label
@@ -384,22 +395,27 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     size_t n = links.size();
     double w = windowWidth / n;
     double xOffset;
+    double maxQueue = 0;
+    sf::Color outlineColor = sf::Color::Black;
     
     // Get max queueLength
     long double queueSum = 1.0e-6;
     for (auto l : links) {
         size_t queueLength = l->getQueueLength();
         queueSum += queueLength;
+        if (queueLength > maxQueue) maxQueue = queueLength;
     }
     
     // Draw relative bar graph showing distribution of queueLength between the links
     for (auto i = 0; i < n; ++i) {
         size_t queueLength = links[i]->getQueueLength();
-        double h = windowHeight * queueLength / queueSum;
+        double h = (double) windowHeight * queueLength / maxQueue;
         
         // Draw bar
         sf::RectangleShape rec(sf::Vector2f(w - 2, h));
-        rec.setFillColor(sf::Color(128, 0, 96, 196));
+        rec.setFillColor(sf::Color(128, 0, 96, 160));
+        rec.setOutlineColor(outlineColor);
+        rec.setOutlineThickness(0.5);
         rec.setPosition(i * w, windowHeight - h);
         window->draw(rec);
         
@@ -412,7 +428,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
         text.setPosition(i * w + xOffset, windowHeight - fontSize * 5);
-        window->draw(text);
+        if (n < 20) window->draw(text);
         
         // Draw total packet count
         double percentage = queueLength / queueSum * 100;
@@ -424,7 +440,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
         text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
         text.setPosition(i * w + xOffset, windowHeight - fontSize * 4);
-        window->draw(text);
+        if (n < 20) window->draw(text);
     }
     
     // Draw global label
@@ -452,10 +468,10 @@ void NetworkSimulatorGUI::drawRouting() {
                 sf::Color pathColor = sf::Color(255, 255, 255);
 
                 // Node coordinates
-                double x1 = visibleNodes.at(n1->getAddress()).x;
-                double y1 = visibleNodes.at(n1->getAddress()).y;
-                double x2 = visibleNodes.at(n2->getAddress()).x;
-                double y2 = visibleNodes.at(n2->getAddress()).y;
+                double x1 = visibleNodes.at(n1->getAddress()).x * zoom;
+                double y1 = visibleNodes.at(n1->getAddress()).y * zoom;
+                double x2 = visibleNodes.at(n2->getAddress()).x * zoom;
+                double y2 = visibleNodes.at(n2->getAddress()).y * zoom;
                 
                 // Line between nodes
                 sf::Vertex line[] =
@@ -492,8 +508,8 @@ void NetworkSimulatorGUI::checkMouseOverNode(int x, int y) {
     focusNode = "";
     
     for (auto n : visibleNodes) {
-        int nx = n.second.x + transformX;
-        int ny = n.second.y + transformY;
+        int nx = n.second.x * zoom + transformX;
+        int ny = n.second.y * zoom + transformY;
         if (std::sqrt(std::pow((double) nx - x, 2) + std::pow((double) ny - y, 2)) < nodeRadius) {
             focusNode = n.first;
         }
@@ -524,13 +540,11 @@ void NetworkSimulatorGUI::toggleSelect(ns::AddressType address) {
 }
 
 void NetworkSimulatorGUI::update() {
-    // Event handling
+    // Handle events
     while (window->pollEvent(event))
     {
-        // check the type of the event...
         switch (event.type)
         {
-                // window closed
             case sf::Event::Closed:
                 networkSimulator->quit();
                 break;
@@ -547,27 +561,34 @@ void NetworkSimulatorGUI::update() {
                 }
                 break;
                 
-            // key pressed
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
                         networkSimulator->restart();
                         break;
 
+                    case sf::Keyboard::Num1:
+                        zoom /= 1.1;
+                        break;
+
+                    case sf::Keyboard::Num2:
+                        zoom *= 1.1;
+                        break;
+
                     case sf::Keyboard::Left:
-                        transformX -= 10.0;
+                        transformX += 10.0 * zoom;
                         break;
 
                     case sf::Keyboard::Right:
-                        transformX += 10.0;
+                        transformX -= 10.0 * zoom;
                         break;
 
                     case sf::Keyboard::Up:
-                        transformY -= 10.0;
+                        transformY += 10.0 * zoom;
                         break;
                         
                     case sf::Keyboard::Down:
-                        transformY += 10.0;
+                        transformY -= 10.0 * zoom;
                         break;
 
                     case sf::Keyboard::Space:
@@ -614,7 +635,6 @@ void NetworkSimulatorGUI::update() {
                 }
                 break;
                 
-                // we don't process other types of events
             default:
                 break;
         }

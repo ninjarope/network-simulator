@@ -135,14 +135,15 @@ private:
     unsigned int windowHeight;
     double transformX;
     double transformY;
+    double zoom;
     
     // Helper struct
-    struct point {
+    struct Point {
         double x;
         double y;
     };
     
-    std::map<ns::AddressType, point> visibleNodes;
+    std::map<ns::AddressType, Point> visibleNodes;
     std::list<ns::AddressType> selectedNodes;
     ns::AddressType focusNode;
     
@@ -154,6 +155,7 @@ private:
     } distributionMode ;
     
     bool altDown = false;
+    
 };
 
 

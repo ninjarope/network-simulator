@@ -25,6 +25,7 @@ void NetworkSimulator::timerCallback() {
 }
 
 void NetworkSimulator::restart() {
+    ui->generateGraphLayout();
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
     clearRouting();
