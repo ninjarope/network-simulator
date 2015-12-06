@@ -38,12 +38,12 @@ namespace ns {
     typedef std::list<std::pair<PacketIdType, TimePointType>> TransmissionLogType;
     typedef std::multimap<AddressType, AddressType> LinkStorage;
     
-    struct WeightSum {
+    struct TotalWeight {
         AddressType nextHop;
         double totalWeight;
     };
 
-    typedef std::map<ns::AddressType, WeightSum> RoutingTable;
+    typedef std::map<ns::AddressType, TotalWeight> RoutingTable;
     /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;

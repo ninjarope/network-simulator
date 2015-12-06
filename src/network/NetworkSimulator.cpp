@@ -18,17 +18,17 @@ NetworkSimulator::~NetworkSimulator() {
     delete applicationFactory;
 }
 
-void NetworkSimulator::start() {
-    for (auto& node : getNodes()) node.second->reset();
-    for (auto& link : getLinks()) link->reset();
-    updateRouting();
-    startTimer();
-}
-
 void NetworkSimulator::timerCallback() {
     for (auto& node : getNodes()) node.second->run(currentTime);
     for (auto& link : getLinks()) link->run(currentTime);
     if (ui) ui->update();
+}
+
+void NetworkSimulator::restart() {
+    for (auto& node : getNodes()) node.second->reset();
+    for (auto& link : getLinks()) link->reset();
+    clearRouting();
+    startTimer();
 }
 
 void NetworkSimulator::quit() {
