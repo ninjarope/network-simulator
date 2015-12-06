@@ -551,7 +551,7 @@ void NetworkSimulatorGUI::update() {
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
-                        networkSimulator->start();
+                        networkSimulator->restart();
                         break;
 
                     case sf::Keyboard::Left:
