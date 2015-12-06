@@ -107,7 +107,7 @@ void NetworkSimulatorGUI::generateGraphLayout() {
 
 void NetworkSimulatorGUI::displayTrafficLog(ns::AddressType source, ns::AddressType destination) {
     // print traffic logs
-    const auto &l = networkSimulator->getLink(source, destination);
+    Link* l = networkSimulator->getLink(source, destination);
     std::cout
     << "Transmission log for link "
     << l->getSource()->getAddress()
@@ -440,40 +440,36 @@ void NetworkSimulatorGUI::drawRouting() {
         ns::AddressType source = selectedNodes.front();
         ns::AddressType dest = (selectedNodes.size() == 1 ? focusNode : selectedNodes.back());
     
-        auto& paths = networkSimulator->getPaths();
-        std::vector<ns::AddressType> path;
-        for (auto& p : paths) {
-            if (p.front() == source && p.back() == dest) path = p;
-        }
+        try {
+            Node* n1 = networkSimulator->getNode(source);
+            while (n1) {
+                ns::AddressType next = n1->getRoutingTable().at(dest).nextHop;
+                Node* n2 = networkSimulator->getNode(next);
+                
+                if (!n2) break;
+                
+                // Color changes to red as queue grows
+                sf::Color pathColor = sf::Color(255, 255, 255);
 
-        if (path.size() > 1) {
-            try {
-                Node* n1 = networkSimulator->getNode(source);
-                while (n1) {
-                    ns::AddressType next = n1->getRoutingTable().at(dest);
-                    Node* n2 = networkSimulator->getNode(next);
-                    
-                    // Color changes to red as queue grows
-                    sf::Color pathColor = sf::Color(255, 255, 255);
-    
-                    // Line between nodes
-                    double x1 = visibleNodes.at(n1->getAddress()).x;
-                    double y1 = visibleNodes.at(n1->getAddress()).y;
-                    double x2 = visibleNodes.at(n2->getAddress()).x;
-                    double y2 = visibleNodes.at(n2->getAddress()).y;
-                    
-                    sf::Vertex line[] =
-                    {
-                        sf::Vertex(sf::Vector2f(x1 + transformX, y1 + transformY), pathColor),
-                        sf::Vertex(sf::Vector2f(x2 + transformX, y2 + transformY), pathColor)
-                    };
-                    
-                    window->draw(line, 2, sf::Lines);
-                    next = n2->getRoutingTable().at(dest);
-                    n1 = n2;
-                }
-            } catch (std::out_of_range) {}
-        }
+                // Node coordinates
+                double x1 = visibleNodes.at(n1->getAddress()).x;
+                double y1 = visibleNodes.at(n1->getAddress()).y;
+                double x2 = visibleNodes.at(n2->getAddress()).x;
+                double y2 = visibleNodes.at(n2->getAddress()).y;
+                
+                // Line between nodes
+                sf::Vertex line[] =
+                {
+                    sf::Vertex(sf::Vector2f(x1 + transformX, y1 + transformY), pathColor),
+                    sf::Vertex(sf::Vector2f(x2 + transformX, y2 + transformY), pathColor)
+                };
+                
+                window->draw(line, 2, sf::Lines);
+                
+                n1 = n2;
+                if (next == dest) break;
+            }
+        } catch (std::out_of_range) {}
     }
 }
 

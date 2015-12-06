@@ -21,6 +21,7 @@ NetworkSimulator::~NetworkSimulator() {
 void NetworkSimulator::start() {
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
+    updateRouting();
     startTimer();
 }
 

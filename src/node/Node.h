@@ -42,7 +42,7 @@ public:
     ns::Packets& getPackets();
 
     /** Return address of the node. */
-    ns::AddressType getAddress() const;
+    ns::AddressType getAddress();
     
     /** Return x coordinate. */
     double getX();
@@ -56,7 +56,7 @@ public:
     void updateTable(std::vector<ns::AddressType> shortestPath);
     
     /** Return modifiable routing table. */
-    std::map<ns::AddressType,ns::AddressType>& getRoutingTable();
+    ns::RoutingTable& getRoutingTable();
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
@@ -66,8 +66,8 @@ protected:
     ns::Packets packets;
     ns::AddressType address;
 
-    // <destination, nextHop>
-    std::map<ns::AddressType,ns::AddressType> routingTable;
+    // <destination, <nextHop, total path weight>>
+    ns::RoutingTable routingTable;
 
     double x = 0;
     double y = 0;

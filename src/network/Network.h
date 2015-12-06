@@ -29,18 +29,18 @@ class Network : public Notifiable {
     ~Network();
 
     /** Return all network nodes. */
-    const std::map<ns::AddressType, ApplicationNode*>& getNodes() const;
+    std::map<ns::AddressType, ApplicationNode*>& getNodes();
 
     /** Return all links between nodes. */
-    const std::vector<Link*>& getLinks() const;
+    std::vector<Link*>& getLinks();
 
     /** Return single node. */
-    ApplicationNode* operator[](ns::AddressType address) const;
+    ApplicationNode* operator[](ns::AddressType address);
 
-    ApplicationNode* getNode(ns::AddressType address) const;
+    ApplicationNode* getNode(ns::AddressType address);
 
     /** Return single link. */
-    const Link* getLink(ns::AddressType source, ns::AddressType destination) const;
+    Link* getLink(ns::AddressType source, ns::AddressType destination);
 
     /** Add new node to network. Network takes ownership of the node. */
     bool addNode(ns::AddressType address);

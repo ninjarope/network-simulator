@@ -33,7 +33,7 @@ void TestRouter::process(double currentTime) {
         for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
                 for (auto l : hostNode->getConnections()) {
-                    if (l->getDestination()->getAddress() == entry.second) {
+                    if (l->getDestination()->getAddress() == entry.second.nextHop) {
                         l->addPacket(p);
                         packets.erase(packets.begin());
                         routingExists = true;

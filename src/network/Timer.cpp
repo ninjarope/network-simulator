@@ -15,6 +15,7 @@
 Timer::Timer() {
     interval = 20;
     endTime = 10000;
+    speed = 1.0;
 }
 
 Timer::~Timer() {}
@@ -34,17 +35,15 @@ void Timer::startTimer() {
     paused = false;
     
     while (running) {
-        // debugging output
-        // std::cout << "CURRENT TIME: " << currentTime / 1000.0 << " s" << std::endl;
-
         callTime = std::chrono::system_clock::now();
         timerCallback();
         returnTime = std::chrono::system_clock::now();
         callbackDuration = returnTime - callTime;
 
         // delay if necessary
-        if (callbackDuration < std::chrono::milliseconds(interval)) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
+        int waitTime = (double) interval / speed;
+        if (callbackDuration < std::chrono::milliseconds(waitTime)) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - callbackDuration);
         }
 
         if (currentTime < endTime and !paused) currentTime += interval;
@@ -52,8 +51,7 @@ void Timer::startTimer() {
 }
 
 void Timer::toggleTimer() {
-    if (paused) paused = false;
-    else paused = true;
+    paused = !paused;
 }
 
 void Timer::stopTimer() { running = false; }

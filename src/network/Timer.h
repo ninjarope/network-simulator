@@ -50,6 +50,7 @@ protected:
     int interval;
     double currentTime;
     double endTime;
+    double speed;
 };
 
 #endif /* defined(__NetworkSimulator__Timer__) */
