@@ -1,0 +1,126 @@
+<network>
+    <node address="1" x="1.0" y="1.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="2" x="1.0" y="2.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="3" x="1.0" y="3.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="4" x="1.0" y="4.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="5" x="1.0" y="5.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="6" x="2.0" y="1.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="7" x="2.0" y="2.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="8" x="2.0" y="3.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="9" x="2.0" y="4.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="10" x="2.0" y="5.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="11" x="3.0" y="1.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="12" x="3.0" y="2.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="13" x="3.0" y="3.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="14" x="3.0" y="4.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+    
+    <node address="15" x="3.0" y="5.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+
+
+    <link source="1" destination="6" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="2" destination="7" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="3" destination="8" directed="false" type="Wireless" speed="3.0" delay="1.0" weight="1.0"/>
+    <link source="4" destination="9" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
+    <link source="5" destination="10" directed="false" type="Wireless" speed="5.0" delay="1.0" weight="1.0"/>
+
+    <link source="6" destination="11" directed="false" type="Wireless" speed="6.0" delay="1.0" weight="1.0"/>
+    <link source="7" destination="12" directed="false" type="Wireless" speed="7.0" delay="1.0" weight="1.0"/>
+    <link source="8" destination="13" directed="false" type="Wireless" speed="8.0" delay="1.0" weight="1.0"/>
+    <link source="9" destination="14" directed="false" type="Wireless" speed="9.0" delay="1.0" weight="1.0"/>
+    <link source="10" destination="15" directed="false" type="Wireless" speed="10.0" delay="1.0" weight="1.0"/>
+
+    <link source="1" destination="7" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="2" destination="8" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="3" destination="9" directed="false" type="Wireless" speed="3.0" delay="1.0" weight="1.0"/>
+    <link source="4" destination="10" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
+
+    <link source="6" destination="2" directed="false" type="Wireless" speed="5.0" delay="1.0" weight="1.0"/>
+    <link source="7" destination="3" directed="false" type="Wireless" speed="6.0" delay="1.0" weight="1.0"/>
+    <link source="8" destination="4" directed="false" type="Wireless" speed="7.0" delay="1.0" weight="1.0"/>
+    <link source="9" destination="5" directed="false" type="Wireless" speed="8.0" delay="1.0" weight="1.0"/>
+
+    <link source="6" destination="12" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    <link source="7" destination="13" directed="false" type="Wireless" speed="2.0" delay="1.0" weight="1.0"/>
+    <link source="8" destination="14" directed="false" type="Wireless" speed="3.0" delay="1.0" weight="1.0"/>
+    <link source="9" destination="15" directed="false" type="Wireless" speed="4.0" delay="1.0" weight="1.0"/>
+
+    <link source="11" destination="7" directed="false" type="Wireless" speed="5.0" delay="1.0" weight="1.0"/>
+    <link source="12" destination="8" directed="false" type="Wireless" speed="6.0" delay="1.0" weight="1.0"/>
+    <link source="13" destination="9" directed="false" type="Wireless" speed="7.0" delay="1.0" weight="1.0"/>
+    <link source="14" destination="10" directed="false" type="Wireless" speed="8.0" delay="1.0" weight="1.0"/>
+
+</network>

@@ -20,7 +20,7 @@ public:
     
     /** Construct packet that has source & destination addresses and some content (data).
         The amount of data defines packet size. */
-    Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data);
+    Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data, double size = 1.0);
 
     /** Return packet ID. */
     ns::PacketIdType getID();
