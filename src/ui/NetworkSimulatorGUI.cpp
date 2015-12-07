@@ -452,12 +452,12 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
             << "-"
             << links[i]->getDestination()->getAddress();
 
-        text.setString(ss.str());
         xOffset = (int) (w - text.getLocalBounds().width) / 2;
+        text.setString(ss.str());
         text.setPosition(i * w + xOffset, windowHeight - fontSize * 5);
         if (n < 30) window->draw(text);
         
-        // Draw total packet count
+        // Draw precentage
         double percentage = queueLength / queueSum * 100;
         ss.str("");
         ss.setf(std::ios::fixed);
@@ -520,7 +520,6 @@ void NetworkSimulatorGUI::drawRouting() {
                 weight.setString(ss.str());
                 weight.setOrigin((int) weight.getLocalBounds().width / 2, (int) weight.getLocalBounds().height / 2);
                 weight.setPosition((int) (x2 + x1) / 2, (int) (y2 + y1) / 2);
-
                 
                 window->draw(line, 2, sf::Lines);
                 if (dest == focusNode) {

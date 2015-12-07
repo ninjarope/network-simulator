@@ -13,7 +13,7 @@
 #include "Timer.h"
 
 Timer::Timer() {
-    interval = 20;
+    interval = 10;
     endTime = 10000;
     speed = 1.0;
 }
@@ -41,12 +41,12 @@ void Timer::startTimer() {
         callbackDuration = returnTime - callTime;
 
         // delay if necessary
-        int waitTime = (double) interval / speed;
+        int waitTime = (double) interval;
         if (callbackDuration < std::chrono::milliseconds(waitTime)) {
             std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - callbackDuration);
         }
 
-        if (currentTime < endTime and !paused) currentTime += interval;
+        if (currentTime < endTime and !paused) currentTime += interval * speed;
     }
 }
 
