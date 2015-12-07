@@ -47,8 +47,8 @@ public:
             } while ((destination == source || ns.getLink(source, destination)) && j++ < nodeCount);
             
             // Create bidirectional link
-            double speed = 1.0 + rand() % 32;
-            double delay = 10.0 + (rand() % 20);
+            double speed = 1.0 + rand() % 16;
+            double delay = 100;
             ns.addLink(source, destination, new ParametricLink(speed, delay));
             ns.addLink(destination, source, new ParametricLink(speed, delay));
         }
@@ -65,18 +65,17 @@ public:
 
         // Packet generators
         for (int i = 0; i < std::min(nodeCount, genCount); i++) {
-            std::string rate = std::to_string(1 + rand() % 1000);
+            std::string rate = std::to_string(1 + rand() % 100);
             std::string recipient = std::to_string(rand() % nodeCount);
             ns.getNode(std::to_string(i))
                 ->addApplications(applicationFactory.create(PACKET_GENERATOR)
-                ->setParameters({rate}));
+                ->setParameters({rate, recipient}));
         }
 
         // Routers
         for (auto node : ns.getNodes()) {
             node.second->addApplications(applicationFactory.create(TEST_ROUTER));
         }
-
     }
     
 private:

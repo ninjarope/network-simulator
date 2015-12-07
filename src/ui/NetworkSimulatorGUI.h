@@ -149,10 +149,12 @@ private:
     
     bool statsVisible;
     bool distributionVisible;
+    
     enum {
         Traffic,
         Queue
-    } distributionMode ;
+    } distributionMode;
+    
     
     bool altDown = false;
     
