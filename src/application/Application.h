@@ -52,7 +52,7 @@ protected:
     Node *hostNode;
     std::string type;
     double previousTime;
-    
+    double passedTime;
 };
 
 #endif /* defined(__NetworkSimulator__Application__) */
