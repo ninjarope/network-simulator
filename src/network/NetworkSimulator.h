@@ -19,6 +19,7 @@
 class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
+
     ~NetworkSimulator();
     void setUI(NetworkSimulatorUI* ui);
     
@@ -45,6 +46,5 @@ private:
     std::thread t;
     NetworkSimulatorUI* ui;
     ApplicationFactory* applicationFactory;
-    std::thread nsThread;
 };
 #endif /* defined(__NetworkSimulator__NetworkSimulator__) */

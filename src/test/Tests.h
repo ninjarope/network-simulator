@@ -8,6 +8,7 @@
 
 #include "../xml/tinyxml2.h"
 #include "../network/Network.h"
+#include "../ui/NetworkSimulatorTesterUI.h"
 #include <iostream>
 #include <string>
 
@@ -50,17 +51,61 @@ TEST_CASE("Xml Loading", "[xml]") {
 TEST_CASE("Test adding nodes to network", "[network]") {
 //    SECTION("Test adding nodes to network") {
     NetworkSimulator ns;
+    int n = 10;
 
 // create some nodes
-    ns.addNode("A");
-    ns.addNode("B");
-    ns.addNode("C");
-    ns.addNode("D");
-    ns.addNode("E");
+    for (auto i = 0; i < n; ++i) {
+        ns.addNode(std::to_string(i));
+    }
 
-    REQUIRE(ns.getNodes().size() == 5);
+    REQUIRE(ns.getNodes().size() == n);
 }
 
+TEST_CASE("Test adding 10 000 nodes to network", "[network]") {
+//    SECTION("Test adding nodes to network") {
+    NetworkSimulator ns;
+    int n = 10000;
+
+// create some nodes
+    for (auto i = 0; i < n; ++i) {
+        ns.addNode(std::to_string(i));
+    }
+
+    REQUIRE(ns.getNodes().size() == n);
+}
+
+TEST_CASE("Test adding 10 000 000 nodes to network", "[big-network]") {
+//    SECTION("Test adding nodes to network") {
+    NetworkSimulator ns;
+    int n = 10000000;
+
+// create some nodes
+    for (auto i = 0; i < n; ++i) {
+        ns.addNode(std::to_string(i));
+    }
+
+    REQUIRE(ns.getNodes().size() == n);
+}
+
+TEST_CASE("Creating a tester ui", "[network],[ui]") {
+//    SECTION("Test adding nodes to network") {
+    NetworkSimulatorUI* ui = NetworkSimulatorTesterUI::createUI();
+
+    CHECK(ui);
+}
+
+TEST_CASE("Starting a network", "[network]") {
+//    SECTION("Test adding nodes to network") {
+    NetworkSimulator ns;
+    NetworkSimulatorUI* ui = NetworkSimulatorTesterUI::createUI();
+    ns.setUI(ui);
+
+    ns.setTimerInterval(10);
+    ns.setTimerSlowdownrate(1.0);
+    ns.setTimerEndTime(20);
+
+    CHECK(ui);
+}
 
 // This test mysteriously messes up the control for all the other tests..
 //    SECTION("Comprehensive all around test with gui") {

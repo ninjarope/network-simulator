@@ -9,6 +9,7 @@
 #ifndef __NetworkSimulator__Timer__
 #define __NetworkSimulator__Timer__
 
+#include <iostream>
 #include "../ns.h"
 
 /**
@@ -25,7 +26,12 @@ class Timer {
     double getCurrentTime();
 
     /** Set timer interval in milliseconds. */
-    void setTimerInterval(double milliseconds);
+    void setTimerInterval(int);
+    void setTimerSlowdownrate(double);
+    void setTimerEndTime(int);
+
+    void slowdown() { slowdownrate += 10.0; std::cout << "slowed down to " << slowdownrate << std::endl; }
+    void fasten() { slowdownrate -= 10.0; std::cout << "fastened down to " << slowdownrate << std::endl; }
 
     /** Return timer interval. */
     double getTimerInterval();
@@ -49,12 +55,12 @@ class Timer {
     virtual void timerCallback() = 0;
 
   protected:
-    bool running;
-    bool paused;
+    bool isRunning;
+    bool isPaused;
     int interval;
     double currentTime;
+    double slowdownrate;
     double endTime;
-    double speed;
 };
 
 #endif /* defined(__NetworkSimulator__Timer__) */

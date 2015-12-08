@@ -12,13 +12,15 @@
 
 #include "Timer.h"
 
-Timer::Timer(int i, double s, int et) : interval(i), endTime(et), speed(s) { }
+Timer::Timer(int i, double s, int et) : interval(i), slowdownrate(s), endTime(et) { }
 
 Timer::~Timer() {}
 
 double Timer::getCurrentTime() { return currentTime; }
 
-void Timer::setTimerInterval(double milliseconds) {}
+void Timer::setTimerInterval(int i) { interval = i; }
+void Timer::setTimerSlowdownrate(double s) { slowdownrate = s; }
+void Timer::setTimerEndTime(int et) { endTime = et; }
 
 double Timer::getTimerInterval() { return interval; }
 
@@ -27,12 +29,15 @@ void Timer::startTimer() {
     std::chrono::duration<double> callbackDuration;
     
     currentTime = 0.0;
-    running = true;
-    paused = false;
+    isRunning = true;
+    isPaused = false;
 
-    while (running) {
-        std::cerr << "OUTER LOOP " << paused << " " << currentTime << " " << endTime << std::endl;
-        while(!paused && (endTime ? currentTime < endTime : true)) {
+    while (isRunning) {
+#if DEBUG
+        std::cout << "OUTER LOOP " << isPaused << " " << currentTime << " " << endTime << std::endl;
+#endif
+        while(!isPaused && (endTime ? currentTime < endTime : true)) {
+            // Calculate the call back functions elapsed time
             callTime = std::chrono::system_clock::now();
             timerCallback();
             returnTime = std::chrono::system_clock::now();
@@ -43,7 +48,7 @@ void Timer::startTimer() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
             }
 
-            currentTime += interval;
+            currentTime += interval / slowdownrate;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(interval));
@@ -51,10 +56,10 @@ void Timer::startTimer() {
 }
 
 void Timer::toggleTimer() {
-    paused = !paused;
+    isPaused = !isPaused;
 }
 
-void Timer::stopTimer() { running = false; paused = true; }
+void Timer::stopTimer() { isRunning = false; isPaused = true; }
 
 void Timer::resetTimer() { currentTime = 0.0; }
 

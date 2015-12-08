@@ -1,0 +1,54 @@
+<network interval="20" slowdownrate="20.0" endTime="2000">
+    <node address="A" x="1.0" y="1.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <node address="B" x="3.0" y="1.0">
+        <application type="PacketGenerator" rate="2.0">
+            <destination address="D"/>
+        </application>
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <node address="C" x="5.0" y="1.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <node address="D" x="2.0" y="3.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <node address="E" x="4.0" y="3.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <node address="F" x="3.0" y="5.0">
+        <application type="RoutingGenerator"/>
+        <application type="PacketReceiver"/>
+        <application type="TestRouter"/>
+    </node>
+
+    <link source="A" destination="B" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
+    <link source="B" destination="C" directed="false" speed="2.0" delay="100.0" weight="1.0"/>
+    <link source="D" destination="E" directed="false" speed="3.0" delay="100.0" weight="1.0"/>
+
+    <link source="A" destination="D" directed="false" speed="2.0" delay="100.0" weight="1.0"/>
+    <link source="D" destination="F" directed="false" speed="4.0" delay="100.0" weight="1.0"/>
+    <link source="C" destination="E" directed="false" speed="8.0" delay="100.0" weight="1.0"/>
+    <link source="E" destination="F" directed="false" speed="16.0" delay="100.0" weight="1.0"/>
+
+    <link source="B" destination="D" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
+    <link source="B" destination="E" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
+
+    <packet/>
+</network>

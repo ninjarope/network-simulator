@@ -20,8 +20,8 @@ void XMLReader::load(const char* filepath) {
 }
 
 void XMLReader::process() {
-    // Load first node and test for error
-    // XMLHandle enables checking for nullptr's / in other words error handling
+    parseRoot();
+
     XMLHandle docHandle(&doc);
     XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
     if (!nodeElement)
@@ -52,6 +52,38 @@ void XMLReader::process() {
     }
 }
 
+void XMLReader::parseRoot() {
+    // Load first node and test for error
+    // XMLHandle enables checking for nullptr's / in other words error handling
+    XMLHandle docHandle(&doc);
+    XMLElement* rootElement = docHandle.FirstChild().ToElement();
+    if (!rootElement)
+        throw "No root element defined.";
+
+    int interval = -1;
+    double slowdownrate = -1.0;
+    int endTime = -1;
+
+    rootElement->QueryIntAttribute("interval", &interval);
+    if (interval >= 0) {
+        std::cout << "Set interval: " << interval << std::endl;
+        ns.setTimerInterval(interval);
+    }
+
+
+    rootElement->QueryDoubleAttribute("slowdownrate", &slowdownrate);
+    if (slowdownrate >= 0.0){
+        std::cout << "Set slowdownrate: " << slowdownrate << std::endl;
+        ns.setTimerSlowdownrate(slowdownrate);
+    }
+
+    rootElement->QueryIntAttribute("endTime", &endTime);
+    if (endTime >= 0) {
+        std::cout << "Set endtime: " << endTime << std::endl;
+        ns.setTimerEndTime(endTime);
+    }
+}
+
 void XMLReader::buildNode(XMLElement* e) {
     // Variables for a node
     ns::AddressType address = "";
@@ -75,21 +107,21 @@ void XMLReader::buildNode(XMLElement* e) {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
-            std::vector<std::string> parameters;
+            std::vector <std::string> parameters;
             parameters.push_back(applicationElement->Attribute("rate"));
-            
+
             XMLHandle pHandle(applicationElement);
             XMLElement* parameterElement = pHandle.FirstChildElement("destination").ToElement();
-            while (parameterElement)  {
+            while (parameterElement) {
                 parameters.push_back(parameterElement->Attribute("address"));
-                
+
                 XMLHandle pHandle(parameterElement);
                 parameterElement = pHandle.NextSiblingElement("destination").ToElement();
             }
-            
+
             ns.getNode(address)->addApplications(applicationFactory
-                                                 ->create(PACKET_GENERATOR)
-                                                 ->setParameters(parameters));
+                                                     ->create(PACKET_GENERATOR)
+                                                     ->setParameters(parameters));
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(RANDOM_ROUTER));
@@ -98,7 +130,7 @@ void XMLReader::buildNode(XMLElement* e) {
                 addApplications(applicationFactory->create(TEST_ROUTER));
         } else if (appType == "RoutingGenerator") {
             ns.getNode(address)->
-            addApplications(applicationFactory->create(ROUTING_GENERATOR));
+                addApplications(applicationFactory->create(ROUTING_GENERATOR));
         }
 
         XMLHandle aeHandle(applicationElement); // while-loop scope
@@ -114,7 +146,7 @@ void XMLReader::buildLink(XMLElement* e) {
     double speed = 0.0;
     double delay = 0.0;
     double weight = 0.0;
-    
+
     // get attributes
     source = e->Attribute("source");
     destination = e->Attribute("destination");
@@ -122,7 +154,7 @@ void XMLReader::buildLink(XMLElement* e) {
     e->QueryDoubleAttribute("speed", &speed);
     e->QueryDoubleAttribute("delay", &delay);
     e->QueryDoubleAttribute("weight", &weight);
-    
+
     ns.addLink(source, destination, new ParametricLink(speed, delay, weight));
     if (!directed) ns.addLink(destination, source, new ParametricLink(speed, delay, weight));
 }
