@@ -26,6 +26,9 @@ ApplicationNode::ApplicationNode(ns::AddressType address,
 }
 
 void ApplicationNode::reset() {
+    // Enter critical section
+    std::unique_lock<std::mutex> lock(mtx);
+    
     packets.clear();
     for (auto& a : applications) a->reset();
 }
@@ -61,6 +64,10 @@ std::string ApplicationNode::getType() const {
 }
 
 void ApplicationNode::run(double currentTime) {
-    for (auto& application : applications)
+    for (auto& application : applications) {
+        // Enter critical section
+        std::unique_lock<std::mutex> lock(mtx);
+        
         application->process(currentTime);
+    }
 }

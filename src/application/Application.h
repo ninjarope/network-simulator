@@ -10,6 +10,7 @@
 #define __NetworkSimulator__Application__
 
 #include <iostream>
+#include <mutex>
 
 #include "../ns.h"
 #include "../packet/Packet.h"
@@ -53,6 +54,8 @@ protected:
     std::string type;
     double previousTime;
     double passedTime;
+    
+    std::mutex mtx;
 };
 
 #endif /* defined(__NetworkSimulator__Application__) */

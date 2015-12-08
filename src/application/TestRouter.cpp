@@ -18,6 +18,7 @@ TestRouter::TestRouter() { type = "TestRouter"; }
 void TestRouter::process(double currentTime) {
     Packet* p;
     ns::AddressType packetDestination;
+    
     ns::Packets& packets = hostNode->getPackets();
 
     // if there is packets to processs
@@ -30,6 +31,7 @@ void TestRouter::process(double currentTime) {
         //routingTable
         bool routingExists = false;
 
+        
         for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
                 for (auto l : hostNode->getConnections()) {
@@ -42,13 +44,6 @@ void TestRouter::process(double currentTime) {
             }
         }
 
-        // No routing found, route randomly
-//        if (!routingExists && !hostNode->getConnections().empty()) {
-//            // forward packet directly to first connection
-//            Link* targetLink = hostNode->getConnections().front();
-//            targetLink->addPacket(p);
-//            packets.erase(packets.begin());
-//        }
         if (!routingExists && !hostNode->getConnections().empty()) {
             auto& connections = hostNode->getConnections();
             int randI = rand() % connections.size();

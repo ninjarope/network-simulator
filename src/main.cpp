@@ -5,6 +5,7 @@
 //
 
 #define CATCH_CONFIG_RUNNER
+
 #include "test/catch.h"
 
 #include <iostream>
