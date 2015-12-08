@@ -27,9 +27,9 @@ void RoutingGenerator::process(double currentTime) {
 //    }
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
-    
+
     if (passedTime > 1000.0 / rate) {
-    
+
         if (!hostRoutingTable.empty()) {
             for (auto connection : hostNode->getConnections()) {
                 Node* neighbor = connection->getDestination();
@@ -38,17 +38,17 @@ void RoutingGenerator::process(double currentTime) {
                     // Check if in neighbor routing table has new destinations
                     for (auto entry : neighbor->getRoutingTable()) {
                         ns::AddressType destinationAddress = entry.first;
-                        
+
                         // Cost to given destination is path cost to neighbor + associated
                         // weight in neighbor node's routing table
                         double newTotal = connection->getWeight() + entry.second.totalWeight;
-                        
+
                         // Check if host node has routing table entry for given destination
                         auto it = hostRoutingTable.find(destinationAddress);
                         if (it != hostRoutingTable.end()) {
                             // For existing destinations, check if alternative cost is lower
                             double currentTotal = it->second.totalWeight;
-                            
+
                             // Update routing table if lower cost routing found
                             if (newTotal < currentTotal) {
                                 it->second = {neighbor->getAddress(), newTotal};
@@ -70,7 +70,7 @@ void RoutingGenerator::process(double currentTime) {
             for (auto connection : hostNode->getConnections()) {
                 ns::AddressType neighborAddress = connection->getDestination()->getAddress();
                 double weight = connection->getWeight();
-                
+
                 // Insert entry
                 hostRoutingTable.insert({neighborAddress, {neighborAddress, weight}});
             }

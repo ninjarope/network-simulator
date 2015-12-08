@@ -23,20 +23,20 @@ public:
 
     /** Construct packet generator that generates packets to given destinations at given rate. */
     PacketGenerator(unsigned int rate, std::vector<ns::AddressType> destinations);
-    
-    /** Set parameters of the application. 
-     *  
+
+    /** Set parameters of the application.
+     *
      *  1   rate
      *  2-n possible destination addresses
      */
     Application* setParameters(std::vector<std::string> parameters) override;
-    
+
     /**
      * Generates packets at given rate and adds them to host node
      * packet queue.
      */
     void process(double currentTime) override;
-    
+
 private:
     std::vector<ns::AddressType> destinations;
     unsigned int rate;

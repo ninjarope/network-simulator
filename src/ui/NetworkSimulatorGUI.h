@@ -30,12 +30,12 @@ public:
      * Enables generic UI supertype and switching of its implementation layer.
      */
     static NetworkSimulatorUI* createUI();
-    
+
     /**
      * Generate layout based on network structure.
      */
     void generateGraphLayout() override;
-    
+
     /**
      * Show traffic in a link. Search the link with parameters.
      *
@@ -53,7 +53,12 @@ public:
      * Render links.
      */
     void drawLinks();
-    
+
+    /**
+     * Render packets.
+     */
+    void drawPackets();
+
     /**
      * Render text boxes.
      */
@@ -63,12 +68,12 @@ public:
      * Show current time.
      */
     void drawTime();
-    
+
     /**
      * Show queues of links.
      */
     void drawQueues();
-    
+
     /**
      * Show applications of all nodes.
      */
@@ -103,14 +108,14 @@ public:
      * Change between different distribution views.
      */
     void changeDistributionView();
-    
+
     /**
      * Sets focus on node if mouse cursor is on it.
      */
     void checkMouseOverNode(int x, int y);
 
     /**
-     * Toggles select state of given node.     
+     * Toggles select state of given node.
      */
     void toggleSelect(ns::AddressType address);
 
@@ -119,7 +124,7 @@ public:
      * Encapsulates all UI subjects.
      */
     void update() override;
-    
+
 private:
     sf::RenderWindow* window;
     sf::Event event;
@@ -128,7 +133,7 @@ private:
     sf::Color defaultNodeColor;
     sf::Color defaultFillColor;
     sf::Color defaultDistColor;
-    
+
     unsigned int fontSize;
     unsigned int nodeRadius;
     unsigned int windowWidth;
@@ -136,28 +141,28 @@ private:
     double transformX;
     double transformY;
     double zoom;
-    
+
     // Helper struct
     struct Point {
         double x;
         double y;
     };
-    
+
     std::map<ns::AddressType, Point> visibleNodes;
     std::list<ns::AddressType> selectedNodes;
     ns::AddressType focusNode;
-    
+
     bool statsVisible;
     bool distributionVisible;
-    
+
     enum {
         Traffic,
         Queue
     } distributionMode;
-    
-    
+
+
     bool altDown = false;
-    
+
 };
 
 

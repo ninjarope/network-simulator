@@ -29,7 +29,7 @@ void ParametricLink::reset() {
     packetsWaiting.clear();
     packetsInTransmission.clear();
     transmittedPackets.clear();
-    
+
     previousTime = 0.0;
     packetToTransitTime = 0.0;
 }
@@ -38,7 +38,7 @@ void ParametricLink::run(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
     std::stringstream ss;
-    
+
     // waiting time until next packet will be picked for transmission
     if (!packetsWaiting.empty()) packetToTransitTime -= timeDelta;
 
@@ -54,16 +54,16 @@ void ParametricLink::run(double currentTime) {
             // "time to transmit a packet == packet size / link speed"
             packetToTransitTime = (*it)->getSize() / transmissionSpeed;
     }
-    
+
     // handle packets being transmitted
     for (auto it = packetsInTransmission.begin(); it != packetsInTransmission.end();) {
         it->second -= timeDelta;
-        
+        //it->second += 5;
         // if transmission time has passed...
         if (it->second <= 0.0) {
             // deliver it to destination node
             destination->receivePacket(it->first);
-            
+
             // add packet to transmission log {packetId, deliveryTime}
             if (logging) transmittedPackets.push_back({it->first->getID(), currentTime});
 

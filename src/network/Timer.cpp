@@ -29,11 +29,11 @@ double Timer::getTimerInterval() { return interval; }
 void Timer::startTimer() {
     std::chrono::time_point<std::chrono::system_clock> callTime, returnTime;
     std::chrono::duration<double> callbackDuration;
-    
+
     currentTime = 0.0;
     running = true;
     paused = false;
-    
+
     while (running) {
         callTime = std::chrono::system_clock::now();
         timerCallback();

@@ -20,7 +20,7 @@ INCLUDES = -I $(SRC_PATH)/
 # General linker settings
 LINK_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 # Additional release-specific linker settings
-RLINK_FLAGS =
+RLINK_FLAGS = -lpthread
 # Additional debug-specific linker settings
 DLINK_FLAGS =
 # Destination directory, like a jail or mounted system

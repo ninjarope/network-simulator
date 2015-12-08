@@ -39,14 +39,14 @@ Application* PacketGenerator::setParameters(std::vector<std::string> parameters)
     for (auto s : parameters) {
         destinations.push_back(s);
     };
-    
+
     return this;
 }
 
 void PacketGenerator::process(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
-    
+
     if (passedTime > 1000.0 / rate) {
         for (unsigned int i = 0; i < (unsigned int) (passedTime * rate / 1000.0); i++) {
             ns::AddressType source = hostNode->getAddress();
@@ -63,7 +63,7 @@ void PacketGenerator::process(double currentTime) {
                     destination = "NOT DEFINED";
                 }
             }
-            
+
             /* Generate and forward packet. */
             std::stringstream packetData;
             packetData << "PACKET " << count++ << " TO " << destination;
