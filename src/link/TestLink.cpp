@@ -8,9 +8,12 @@
 
 #include "TestLink.h"
 
-TestLink::TestLink() {}
+TestLink::TestLink() : Link() {}
 
 void TestLink::run(double currentTime) {
+    // Get atomic containers
+    auto& packetsWaiting = *this->packetsWaiting.load();
+
     while (!packetsWaiting.empty()) {
         destination->receivePacket(packetsWaiting.front());
         

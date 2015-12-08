@@ -10,6 +10,8 @@
 #define __NetworkSimulator__Link__
 
 #include <map>
+#include <atomic>
+#include <mutex>
 
 #include "../ns.h"
 #include "../Notifiable.h"
@@ -23,12 +25,6 @@
  */
 class Link : public Notifiable {
 public:
-    Link();
-
-    Link(Node* source, Node* destination);
-
-    Link(Node* source, Node* destination, double weight);
-
     /** Destroys all packets (packets will be lost) when link is removed. */
     virtual ~Link();
 
@@ -87,14 +83,23 @@ public:
     virtual void run(double currentTime) = 0;
 
 protected:
+    Link();
+    
+    Link(Node* source, Node* destination);
+    
+    Link(Node* source, Node* destination, double weight);
+
     Node* source;
     Node* destination;
-    ns::Packets packetsWaiting;
-    std::map<Packet*, double> packetsInTransmission; // {Packet*, [time to delivery]}
+    std::atomic<ns::Packets*> packetsWaiting;
+    std::atomic<std::map<Packet*, double>*> packetsInTransmission; // {Packet*, [time to delivery]}
     ns::TransmissionLogType transmittedPackets; // {packetId, deliveryTime}
     double transmissionSpeed = 0.0;
     double propagationDelay = 0.0;
     double weight = 1.0;
+    
+    std::mutex mtx;
+
 };
 
 

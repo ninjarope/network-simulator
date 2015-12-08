@@ -61,4 +61,6 @@ void Timer::toggleTimer() {
 
 void Timer::stopTimer() { isRunning = false; isPaused = true; }
 
+void Timer::resetTimer() { currentTime = 0.0; }
+
 void Timer::setRunningTime(double milliseconds) {}

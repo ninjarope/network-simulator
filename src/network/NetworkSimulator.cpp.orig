@@ -73,12 +73,22 @@ void NetworkSimulator::timerCallback() {
 
 
 void NetworkSimulator::start() {
+<<<<<<< HEAD
 #if DEBUG
     std::cout << ui << std::endl;
 #endif
 
     reset();
     t = std::thread (&NetworkSimulator::startTimer, this);
+=======
+    
+    std::cerr << ui << std::endl;
+    
+    reset();
+    
+    t = std::thread (&NetworkSimulator::startTimer, this);
+    
+>>>>>>> origin/segfault_threadingtest
     ui->startTimer();
     
 }
@@ -88,7 +98,11 @@ void NetworkSimulator::reset() {
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
     clearRouting();
+<<<<<<< HEAD
+    currentTime = 0.0;
+=======
     resetTimer();
+>>>>>>> origin/segfault_threadingtest
 }
 
 void NetworkSimulator::quit() {

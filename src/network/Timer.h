@@ -44,6 +44,9 @@ class Timer {
 
     /** Stop timer. */
     void stopTimer();
+    
+    /** Reset current time. */
+    void resetTimer();
 
     /** Set maximum running time. */
     void setRunningTime(double seconds);

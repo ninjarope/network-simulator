@@ -18,7 +18,7 @@ RoutingGenerator::RoutingGenerator() {
 }
 
 void RoutingGenerator::process(double currentTime) {
-    ns::RoutingTable& hostRoutingTable = hostNode->getRoutingTable();
+    ns::RoutingTable hostRoutingTable = hostNode->getRoutingTable();
 
 //    // Print rtable
 //    std::cout << hostNode->getAddress() << std::endl;

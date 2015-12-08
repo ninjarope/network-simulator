@@ -23,6 +23,7 @@ class NetworkSimulator;
 class NetworkSimulatorUI;
 
 namespace ns {
+    
     enum Notification {
         someNotificationType1,
         someNotificationType2
@@ -30,7 +31,7 @@ namespace ns {
     
     typedef std::string AddressType;
     typedef std::string PacketDataType;
-    typedef std::list<Packet*> Packets;
+    typedef std::vector<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
     typedef std::string PacketIdType;

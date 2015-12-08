@@ -13,17 +13,26 @@
 
 Node::Node() {}
 
-Node::Node(ns::AddressType address) : address(address) {}
+Node::Node(ns::AddressType address) {
+    this->address = address;
+}
 
 Node::~Node() {
     for (auto& packet : packets) delete packet;
 }
 
-void Node::receivePacket(Packet* p) { packets.push_back(p); }
+void Node::receivePacket(Packet* p) {    
+    packets.push_back(p);
+}
 
-void Node::addConnection(Link* link) { connections.push_back(link); }
+void Node::addConnection(Link* link) {
+    connections.push_back(link);
+}
 
 void Node::removeConnection(Link* link) {
+    // Enter critical section
+    std::unique_lock<std::mutex> lock(mtx);
+    
     /* Requires some checking and mods... */
     auto it = connections.begin();
     if (*it && link) {
@@ -47,20 +56,19 @@ double Node::getX() { return x; }
 double Node::getY() { return y; }
 
 void Node::updateTable(std::vector<ns::AddressType> shortestPath){
-    // this->routingTable.clear();
+    // Enter critical section
+    std::unique_lock<std::mutex> lock(mtx);
+
     // For given destination (last address in path) associate next node in path (check that first is this node)
     try {
         if (shortestPath.front() == this->address) {
             this->routingTable.at(shortestPath.back()) = {shortestPath[1], 0.0};
-            std::cout << "TABLE UPDATED!" << std::endl;
         }
     } catch (std::out_of_range) {
         this->routingTable.insert({shortestPath.back(), {shortestPath[1], 0.0}});
-        std::cout << "Inserted " << shortestPath.back() << ", " << shortestPath[1] << std::endl;
-        // std::cout << "Key " << shortestPath.back() << " not found!" << std::endl;
     }
     
 }
 
-ns::RoutingTable& Node::getRoutingTable() { return routingTable; }
+ns::RoutingTable Node::getRoutingTable() { return routingTable; }
 
