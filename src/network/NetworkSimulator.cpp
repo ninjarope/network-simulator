@@ -6,6 +6,7 @@
 
 #include <thread>
 #include "NetworkSimulator.h"
+#include "debug.h"
 
 NetworkSimulator::NetworkSimulator() : ui(nullptr) {
     applicationFactory = new ApplicationFactory(*this);
@@ -14,16 +15,26 @@ NetworkSimulator::NetworkSimulator() : ui(nullptr) {
 void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
     this->ui = ui;
     ui->setNetworkSimulator(this);
-    std::cerr << "UI SET: " << ui << std::endl;
+#if DEBUG
+    std::cout << "UI SET: " << ui << std::endl;
+#endif
 }
 
 NetworkSimulator::~NetworkSimulator() {
+#if DEBUG
+    std::cout << "Destroying NetworkSimulator" << std::endl;
+#endif
     delete applicationFactory;
+    isRunning = false;
+    if (t.joinable()) {
+        t.join();
+    }
 }
 
 void NetworkSimulator::timerCallback() {
-    
-    std::cerr << "RUNNING NS TIMER " << this << std::endl << " " << currentTime;
+#if DEBUG
+    std::cout << "RUNNING NS TIMER " << this << std::endl << " " << currentTime;
+#endif
 
     const int maxThreads = 1;
     std::list<std::thread> nodeWorkers;
@@ -60,8 +71,12 @@ void NetworkSimulator::timerCallback() {
 }
 
 void NetworkSimulator::start() {
-    std::cerr << ui << std::endl;
+#if DEBUG
+    std::cout << ui << std::endl;
+#endif
+
     reset();
+    t = std::thread (&NetworkSimulator::startTimer, this);
     ui->startTimer();
 }
 
@@ -70,12 +85,12 @@ void NetworkSimulator::reset() {
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
     clearRouting();
-    t = std::thread (&NetworkSimulator::startTimer, this);
-    t.detach();
 }
 
 void NetworkSimulator::quit() {
-    std::cerr << "TERMINATING..." << std::endl;
+#if DEBUG
+    std::cout << "TERMINATING..." << std::endl;
+#endif
     ui->stopTimer();
     stopTimer();
 }

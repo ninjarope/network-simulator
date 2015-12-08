@@ -7,6 +7,8 @@
 //
 
 #include "NetworkSimulatorGUI.h"
+#include "debug.h"
+
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 #include <cmath>
@@ -59,6 +61,9 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
 
 NetworkSimulatorGUI::~NetworkSimulatorGUI() {
     window->close();
+#if DEBUG
+    std::cout << "Destroying NetworkSimulatorGUI" << std::endl;
+#endif
 }
 
 NetworkSimulatorUI *NetworkSimulatorGUI::createUI() {
@@ -67,7 +72,9 @@ NetworkSimulatorUI *NetworkSimulatorGUI::createUI() {
 
 
 void NetworkSimulatorGUI::generateGraphLayout() {
+#if DEBUG
     std::cout << "Generating layout..." << std::endl;
+#endif
     visibleNodes.clear();
     
     double xMax = -DBL_MAX;
@@ -593,15 +600,23 @@ void NetworkSimulatorGUI::toggleSelect(ns::AddressType address) {
     }
 }
 
+bool NetworkSimulatorGUI::windowExists() {
+    sf::Window* ptrw = window;
+    return ptrw;
+}
 
 
 void NetworkSimulatorGUI::update() {
+    // Double checking that the window has been created
+    while (!windowExists()) {
+        // wait
+    }
+
+#if DEBUG
+    std::cout << "WINDOW ADDRESS: " << window << std::endl;
+#endif
+
     // Handle events
-    std::cerr << "WINDOW ADDRESS: " << window << std::endl;
-    //e->pollEvent();
-    //std::queue<sf::Event> events = e->getEvents();
-    //std::thread eventThread(&sf::Window::pollEvent, window, event);
-    //eventThread.join();
     while (window->pollEvent(event))
     {
         //event = events.front();

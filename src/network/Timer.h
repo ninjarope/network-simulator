@@ -46,8 +46,8 @@ class Timer {
     virtual void timerCallback() = 0;
 
   protected:
-    bool running;
-    bool paused;
+    bool isRunning;
+    bool isPaused;
     int interval;
     double currentTime;
     double endTime;

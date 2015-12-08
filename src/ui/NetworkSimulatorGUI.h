@@ -15,6 +15,7 @@
 #include <sstream>
 #include <map>
 #include <thread>
+#include "../debug.h"
 
 #include "NetworkSimulatorUI.h"
 
@@ -119,10 +120,14 @@ public:
      * Threaded callback to update GUI
      */
     void timerCallback() override {
+#if DEBUG
         std::cerr << "UPDATE UI..." << std::endl;
+#endif
         update();
     }
-    
+
+    bool windowExists();
+
     /**
      * Main function that is called from Network Simulator.
      * Encapsulates all UI subjects.
