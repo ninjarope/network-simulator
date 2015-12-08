@@ -636,7 +636,7 @@ void NetworkSimulatorGUI::update() {
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
-                        currentTime = 0.0; // gui timer restarts
+                        resetTimer();
                         networkSimulator->reset();
                         break;
 
