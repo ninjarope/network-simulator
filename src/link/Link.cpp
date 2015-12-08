@@ -10,22 +10,25 @@
 #include "../node/Node.h"
 #include "../packet/Packet.h"
 
-Link::Link() {}
+Link::Link() {
+    packetsWaiting.store(new ns::Packets);
+    packetsInTransmission.store(new std::map<Packet*, double>);
+}
 
-Link::Link(Node* source, Node* destination) {
+Link::Link(Node* source, Node* destination) : Link() {
     setSource(source);
     setDestination(destination);
 }
 
-Link::Link(Node* source, Node* destination, double weight) {
+Link::Link(Node* source, Node* destination, double weight) : Link() {
     setSource(source);
     setDestination(destination);
     setWeight(weight);
 }
 
 Link::~Link() {
-    for (auto& packet : packetsWaiting) delete packet;
-    for (auto& packet : packetsInTransmission) delete packet.first;
+    for (auto& packet : *packetsWaiting.load()) delete packet;
+    for (auto& packet : *packetsInTransmission.load()) delete packet.first;
 
     // This could be also just notifying source node...
     source->removeConnection(this);
@@ -47,7 +50,7 @@ bool Link::setDestination(Node* destination) {
 
 }
 
-void Link::addPacket(Packet* p) { packetsWaiting.push_back(p); }
+void Link::addPacket(Packet* p) { packetsWaiting.load()->push_back(p); }
 
 Node* Link::getSource() { return source; }
 
@@ -79,13 +82,13 @@ double Link::getPropagationDelay() {
 }
 
 const ns::Packets& Link::getPacketsWaiting() const {
-    return packetsWaiting;
+    return *packetsWaiting.load();
 }
 
-size_t Link::getQueueLength() { return packetsWaiting.size(); }
+size_t Link::getQueueLength() { return packetsWaiting.load()->size(); }
 
 const std::map<Packet*, double>& Link::getPacketsInTransmission() const {
-    return packetsInTransmission;
+    return *packetsInTransmission.load();
 }
 
 const ns::TransmissionLogType& Link::getTransmissionLog() const {

@@ -10,13 +10,13 @@
 
 #include "ParametricLink.h"
 
-ParametricLink::ParametricLink() {
+ParametricLink::ParametricLink() : Link() {
     previousTime = 0.0;
     packetToTransitTime = 0.0;
     logging = true;
 }
 
-ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay, double weight) {
+ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay, double weight) : Link() {
     this->transmissionSpeed = transmissionSpeed;    // interval
     this->propagationDelay = propagationDelay;      // transmission time per packet
     this->weight = weight;
@@ -28,18 +28,28 @@ ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay
 }
 
 void ParametricLink::reset() {
-    packetsWaiting.clear();
-    packetsInTransmission.clear();
+    // Enter critical section
+    std::unique_lock<std::mutex> lock(mtx);
+    
+    packetsWaiting.load()->clear();
+    packetsInTransmission.load()->clear();
     transmittedPackets.clear();
     
     previousTime = 0.0;
-    packetToTransitTime = 0.0;
+    packetToTransitTime =
+    0.0;
 }
 
 void ParametricLink::run(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
-    std::stringstream ss;
+    
+    // Enter critical section
+    std::unique_lock<std::mutex> lock(mtx);
+    
+    // Get atomic containers
+    auto& packetsWaiting = *this->packetsWaiting.load();
+    auto& packetsInTransmission = *this->packetsInTransmission.load();
     
     // waiting time until next packet will be picked for transmission
     if (!packetsWaiting.empty()) packetToTransitTime -= timeDelta;

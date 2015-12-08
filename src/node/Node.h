@@ -14,6 +14,8 @@
 #include "../packet/Packet.h"
 #include "../link/Link.h"
 #include <map>
+#include <atomic>
+#include <mutex>
 
 /** Abstract base class for nodes. */
 class Node : public Notifiable {
@@ -56,11 +58,13 @@ public:
     void updateTable(std::vector<ns::AddressType> shortestPath);
     
     /** Return modifiable routing table. */
-    ns::RoutingTable& getRoutingTable();
+    ns::RoutingTable getRoutingTable();
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
     
+    std::mutex mtx;
+
 protected:
     ns::Connections connections;
     ns::Packets packets;
@@ -71,7 +75,6 @@ protected:
 
     double x = 0;
     double y = 0;
-
 };
 
 #endif /** defined(__NetworkSimulator__Node__) */
