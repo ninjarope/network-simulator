@@ -12,6 +12,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >
 >```
 >./ns [relative-xml-file-path]
+>./ns [relative-xml-file-path] > log.txt
 >./ns random [node-count] [edge-count] [packet-generator-count]
 >```
 
@@ -109,10 +110,10 @@ Example of getting a specific node by address:
 >Running tests for xml (linux):
 >
 >```
->./ns -n xml
+>./ns "[tag]" <options>
 >```
 >
->./ns refers to the built executive. The parameters -n and xml refer to 'name' and the tag of the test. To get tags for all tests use:
+>./ns refers to the built executive. The arguments include the tag of the test and options for the tests. To get tags for all tests use:
 >
 >```
 >./ns -l
@@ -172,7 +173,8 @@ This repository contains three subdirectories:
 
 ## License
 
-MIT license applies for all that's included here, if not explicitly stated otherwise (in files). See LICENSE.
+
+ MIT license applies for all that's included here, if not explicitly stated otherwise (in files). See LICENSE.
 
 ---
 

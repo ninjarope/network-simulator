@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
         std::string firstArg;
         
         if (args) firstArg = argv[1];
-        if (firstArg != "random" && argc > 2) {
+        if ((firstArg != "random" && argc > 2) || (firstArg[0] == '-')) {
             // Run tests
             result = Catch::Session().run(argc, argv);
         } else {

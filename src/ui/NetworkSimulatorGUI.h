@@ -121,7 +121,7 @@ public:
      */
     void timerCallback() override {
 #if DEBUG
-        std::cerr << "UPDATE UI..." << std::endl;
+        std::cout << "UPDATE UI..." << std::endl;
 #endif
         update();
     }
