@@ -85,6 +85,7 @@ void NetworkSimulator::reset() {
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
     clearRouting();
+    currentTime = 0.0;
 }
 
 void NetworkSimulator::quit() {
