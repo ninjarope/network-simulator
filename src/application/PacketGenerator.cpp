@@ -67,6 +67,7 @@ void PacketGenerator::process(double currentTime) {
             /* Generate and forward packet. */
             std::stringstream packetData;
             packetData << "PACKET " << count++ << " TO " << destination;
+            std::cout << packetData.str() << std::endl;
             hostNode->receivePacket(new Packet(source, destination, packetData.str()));
         }
         passedTime = 0.0; // reset
