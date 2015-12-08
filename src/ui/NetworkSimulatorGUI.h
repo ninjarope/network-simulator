@@ -14,6 +14,7 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <map>
+#include <thread>
 
 #include "NetworkSimulatorUI.h"
 
@@ -117,15 +118,19 @@ public:
     /**
      * Threaded callback to update GUI
      */
-    void timerCallback() override { update(); }
-
+    void timerCallback() override {
+        std::cerr << "UPDATE UI..." << std::endl;
+        update();
+    }
+    
     /**
      * Main function that is called from Network Simulator.
      * Encapsulates all UI subjects.
      */
     void update() override;
     
-private:
+    
+protected:
     sf::RenderWindow* window;
     sf::Event event;
     sf::Font font;
