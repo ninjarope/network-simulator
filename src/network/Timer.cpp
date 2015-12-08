@@ -18,7 +18,9 @@ Timer::~Timer() {}
 
 double Timer::getCurrentTime() { return currentTime; }
 
-void Timer::setTimerInterval(double milliseconds) {}
+void Timer::setTimerInterval(int i) { interval = i; }
+void Timer::setTimerSpeed(double s) { speed = s; }
+void Timer::setTimerEndTime(int et) { endTime = et; }
 
 double Timer::getTimerInterval() { return interval; }
 

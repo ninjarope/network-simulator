@@ -19,6 +19,7 @@
 class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
+
     ~NetworkSimulator();
     void setUI(NetworkSimulatorUI* ui);
     

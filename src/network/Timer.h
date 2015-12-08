@@ -25,7 +25,9 @@ class Timer {
     double getCurrentTime();
 
     /** Set timer interval in milliseconds. */
-    void setTimerInterval(double milliseconds);
+    void setTimerInterval(int);
+    void setTimerSpeed(double);
+    void setTimerEndTime(int);
 
     /** Return timer interval. */
     double getTimerInterval();
@@ -50,8 +52,8 @@ class Timer {
     bool isPaused;
     int interval;
     double currentTime;
-    double endTime;
     double speed;
+    double endTime;
 };
 
 #endif /* defined(__NetworkSimulator__Timer__) */

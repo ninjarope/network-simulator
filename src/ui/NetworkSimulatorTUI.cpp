@@ -5,7 +5,7 @@
 //  Created by Tommi Gröhn on 14.11.2015.
 //
 
-#include "NetworkSimulatorTestUI.h"
+#include "NetworkSimulatorTUI.h"
 
 /**
  * Enables generic UI supertype and switching of its implementation layer.
