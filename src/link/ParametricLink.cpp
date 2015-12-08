@@ -20,6 +20,8 @@ ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay
     this->transmissionSpeed = transmissionSpeed;    // interval
     this->propagationDelay = propagationDelay;      // transmission time per packet
     this->weight = weight;
+
+    // TODO Refactor
     previousTime = 0.0;
     packetToTransitTime = 0.0;
     logging = true;
@@ -61,6 +63,9 @@ void ParametricLink::run(double currentTime) {
         
         // if transmission time has passed...
         if (it->second <= 0.0) {
+
+            // TODO Destination->receive :: Probably needs a lock handle
+
             // deliver it to destination node
             destination->receivePacket(it->first);
             

@@ -41,7 +41,6 @@ class NetworkSimulatorUI : public Timer {
     NetworkSimulatorUI();
 
     NetworkSimulator* networkSimulator;
-    std::thread uiThread;
 
 };
 

@@ -45,6 +45,5 @@ private:
     std::thread t;
     NetworkSimulatorUI* ui;
     ApplicationFactory* applicationFactory;
-    std::thread nsThread;
 };
 #endif /* defined(__NetworkSimulator__NetworkSimulator__) */
