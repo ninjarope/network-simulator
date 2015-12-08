@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
             
             
             // Let's go!
-            ns.restart();
+            ns.start();
         }
     } catch (const char* msg) {
         std::cerr << msg << std::endl;
