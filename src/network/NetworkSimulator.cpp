@@ -21,9 +21,9 @@ NetworkSimulator::~NetworkSimulator() {
 }
 
 void NetworkSimulator::timerCallback() {
-    const int threads = 32;
-    std::vector<std::thread> nodeWorkers;
-    std::vector<std::thread> linkWorkers;
+    const int maxThreads = 64;
+    std::list<std::thread> nodeWorkers;
+    std::list<std::thread> linkWorkers;
     
     auto node = getNodes().begin();
     auto link = getLinks().begin();
@@ -33,7 +33,7 @@ void NetworkSimulator::timerCallback() {
     
     // Start threads for nodes
     while (node != endNode) {
-        for (int i = 0; i < threads && node != endNode; i++) {
+        for (int i = 0; i < maxThreads && node != endNode; i++) {
             nodeWorkers.push_back(std::thread(&ApplicationNode::run, node->second, ct));
             node++;
         }
@@ -43,7 +43,7 @@ void NetworkSimulator::timerCallback() {
 
     // Start threads for links
     while (link != endLink) {
-        for (int i = 0; i < threads && link != endLink; i++) {
+        for (int i = 0; i < maxThreads && link != endLink; i++) {
             linkWorkers.push_back(std::thread(&Link::run, *link, ct));
             link++;
         }

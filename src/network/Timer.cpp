@@ -41,9 +41,8 @@ void Timer::startTimer() {
         callbackDuration = returnTime - callTime;
 
         // delay if necessary
-        int waitTime = (double) interval;
-        if (callbackDuration < std::chrono::milliseconds(waitTime)) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - callbackDuration);
+        if (callbackDuration < std::chrono::milliseconds(interval)) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
         }
 
         if (currentTime < endTime and !paused) currentTime += interval * speed;

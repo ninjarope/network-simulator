@@ -7,6 +7,7 @@
 #ifndef __NetworkSimulator__NetworkSimulator__
 #define __NetworkSimulator__NetworkSimulator__
 #include <memory>
+#include <thread>
 #include "../ns.h"
 #include "Timer.h"
 #include "Network.h"
@@ -39,5 +40,5 @@ public:
 private:
     NetworkSimulatorUI* ui;
     ApplicationFactory* applicationFactory;
-};
+    };
 #endif /* defined(__NetworkSimulator__NetworkSimulator__) */

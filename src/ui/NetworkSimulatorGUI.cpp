@@ -128,6 +128,7 @@ void NetworkSimulatorGUI::displayTrafficLog(ns::AddressType source, ns::AddressT
 }
 
 void NetworkSimulatorGUI::drawNodes() {
+    sf::CircleShape nodeShape(nodeRadius);
     for (auto &n : visibleNodes) {
         // Hide others if two nodes selected
         if (selectedNodes.size() != 2
@@ -136,9 +137,7 @@ void NetworkSimulatorGUI::drawNodes() {
         const ns::AddressType& address = n.first;
         const int& x = n.second.x * zoom + transformX;
         const int& y = n.second.y * zoom + transformY;
-        
-        sf::CircleShape nodeShape(nodeRadius);
-        
+            
         // set color and transfrom
         sf::Color outlineColor = defaultNodeColor;
         sf::Color fillColor = defaultFillColor;
@@ -184,7 +183,7 @@ void NetworkSimulatorGUI::drawLinks() {
         sf::Color sourceColor;
         
         if (distributionMode == Traffic) {
-            value = l->getPacketsInTransmission().size() * 100;
+            value = (l->getPacketsInTransmission().empty() ? 0.0 : 255);
             intensity = std::min((int) value, 255);
             sourceColor = sf::Color(128 - 0.5 * intensity,
                                               128 + 0.5 * intensity,

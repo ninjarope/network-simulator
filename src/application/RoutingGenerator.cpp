@@ -59,7 +59,7 @@ void RoutingGenerator::process(double currentTime) {
                             hostRoutingTable.insert({destinationAddress, {neighbor->getAddress(), newTotal}});
                         }
                     }
-                } catch (std::out_of_range) {}
+                } catch (std::exception) {}
             }
         } else {
             // Trivial path to node itself, which has zero weight

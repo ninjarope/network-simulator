@@ -6,7 +6,7 @@
     </node>
 
     <node address="B" x="3.0" y="1.0">
-        <application type="PacketGenerator" rate="100.0">
+        <application type="PacketGenerator" rate="2.0">
             <destination address="D"/>
         </application>
         <application type="RoutingGenerator"/>
@@ -50,4 +50,5 @@
     <link source="B" destination="D" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
     <link source="B" destination="E" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
 
+    <packet/>
 </network>
