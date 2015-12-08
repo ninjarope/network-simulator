@@ -11,7 +11,6 @@
 TestLink::TestLink() : Link() {}
 
 void TestLink::run(double currentTime) {
-    // Get atomic containers
     auto& packetsWaiting = *this->packetsWaiting.load();
 
     while (!packetsWaiting.empty()) {

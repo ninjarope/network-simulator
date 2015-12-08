@@ -13,6 +13,7 @@
 Link::Link() {
     packetsWaiting.store(new ns::Packets);
     packetsInTransmission.store(new std::map<Packet*, double>);
+    transmittedPackets.store(new ns::TransmissionLogType);
 }
 
 Link::Link(Node* source, Node* destination) : Link() {
@@ -29,7 +30,7 @@ Link::Link(Node* source, Node* destination, double weight) : Link() {
 Link::~Link() {
     for (auto& packet : *packetsWaiting.load()) delete packet;
     for (auto& packet : *packetsInTransmission.load()) delete packet.first;
-
+    
     // This could be also just notifying source node...
     source->removeConnection(this);
 }
@@ -47,7 +48,7 @@ bool Link::setDestination(Node* destination) {
         this->destination = destination;
         return true;
     } else return false;
-
+    
 }
 
 void Link::addPacket(Packet* p) { packetsWaiting.load()->push_back(p); }
@@ -92,5 +93,5 @@ const std::map<Packet*, double>& Link::getPacketsInTransmission() const {
 }
 
 const ns::TransmissionLogType& Link::getTransmissionLog() const {
-    return transmittedPackets;
+    return *transmittedPackets.load();
 }

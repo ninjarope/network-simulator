@@ -136,7 +136,7 @@ void Network::updateRouting(){
 void Network::clearRouting(){
     shortestPath = ShortestPath();
     for (auto& n : nodes) {
-        n.second->getRoutingTable().clear();
+        n.second->clearRoutingTable();
     }
 }
 

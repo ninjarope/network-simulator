@@ -25,7 +25,7 @@ void NetworkSimulator::timerCallback() {
     
     std::cerr << "RUNNING NS TIMER " << this << std::endl << " " << currentTime;
 
-    const int maxThreads = 64;
+    const int maxThreads = 32;
     std::list<std::thread> nodeWorkers;
     std::list<std::thread> linkWorkers;
     
@@ -75,8 +75,8 @@ void NetworkSimulator::start() {
 
 void NetworkSimulator::reset() {
     ui->generateGraphLayout();
-    for (auto& node : getNodes()) node.second->reset();
-    for (auto& link : getLinks()) link->reset();
+    for (auto& node : getNodes()) if (node.second) node.second->reset();
+    for (auto& link : getLinks()) if (link) link->reset();
     clearRouting();
     resetTimer();
 }

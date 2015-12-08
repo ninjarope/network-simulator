@@ -56,14 +56,16 @@ public:
     virtual std::string getType() const = 0;
 
     void updateTable(std::vector<ns::AddressType> shortestPath);
+    void updateTable(ns::AddressType, ns::TotalWeight);
     
     /** Return modifiable routing table. */
     ns::RoutingTable getRoutingTable();
     
+    void clearRoutingTable();
+    
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
     
-    std::mutex mtx;
 
 protected:
     ns::Connections connections;
@@ -75,6 +77,9 @@ protected:
 
     double x = 0;
     double y = 0;
+
+    std::recursive_mutex mtx;
+
 };
 
 #endif /** defined(__NetworkSimulator__Node__) */

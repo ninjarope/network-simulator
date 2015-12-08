@@ -52,11 +52,13 @@ void RoutingGenerator::process(double currentTime) {
                             // Update routing table if lower cost routing found
                             if (newTotal < currentTotal) {
                                 it->second = {neighbor->getAddress(), newTotal};
+                                hostNode->updateTable(it->first, it->second);
                             }
                         } else {
                             // If host has no existing routing to destination found in neighbor's
                             // routing table, add new routing via neighbor
-                            hostRoutingTable.insert({destinationAddress, {neighbor->getAddress(), newTotal}});
+                            ns::TotalWeight w = {neighbor->getAddress(), newTotal};
+                            hostNode->updateTable(destinationAddress, w);
                         }
                     }
                 } catch (std::exception) {}
@@ -64,7 +66,7 @@ void RoutingGenerator::process(double currentTime) {
         } else {
             // Trivial path to node itself, which has zero weight
             ns::AddressType ownAddress = hostNode->getAddress();
-            hostRoutingTable.insert({ownAddress, {ownAddress, 0.0}});
+            hostNode->updateTable(ownAddress, {ownAddress, 0.0});
 
             // Initialize routing table with direct connections to neighbors
             for (auto connection : hostNode->getConnections()) {
@@ -72,7 +74,7 @@ void RoutingGenerator::process(double currentTime) {
                 double weight = connection->getWeight();
                 
                 // Insert entry
-                hostRoutingTable.insert({neighborAddress, {neighborAddress, weight}});
+                hostNode->updateTable(neighborAddress, {neighborAddress, weight});
             }
         }
         passedTime = 0.0;
