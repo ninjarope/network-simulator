@@ -100,7 +100,9 @@ TEST_CASE("Starting a network", "[network]") {
     NetworkSimulatorUI* ui = NetworkSimulatorTesterUI::createUI();
     ns.setUI(ui);
 
-
+    ns.setTimerInterval(10);
+    ns.setTimerSlowdownrate(1.0);
+    ns.setTimerEndTime(20);
 
     CHECK(ui);
 }
