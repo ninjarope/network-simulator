@@ -56,25 +56,32 @@ void XMLReader::parseRoot() {
     // Load first node and test for error
     // XMLHandle enables checking for nullptr's / in other words error handling
     XMLHandle docHandle(&doc);
-    XMLElement* rootElement = docHandle.FirstChildElement("network").ToElement();
+    XMLElement* rootElement = docHandle.FirstChild().ToElement();
     if (!rootElement)
         throw "No root element defined.";
 
     int interval = -1;
-    double speed = -1.0;
+    double slowdownrate = -1.0;
     int endTime = -1;
 
     rootElement->QueryIntAttribute("interval", &interval);
-    if (interval >= 0)
+    if (interval >= 0) {
+        std::cout << "Set interval: " << interval << std::endl;
         ns.setTimerInterval(interval);
+    }
 
-    rootElement->QueryDoubleAttribute("speed", &speed);
-    if (speed >= 0.0)
-        ns.setTimerSpeed(speed);
+
+    rootElement->QueryDoubleAttribute("slowdownrate", &slowdownrate);
+    if (slowdownrate >= 0.0){
+        std::cout << "Set slowdownrate: " << slowdownrate << std::endl;
+        ns.setTimerSlowdownrate(slowdownrate);
+    }
 
     rootElement->QueryIntAttribute("endTime", &endTime);
-    if (endTime >= 0)
+    if (endTime >= 0) {
+        std::cout << "Set endtime: " << endTime << std::endl;
         ns.setTimerEndTime(endTime);
+    }
 }
 
 void XMLReader::buildNode(XMLElement* e) {

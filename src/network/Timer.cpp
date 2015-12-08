@@ -12,14 +12,14 @@
 
 #include "Timer.h"
 
-Timer::Timer(int i, double s, int et) : interval(i), speed(s), endTime(et) { }
+Timer::Timer(int i, double s, int et) : interval(i), slowdownrate(s), endTime(et) { }
 
 Timer::~Timer() {}
 
 double Timer::getCurrentTime() { return currentTime; }
 
 void Timer::setTimerInterval(int i) { interval = i; }
-void Timer::setTimerSpeed(double s) { speed = s; }
+void Timer::setTimerSlowdownrate(double s) { slowdownrate = s; }
 void Timer::setTimerEndTime(int et) { endTime = et; }
 
 double Timer::getTimerInterval() { return interval; }
@@ -37,6 +37,7 @@ void Timer::startTimer() {
         std::cout << "OUTER LOOP " << isPaused << " " << currentTime << " " << endTime << std::endl;
 #endif
         while(!isPaused && (endTime ? currentTime < endTime : true)) {
+            // Calculate the call back functions elapsed time
             callTime = std::chrono::system_clock::now();
             timerCallback();
             returnTime = std::chrono::system_clock::now();
@@ -47,7 +48,7 @@ void Timer::startTimer() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
             }
 
-            currentTime += interval;
+            currentTime += interval / slowdownrate;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(interval));
