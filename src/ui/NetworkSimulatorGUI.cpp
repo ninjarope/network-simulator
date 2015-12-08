@@ -61,7 +61,9 @@ NetworkSimulatorGUI::~NetworkSimulatorGUI() {
     window->close();
 }
 
-NetworkSimulatorUI *NetworkSimulatorGUI::createUI() { return new NetworkSimulatorGUI(); }
+NetworkSimulatorUI *NetworkSimulatorGUI::createUI() {
+    return new NetworkSimulatorGUI;
+}
 
 
 void NetworkSimulatorGUI::generateGraphLayout() {
@@ -174,48 +176,50 @@ void NetworkSimulatorGUI::drawNodes() {
 void NetworkSimulatorGUI::drawLinks() {
     for (auto &l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
-        auto n1 = visibleNodes.at(l->getSource()->getAddress());
-        auto n2 = visibleNodes.at(l->getDestination()->getAddress());
-        
-        // Color changes
-        double value = 0.0;
-        size_t intensity;
-        sf::Color sourceColor;
-        
-        if (distributionMode == Traffic) {
-            value = (l->getPacketsInTransmission().empty() ? 0.0 : 255);
-            intensity = std::min((int) value, 255);
-            sourceColor = sf::Color(128 - 0.5 * intensity,
-                                              128 + 0.5 * intensity,
-                                              128 - 0.5 * intensity,
-                                              128 + 0.5 * intensity);
-        }
-        else if (distributionMode == Queue) {
-            value = l->getQueueLength();
-            intensity = std::min((int) value, 255);
-            sourceColor = sf::Color(128 + 0.5 * intensity,
-                                    128 - 0.5 * intensity,
-                                    128 - 0.5 * intensity,
-                                    128 + 0.5 * intensity);
-        }
-        
-        sf::Color destinationColor = sf::Color(255,
-                                               255,
-                                               255,
-                                               0);
-        
-        // Line between nodes
-        double x1 = n1.x * zoom + transformX;
-        double y1 = n1.y * zoom + transformY;
-        double x2 = n2.x * zoom + transformX;
-        double y2 = n2.y * zoom + transformY;
-        sf::Vertex line[] =
-        {
-            sf::Vertex(sf::Vector2f(x1, y1), sourceColor),
-            sf::Vertex(sf::Vector2f(x2, y2), destinationColor)
-        };
-        
-        window->draw(line, 2, sf::Lines);
+        try {
+            auto n1 = visibleNodes.at(l->getSource()->getAddress());
+            auto n2 = visibleNodes.at(l->getDestination()->getAddress());
+            
+            // Color changes
+            double value = 0.0;
+            size_t intensity;
+            sf::Color sourceColor;
+            
+            if (distributionMode == Traffic) {
+                value = (l->getPacketsInTransmission().empty() ? 0.0 : 255);
+                intensity = std::min((int) value, 255);
+                sourceColor = sf::Color(128 - 0.5 * intensity,
+                                                  128 + 0.5 * intensity,
+                                                  128 - 0.5 * intensity,
+                                                  128 + 0.5 * intensity);
+            }
+            else if (distributionMode == Queue) {
+                value = l->getQueueLength();
+                intensity = std::min((int) value, 255);
+                sourceColor = sf::Color(128 + 0.5 * intensity,
+                                        128 - 0.5 * intensity,
+                                        128 - 0.5 * intensity,
+                                        128 + 0.5 * intensity);
+            }
+            
+            sf::Color destinationColor = sf::Color(255,
+                                                   255,
+                                                   255,
+                                                   0);
+            
+            // Line between nodes
+            double x1 = n1.x * zoom + transformX;
+            double y1 = n1.y * zoom + transformY;
+            double x2 = n2.x * zoom + transformX;
+            double y2 = n2.y * zoom + transformY;
+            sf::Vertex line[] =
+            {
+                sf::Vertex(sf::Vector2f(x1, y1), sourceColor),
+                sf::Vertex(sf::Vector2f(x2, y2), destinationColor)
+            };
+            
+            window->draw(line, 2, sf::Lines);
+        } catch(std::out_of_range) {}
     }
 }
 
@@ -589,10 +593,18 @@ void NetworkSimulatorGUI::toggleSelect(ns::AddressType address) {
     }
 }
 
+
+
 void NetworkSimulatorGUI::update() {
     // Handle events
+    std::cerr << "WINDOW ADDRESS: " << window << std::endl;
+    //e->pollEvent();
+    //std::queue<sf::Event> events = e->getEvents();
+    //std::thread eventThread(&sf::Window::pollEvent, window, event);
+    //eventThread.join();
     while (window->pollEvent(event))
     {
+        //event = events.front();
         switch (event.type)
         {
             case sf::Event::Closed:
@@ -690,7 +702,6 @@ void NetworkSimulatorGUI::update() {
                 break;
         }
     }
-    
     // Clear buffer
     window->clear();
     

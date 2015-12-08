@@ -31,8 +31,8 @@ void Timer::startTimer() {
     paused = false;
 
     while (running) {
-
-        while(!paused && currentTime < endTime) {
+        std::cerr << "OUTER LOOP " << paused << " " << currentTime << " " << endTime << std::endl;
+        while(!paused && (endTime ? currentTime < endTime : true)) {
             callTime = std::chrono::system_clock::now();
             timerCallback();
             returnTime = std::chrono::system_clock::now();
@@ -43,7 +43,7 @@ void Timer::startTimer() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
             }
 
-            currentTime += interval * speed;
+            currentTime += interval;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(interval));
@@ -54,6 +54,6 @@ void Timer::toggleTimer() {
     paused = !paused;
 }
 
-void Timer::stopTimer() { running = false; }
+void Timer::stopTimer() { running = false; paused = true; }
 
 void Timer::setRunningTime(double milliseconds) {}

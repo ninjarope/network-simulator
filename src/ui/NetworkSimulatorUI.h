@@ -18,8 +18,6 @@
  */
 class NetworkSimulatorUI : public Timer {
   public:
-    NetworkSimulatorUI();
-
     virtual ~NetworkSimulatorUI();
 
     /** NetworkSimulator will call this. */
@@ -39,13 +37,9 @@ class NetworkSimulatorUI : public Timer {
     /** NetworkSimulator will call this in it's timer callbacks. */
     virtual void update() = 0;
 
-    /** Starts the ui thread, runs inherited timer's loop which calls update() in UI */
-    virtual void start() {
-        uiThread = std::thread (&Timer::startTimer, this);
-        uiThread.detach();
-    };
-
   protected:
+    NetworkSimulatorUI();
+
     NetworkSimulator* networkSimulator;
     std::thread uiThread;
 
