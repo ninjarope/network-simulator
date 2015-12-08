@@ -8,7 +8,7 @@
 
 #include "NetworkSimulatorUI.h"
 
-NetworkSimulatorUI::NetworkSimulatorUI() {}
+NetworkSimulatorUI::NetworkSimulatorUI() : Timer(20, 10000, 1.0) {}
 
 NetworkSimulatorUI::~NetworkSimulatorUI() {
     networkSimulator->setUI(nullptr);
@@ -17,3 +17,5 @@ NetworkSimulatorUI::~NetworkSimulatorUI() {
 void NetworkSimulatorUI::setNetworkSimulator(NetworkSimulator* ns) {
     networkSimulator = ns;
 }
+
+

@@ -12,7 +12,7 @@ NetworkSimulator::NetworkSimulator() : ui(nullptr) {
 }
 
 void NetworkSimulator::setUI(NetworkSimulatorUI* ui) {
-    this->ui = ui;
+    ui = ui;
     ui->setNetworkSimulator(this);
 }
 
@@ -52,10 +52,15 @@ void NetworkSimulator::timerCallback() {
     }
     
     // Start thread for UI
-    if (ui) ui->update();
+//    if (ui) ui->update();
 }
 
-void NetworkSimulator::restart() {
+void NetworkSimulator::start() {
+    ui->start();
+    reset();
+}
+
+void NetworkSimulator::reset() {
     ui->generateGraphLayout();
     for (auto& node : getNodes()) node.second->reset();
     for (auto& link : getLinks()) link->reset();
@@ -64,5 +69,6 @@ void NetworkSimulator::restart() {
 }
 
 void NetworkSimulator::quit() {
+    ui->stopTimer();
     stopTimer();
 }

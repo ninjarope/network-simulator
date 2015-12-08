@@ -11,16 +11,17 @@
 
 #include "../ns.h"
 #include "../network/NetworkSimulator.h"
+#include <thread>
 
 /**
  * Abstract base class for all UI implementations. 
  */
-class NetworkSimulatorUI {
-public:
+class NetworkSimulatorUI : public Timer {
+  public:
     NetworkSimulatorUI();
-    
+
     virtual ~NetworkSimulatorUI();
-    
+
     /** NetworkSimulator will call this. */
     void setNetworkSimulator(NetworkSimulator* ns);
 
@@ -38,8 +39,16 @@ public:
     /** NetworkSimulator will call this in it's timer callbacks. */
     virtual void update() = 0;
 
-protected:
+    /** Starts the ui thread, runs inherited timer's loop which calls update() in UI */
+    virtual void start() {
+        uiThread = std::thread (&Timer::startTimer, this);
+        uiThread.detach();
+    };
+
+  protected:
     NetworkSimulator* networkSimulator;
+    std::thread uiThread;
+
 };
 
 #endif /* defined(__NetworkSimulator__NetworkSimulatorUI__) */

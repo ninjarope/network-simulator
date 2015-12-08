@@ -28,8 +28,12 @@ public:
      */
 
     void timerCallback() override;
-    
-    void restart();
+
+    /** Starts timer and ui thread */
+    void start();
+
+    /** Resets nodes, links and graph layout */
+    void reset();
 
     /** Terminate controller and UI. */
     void quit();

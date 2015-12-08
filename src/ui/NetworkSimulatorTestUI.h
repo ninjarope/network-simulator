@@ -31,6 +31,8 @@ public:
     void hr();
     
     void update() override;
+
+    void timerCallback() override { };
     
 private:
 };

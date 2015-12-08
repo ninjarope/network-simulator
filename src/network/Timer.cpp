@@ -12,11 +12,7 @@
 
 #include "Timer.h"
 
-Timer::Timer() {
-    interval = 10;
-    endTime = 10000;
-    speed = 1.0;
-}
+Timer::Timer(int i, double s, int et) : interval(i), endTime(et), speed(s) { }
 
 Timer::~Timer() {}
 
@@ -33,19 +29,24 @@ void Timer::startTimer() {
     currentTime = 0.0;
     running = true;
     paused = false;
-    
-    while (running) {
-        callTime = std::chrono::system_clock::now();
-        timerCallback();
-        returnTime = std::chrono::system_clock::now();
-        callbackDuration = returnTime - callTime;
 
-        // delay if necessary
-        if (callbackDuration < std::chrono::milliseconds(interval)) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
+    while (running) {
+
+        while(!paused && currentTime < endTime) {
+            callTime = std::chrono::system_clock::now();
+            timerCallback();
+            returnTime = std::chrono::system_clock::now();
+            callbackDuration = returnTime - callTime;
+
+            // delay if callback ran faster than the given interval
+            if (callbackDuration < std::chrono::milliseconds(interval)) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
+            }
+
+            currentTime += interval * speed;
         }
 
-        if (currentTime < endTime and !paused) currentTime += interval * speed;
+        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
     }
 }
 

@@ -13,7 +13,7 @@
 #include <cfloat>       /* DBL_MAX */
 #include <algorithm>
 
-NetworkSimulatorGUI::NetworkSimulatorGUI() {
+NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
     // Create window
     sf::ContextSettings settings;
     settings.antialiasingLevel = 0;
@@ -614,7 +614,7 @@ void NetworkSimulatorGUI::update() {
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                     case sf::Keyboard::Return:
-                        networkSimulator->restart();
+                        networkSimulator->reset();
                         break;
 
                     case sf::Keyboard::Num1:
@@ -661,7 +661,8 @@ void NetworkSimulatorGUI::update() {
                     case sf::Keyboard::M:
                         changeDistributionView();
                         break;
-                        
+
+                    case sf::Keyboard::Q:
                     case sf::Keyboard::Escape:
                         networkSimulator->quit();
                         break;

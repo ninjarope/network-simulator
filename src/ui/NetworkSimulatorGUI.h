@@ -115,6 +115,11 @@ public:
     void toggleSelect(ns::AddressType address);
 
     /**
+     * Threaded callback to update GUI
+     */
+    void timerCallback() override { update(); }
+
+    /**
      * Main function that is called from Network Simulator.
      * Encapsulates all UI subjects.
      */
