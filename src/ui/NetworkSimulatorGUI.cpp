@@ -495,61 +495,60 @@ void NetworkSimulatorGUI::drawRouting() {
         ns::AddressType source = selectedNodes.front();
         ns::AddressType dest = (selectedNodes.size() == 1 ? focusNode : selectedNodes.back());
 
-        Node* n1 = networkSimulator->getNode(source);
-        while (n1) {
-            auto it = n1->getRoutingTable().find(dest);
-            if (it == n1->getRoutingTable().end())
-                break;
-            ns::AddressType next = n1->getRoutingTable().at(dest).nextHop;
-            Node* n2 = networkSimulator->getNode(next);
+        try {
+            Node* n1 = networkSimulator->getNode(source);
+            while (n1) {
+                ns::AddressType next = n1->getRoutingTable().at(dest).nextHop;
+                Node* n2 = networkSimulator->getNode(next);
 
-            if (!n2) break;
+                if (!n2) break;
 
-            // Color changes to red as queue grows
-            sf::Color pathColor = sf::Color(255, 255, 255);
+                // Color changes to red as queue grows
+                sf::Color pathColor = sf::Color(255, 255, 255);
 
-            // Node coordinates
-            double x1 = visibleNodes.at(n1->getAddress()).x * zoom + transformX;
-            double y1 = visibleNodes.at(n1->getAddress()).y * zoom + transformY;
-            double x2 = visibleNodes.at(n2->getAddress()).x * zoom + transformX;
-            double y2 = visibleNodes.at(n2->getAddress()).y * zoom + transformY;
+                // Node coordinates
+                double x1 = visibleNodes.at(n1->getAddress()).x * zoom + transformX;
+                double y1 = visibleNodes.at(n1->getAddress()).y * zoom + transformY;
+                double x2 = visibleNodes.at(n2->getAddress()).x * zoom + transformX;
+                double y2 = visibleNodes.at(n2->getAddress()).y * zoom + transformY;
 
-            // Line between nodes
-            sf::Vertex line[] =
-                {
-                    sf::Vertex(sf::Vector2f(x1, y1), pathColor),
-                    sf::Vertex(sf::Vector2f(x2, y2), pathColor)
-                };
+                // Line between nodes
+                sf::Vertex line[] =
+                    {
+                        sf::Vertex(sf::Vector2f(x1, y1), pathColor),
+                        sf::Vertex(sf::Vector2f(x2, y2), pathColor)
+                    };
 
-            Link* l = networkSimulator->getLink(n1->getAddress(), n2->getAddress());
-            std::stringstream ss;
-            ss.precision(2);
-            ss.setf(std::ios::fixed);
-            if (l) ss << l->getWeight();
+                Link* l = networkSimulator->getLink(n1->getAddress(), n2->getAddress());
+                std::stringstream ss;
+                ss.precision(2);
+                ss.setf(std::ios::fixed);
+                if (l) ss << l->getWeight();
 
-            sf::Text weight;
-            weight.setFont(font);
-            weight.setCharacterSize(14);
-            weight.setColor(sf::Color::White);
-            weight.setString(ss.str());
-            weight.setOrigin((int) weight.getLocalBounds().width / 2, (int) weight.getLocalBounds().height / 2);
-            weight.setPosition((int) (x2 + x1) / 2, (int) (y2 + y1) / 2);
+                sf::Text weight;
+                weight.setFont(font);
+                weight.setCharacterSize(14);
+                weight.setColor(sf::Color::White);
+                weight.setString(ss.str());
+                weight.setOrigin((int) weight.getLocalBounds().width / 2, (int) weight.getLocalBounds().height / 2);
+                weight.setPosition((int) (x2 + x1) / 2, (int) (y2 + y1) / 2);
 
-            window->draw(line, 2, sf::Lines);
-            if (dest == focusNode) {
-                sf::RectangleShape rec(sf::Vector2f(weight.getLocalBounds().width,
-                                                    weight.getLocalBounds().height));
-                rec.setFillColor(sf::Color::Black);
-                rec.setOutlineColor(sf::Color::Black);
-                rec.setOutlineThickness(2);
-                rec.setPosition(weight.getGlobalBounds().left, weight.getGlobalBounds().top);
-                window->draw(rec);
-                window->draw(weight);
+                window->draw(line, 2, sf::Lines);
+                if (dest == focusNode) {
+                    sf::RectangleShape rec(sf::Vector2f(weight.getLocalBounds().width,
+                                                        weight.getLocalBounds().height));
+                    rec.setFillColor(sf::Color::Black);
+                    rec.setOutlineColor(sf::Color::Black);
+                    rec.setOutlineThickness(2);
+                    rec.setPosition(weight.getGlobalBounds().left, weight.getGlobalBounds().top);
+                    window->draw(rec);
+                    window->draw(weight);
+                }
+
+                n1 = n2;
+                if (next == dest) break;
             }
-
-            n1 = n2;
-            if (next == dest) break;
-        }
+        } catch (std::out_of_range) { }
     }
 }
 
