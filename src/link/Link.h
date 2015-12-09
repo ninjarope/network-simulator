@@ -98,8 +98,8 @@ protected:
     double propagationDelay = 0.0;
     double weight = 1.0;
     
-    std::mutex mtx;
-    
+    std::recursive_mutex mtx;
+
 };
 
 

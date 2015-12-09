@@ -36,7 +36,6 @@ void NetworkSimulator::timerCallback() {
     std::cout << "RUNNING NS TIMER " << this << std::endl << " " << currentTime;
 #endif
 
-    const int maxThreads = 32;
     std::list<std::thread> nodeWorkers;
     std::list<std::thread> linkWorkers;
     
@@ -48,7 +47,7 @@ void NetworkSimulator::timerCallback() {
     
     // Start threads for nodes
     while (node != endNode) {
-        for (int i = 0; i < maxThreads && node != endNode; i++) {
+        for (int i = 0; i < ns::maxThreads && node != endNode; i++) {
             nodeWorkers.push_back(std::thread(&ApplicationNode::run, node->second, ct));
             node++;
         }
@@ -58,16 +57,13 @@ void NetworkSimulator::timerCallback() {
 
     // Start threads for links
     while (link != endLink) {
-        for (int i = 0; i < maxThreads && link != endLink; i++) {
+        for (int i = 0; i < ns::maxThreads && link != endLink; i++) {
             linkWorkers.push_back(std::thread(&Link::run, *link, ct));
             link++;
         }
         for (auto& t : linkWorkers) t.join();
         linkWorkers.clear();
     }
-    
-    // Start thread for UI
-//    if (ui) ui->update();
 }
 
 
@@ -97,7 +93,6 @@ void NetworkSimulator::quit() {
 #endif
     ui->stopTimer();
     stopTimer();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 
