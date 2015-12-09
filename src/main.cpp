@@ -72,6 +72,6 @@ int main(int argc, char** argv) {
     } catch (const char* msg) {
         std::cerr << msg << std::endl;
     }
-
+    
     return result;
 }

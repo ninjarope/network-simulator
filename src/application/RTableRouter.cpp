@@ -49,7 +49,5 @@ void RTableRouter::process(double currentTime) {
             targetLink->addPacket(p);
             packets.erase(packets.begin());
         }
-        
-
     }
 }

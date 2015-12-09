@@ -51,6 +51,14 @@ void XMLReader::process() {
         XMLHandle leHandle(linkElement);
         linkElement = leHandle.NextSiblingElement("link").ToElement();
     }
+    
+    // Load packets
+    XMLElement* packetElement = neHandle.NextSiblingElement("packet").ToElement();
+    while (packetElement) {
+        buildPacket(packetElement);
+        XMLHandle peHandle(packetElement);
+        packetElement = peHandle.NextSiblingElement("packet").ToElement();
+    }
 }
 
 void XMLReader::parseRoot() {
@@ -91,12 +99,12 @@ void XMLReader::parseRoot() {
 
 void XMLReader::buildNode(XMLElement* e) {
     // Variables for a node
-    ns::AddressType address = "";
+    ns::AddressType address;
     double x = 0.0;
     double y = 0.0;
 
     // Read attributes to variables
-    address = e->Attribute("address");
+    address = getStringAttribute(e->Attribute("address"));
     e->QueryDoubleAttribute("x", &x);
     e->QueryDoubleAttribute("y", &y);
 
@@ -145,16 +153,16 @@ void XMLReader::buildNode(XMLElement* e) {
 
 void XMLReader::buildLink(XMLElement* e) {
     // make a link
-    ns::AddressType source = "";
-    ns::AddressType destination = "";
+    ns::AddressType source;
+    ns::AddressType destination;
     bool directed = false;
     double speed = 0.0;
     double delay = 0.0;
     double weight = 0.0;
 
     // get attributes
-    source = e->Attribute("source");
-    destination = e->Attribute("destination");
+    source = getStringAttribute(e->Attribute("source"));
+    destination = getStringAttribute(e->Attribute("destination"));
     e->QueryBoolAttribute("directed", &directed);
     e->QueryDoubleAttribute("speed", &speed);
     e->QueryDoubleAttribute("delay", &delay);
@@ -162,4 +170,28 @@ void XMLReader::buildLink(XMLElement* e) {
 
     ns.addLink(source, destination, new ParametricLink(speed, delay, weight));
     if (!directed) ns.addLink(destination, source, new ParametricLink(speed, delay, weight));
+}
+
+void XMLReader::buildPacket(XMLElement* e) {
+    // Parameters
+    ns::AddressType source;
+    ns::AddressType destination;
+    std::string data;
+    double size;
+    
+    // Get attributes
+    source = getStringAttribute(e->Attribute("source"));
+    destination = getStringAttribute(e->Attribute("destination"));
+    data = getStringAttribute(e->Attribute("data"));
+    e->QueryDoubleAttribute("size", &size);
+    
+    // Packet to source node
+    Node* sourceNode = ns.getNode(source);
+    if (sourceNode) {
+        sourceNode->receivePacket(new Packet(source, destination, data, size));
+    }
+}
+
+std::string XMLReader::getStringAttribute(const char* s) {
+    return std::string(s ? s : "");
 }

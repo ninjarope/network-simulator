@@ -65,6 +65,17 @@ class XMLReader {
     * Creates nodes from xml elements and attributes and adds them to the network
     */
     void buildLink(XMLElement*);
+
+    /**
+     * Creates packets from xml elements and attributes and adds them to the network
+     */
+    void buildPacket(XMLElement*);
+    
+    /**
+     * Builds a string from string attribute (null checking).
+     */
+    std::string getStringAttribute(const char* s);
+
 };
 
 #endif //NS1_XMLREADER_H

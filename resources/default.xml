@@ -50,5 +50,5 @@
     <link source="B" destination="D" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
     <link source="B" destination="E" directed="false" speed="1.0" delay="100.0" weight="1.0"/>
 
-    <packet/>
+    <packet source="A" destination="C" data="XML PACKET" size="10.0"/>
 </network>
