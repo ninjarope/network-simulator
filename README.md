@@ -22,7 +22,7 @@ Simulator for network connection points, paths between them and packets flowing 
 >Basic xml layout:
 >
 >```xml
-><network>
+><network interval="10" slowdownrate="1.0" endTime="10000">
 >    <node address="somename" x="1.0" y="1.0">
 >        <application type="PacketReceiver"/>
 >        <application type="PacketGenerator"/>
@@ -42,6 +42,10 @@ Simulator for network connection points, paths between them and packets flowing 
 ></network>
 >```
 >
++ Networks parameters are optional
+    + interval = ms for every step
+    + slowdownrate = the bigger, the slower
+    + endTime = end point for the intervals
 + Applications to be used are 
     + PacketReceiver
     + PacketGenerator - defines the destinations for the generated packets
