@@ -42,3 +42,347 @@ Starting a network completed in 5.8e-05s
 All tests passed (6 assertions in 6 test cases)
 
 Destroying NetworkSimulator
+------------------------------------------------------------\n
+Starting a new batch of tests..\n
+Font loaded succesfully!
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000138s
+Test adding nodes to network completed in 7.1e-05s
+Test adding 10 000 nodes to network completed in 0.030525s
+Creating a tester ui completed in 2.2e-05s
+Starting a network completed in 1.5e-05s
+Adding links completed in 5.4e-05s
+Running integration tests / may take a few minutes..
+Run network simulator for a while completed in 0.121451s
+Create some links between nodes completed in 0.121585s
+Add some applications running on nodes completed in 0.12163s
+Create some nodes completed in 0.121653s
+Creating the MVC Objects completed in 0.121669s
+Comprehensive all around test with tester ui completed in 0.121829s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120939s
+Random network with
+Nodes: 10
+Links: 10
+Generators: 10
+ completed in 0.121031s
+Creating the MVC Objects for random generator completed in 0.23741s
+Comprehensive all around test with tester ui completed in 0.240213s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120692s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 1
+ completed in 0.120786s
+Creating the MVC Objects for random generator completed in 0.24106s
+Comprehensive all around test with tester ui completed in 0.244656s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120897s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 2
+ completed in 0.120988s
+Creating the MVC Objects for random generator completed in 0.246655s
+Comprehensive all around test with tester ui completed in 0.250175s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.121032s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 1
+ completed in 0.121127s
+Creating the MVC Objects for random generator completed in 0.249746s
+Comprehensive all around test with tester ui completed in 0.253741s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120996s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 2
+ completed in 0.121092s
+Creating the MVC Objects for random generator completed in 0.24918s
+Comprehensive all around test with tester ui completed in 0.253841s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.12097s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 3
+ completed in 0.121084s
+Creating the MVC Objects for random generator completed in 0.250709s
+Comprehensive all around test with tester ui completed in 0.254705s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.12077s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 1
+ completed in 0.120862s
+Creating the MVC Objects for random generator completed in 0.251331s
+Comprehensive all around test with tester ui completed in 0.255364s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120945s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 2
+ completed in 0.121038s
+Creating the MVC Objects for random generator completed in 0.259108s
+Comprehensive all around test with tester ui completed in 0.264118s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120899s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 3
+ completed in 0.120993s
+Creating the MVC Objects for random generator completed in 0.257015s
+Comprehensive all around test with tester ui completed in 0.261377s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120815s
+Random network with
+Nodes: 50
+Links: 50
+Generators: 50
+ completed in 0.120922s
+Creating the MVC Objects for random generator completed in 0.257919s
+Comprehensive all around test with tester ui completed in 0.262497s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.202281s
+Random network with
+Nodes: 500
+Links: 500
+Generators: 250
+ completed in 0.202401s
+Creating the MVC Objects for random generator completed in 0.356999s
+Comprehensive all around test with tester ui completed in 0.361929s
+===============================================================================
+All tests passed (7 assertions in 7 test cases)
+
+------------------------------------------------------------\n
+Starting a new batch of tests..\n
+Font loaded succesfully!
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000124s
+Test adding nodes to network completed in 6.1e-05s
+Test adding 10 000 nodes to network completed in 0.031704s
+Creating a tester ui completed in 2e-05s
+Starting a network completed in 1.3e-05s
+Adding links completed in 5.2e-05s
+Running integration tests / may take a few minutes..
+Run network simulator for a while completed in 0.121228s
+Create some links between nodes completed in 0.12136s
+Add some applications running on nodes completed in 0.121404s
+Create some nodes completed in 0.121427s
+Creating the MVC Objects completed in 0.121443s
+Comprehensive all around test with tester ui completed in 0.121626s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.121001s
+Random network with
+Nodes: 10
+Links: 10
+Generators: 10
+ completed in 0.121099s
+Creating the MVC Objects for random generator completed in 0.24634s
+Comprehensive all around test with tester ui completed in 0.249161s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120926s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 1
+ completed in 0.121021s
+Creating the MVC Objects for random generator completed in 0.243673s
+Comprehensive all around test with tester ui completed in 0.247461s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120829s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 2
+ completed in 0.120924s
+Creating the MVC Objects for random generator completed in 0.245159s
+Comprehensive all around test with tester ui completed in 0.248948s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120986s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 1
+ completed in 0.121082s
+Creating the MVC Objects for random generator completed in 0.245163s
+Comprehensive all around test with tester ui completed in 0.249133s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120914s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 2
+ completed in 0.12101s
+Creating the MVC Objects for random generator completed in 0.250543s
+Comprehensive all around test with tester ui completed in 0.255456s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.12095s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 3
+ completed in 0.121045s
+Creating the MVC Objects for random generator completed in 0.258437s
+Comprehensive all around test with tester ui completed in 0.262551s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120745s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 1
+ completed in 0.120837s
+Creating the MVC Objects for random generator completed in 0.261582s
+Comprehensive all around test with tester ui completed in 0.266279s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.12088s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 2
+ completed in 0.120978s
+Creating the MVC Objects for random generator completed in 0.264886s
+Comprehensive all around test with tester ui completed in 0.269192s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120935s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 3
+ completed in 0.121029s
+Creating the MVC Objects for random generator completed in 0.265219s
+Comprehensive all around test with tester ui completed in 0.269666s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.120918s
+Random network with
+Nodes: 50
+Links: 50
+Generators: 50
+ completed in 0.121018s
+Creating the MVC Objects for random generator completed in 0.261925s
+Comprehensive all around test with tester ui completed in 0.266238s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.322702s
+Random network with
+Nodes: 500
+Links: 500
+Generators: 250
+ completed in 0.322807s
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ns is a Catch v1.2.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+Comprehensive all around test with tester ui
+Comprehensive all around test with tester ui
+  Creating the MVC Objects for random generator
+  Creating the MVC Objects for random generator
+-------------------------------------------------------------------------------
+src/test/Tests.h:-------------------------------------------------------------------------------
+src/test/Tests.h:171
+...............................................................................171
+
+
+...............................................................................
+
+src/test/Tests.h:279: FAILED:
+due to a fatal error condition:
+  SIGSEGV - Segmentation violation signal
+
+Completed in 0s
+===============================================================================
+test cases: 7 | 6src/test/Tests.h :passed | 1 279failed: 
+FAILED:
+due to a fatal error condition:assertions
+: 9 | 7 passed | 2 failed
+
+  SIGSEGV - Segmentation violation signal
+
+Completed in 0s
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

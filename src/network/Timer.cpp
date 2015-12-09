@@ -18,6 +18,12 @@ Timer::~Timer() {}
 
 double Timer::getCurrentTime() { return currentTime; }
 
+void Timer::setTimerValues(int i, double s, int et) {
+    setTimerInterval(i);
+    setTimerSlowdownrate(s);
+    setTimerEndTime(et);
+}
+
 void Timer::setTimerInterval(int i) { interval = i; }
 void Timer::setTimerSlowdownrate(double s) { slowdownrate = s; }
 void Timer::setTimerEndTime(int et) { endTime = et; }
@@ -61,7 +67,11 @@ void Timer::toggleTimer() {
     isPaused = !isPaused;
 }
 
-void Timer::stopTimer() { isRunning = false; isPaused = true; }
+void Timer::stopTimer() {
+    setTimerValues(1, 1.0, 1);
+    isRunning = false;
+    isPaused = true;
+}
 
 void Timer::resetTimer() { currentTime = 0.0; }
 

@@ -25,6 +25,9 @@ class Timer {
     /** Return current running time in milliseconds. */
     double getCurrentTime();
 
+    /** Set timer's values */
+    void setTimerValues(int, double, int);
+
     /** Set timer interval in milliseconds. */
     void setTimerInterval(int);
     void setTimerSlowdownrate(double);

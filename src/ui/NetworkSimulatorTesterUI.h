@@ -10,6 +10,7 @@
 #define __NetworkSimulator__NetworkSimulatorTesterUI__
 
 #include "../ns.h"
+#include "../debug.h"
 #include "../network/NetworkSimulator.h"
 #include <thread>
 
@@ -38,7 +39,11 @@ class NetworkSimulatorTesterUI : public NetworkSimulatorUI {
      * Display traffic log for given link in form of [packetID, delivery time] for each
      *  transmitted packet.
      */
-    void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override { };
+    void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override {
+#if DEBUG
+        std::cout << "source: " << source << " destination: " << destination << std::endl;
+#endif
+    };
 
     void timerCallback() override {
 #if DEBUG
