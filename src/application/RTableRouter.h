@@ -1,13 +1,13 @@
 //
-//  TestRouter.h
+//  RTableRouter.h
 //  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
 //  Copyright (c) 2015 tommigrohn. All rights reserved.
 //
 
-#ifndef __NetworkSimulator__TestRouter__
-#define __NetworkSimulator__TestRouter__
+#ifndef __NetworkSimulator__RTableRouter__
+#define __NetworkSimulator__RTableRouter__
 
 #include "Application.h"
 #include "../ns.h"
@@ -17,9 +17,9 @@
  * Example implementation of application. Application implementation
  * could be given
  */
-class TestRouter : public Application {
+class RTableRouter : public Application {
 public:
-    TestRouter();
+    RTableRouter();
 
     /** Set parameters of the application. */
     Application* setParameters(std::vector<std::string> parameters) override {
@@ -38,4 +38,4 @@ private:
     std::map<ns::AddressType,ns::AddressType> routingTable;
     //ns::PathsToDestinationAddress routingTable;
 };
-#endif /* defined(__NetworkSimulator__TestRouter__) */
+#endif /* defined(__NetworkSimulator__RTableRouter__) */

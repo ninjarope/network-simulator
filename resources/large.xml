@@ -2,91 +2,91 @@
     <node address="1" x="1.0" y="1.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="2" x="1.0" y="2.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="3" x="1.0" y="3.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="4" x="1.0" y="4.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="5" x="1.0" y="5.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="6" x="2.0" y="1.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="7" x="2.0" y="2.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="8" x="2.0" y="3.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="9" x="2.0" y="4.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="10" x="2.0" y="5.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="11" x="3.0" y="1.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="12" x="3.0" y="2.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="13" x="3.0" y="3.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="14" x="3.0" y="4.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
     
     <node address="15" x="3.0" y="5.0">
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>
-        <application type="TestRouter"/>
+        <application type="RTableRouter"/>
     </node>
 
 

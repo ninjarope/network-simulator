@@ -125,7 +125,7 @@ void XMLReader::buildNode(XMLElement* e) {
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(RANDOM_ROUTER));
-        } else if (appType == "TestRouter") {
+        } else if (appType == "RTableRouter") {
             ns.getNode(address)->
                 addApplications(applicationFactory->create(TEST_ROUTER));
         } else if (appType == "RoutingGenerator") {

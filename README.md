@@ -50,7 +50,7 @@ Simulator for network connection points, paths between them and packets flowing 
     + PacketReceiver
     + PacketGenerator - defines the destinations for the generated packets
     + RandomRouter
-    + TestRouter
+    + RTableRouter
 + Routing can be done with 
     + the random applications
     + with aforementioned links (xml) between nodes.
