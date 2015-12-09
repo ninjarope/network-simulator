@@ -36,8 +36,8 @@ class NetworkSimulatorTesterUI : public NetworkSimulatorUI {
      *  transmitted packet.
      */
     void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override {
-      (void) source;
-      (void) destination;
+//      (void) source;
+//      (void) destination;
 #if DEBUG
         std::cout << "source: " << source << " destination: " << destination << std::endl;
 
