@@ -122,6 +122,8 @@ public:
      * Return true if rendering window is created, false otherwise.
      */
     bool windowExists();
+    
+    void createTransmissionLogFile(Link* l);
 
     /**
      * Main function that is called from Network Simulator.
@@ -137,6 +139,7 @@ protected:
     sf::Color defaultNodeColor;
     sf::Color defaultFillColor;
     sf::Color defaultDistColor;
+    sf::Color selectedLinkColor;
     
     unsigned int fontSize;
     unsigned int nodeRadius;
@@ -148,6 +151,7 @@ protected:
     bool statsVisible;
     bool distributionVisible;
     bool altDown = false;
+    bool linkSelected;
     
     // Helper struct
     struct Point {
@@ -158,6 +162,7 @@ protected:
     std::map<ns::AddressType, Point> visibleNodes;
     std::list<ns::AddressType> selectedNodes;
     ns::AddressType focusNode;
+    Link* selectedLink;
     
     enum {
         Traffic,

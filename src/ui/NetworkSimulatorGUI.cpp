@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cfloat>
 #include <algorithm>
+#include <fstream>
 
 #include "NetworkSimulatorGUI.h"
 #include "debug.h"
@@ -42,6 +43,7 @@ NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
     defaultNodeColor = sf::Color(128, 0, 196);
     defaultFillColor = sf::Color(0, 0, 0, 160);
     defaultDistColor = sf::Color(64, 32, 128, 160);
+    selectedLinkColor = defaultNodeColor;
 
     // Node properties
     nodeRadius = 20;
@@ -180,16 +182,28 @@ void NetworkSimulatorGUI::drawNodes() {
 }
 
 void NetworkSimulatorGUI::drawLinks() {
+    // False by default, set to true in loop if there is
+    // link between two selected nodes
+    linkSelected = false;
+    selectedLink = nullptr;
+    
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         try {
-            auto n1 = visibleNodes.at(l->getSource()->getAddress());
-            auto n2 = visibleNodes.at(l->getDestination()->getAddress());
+            ns::AddressType source = l->getSource()->getAddress();
+            ns::AddressType destination = l->getDestination()->getAddress();
+            
+            auto n1 = visibleNodes.at(source);
+            auto n2 = visibleNodes.at(destination);
 
             // Color changes
             double value = 0.0;
             size_t intensity;
             sf::Color sourceColor;
+            sf::Color destinationColor = sf::Color(255,
+                                                   255,
+                                                   255,
+                                                   0);
 
             if (distributionMode == Traffic) {
                 value = (l->getPacketsInTransmission().empty() ? 0.0 : 255);
@@ -207,11 +221,12 @@ void NetworkSimulatorGUI::drawLinks() {
                                         128 - 0.5 * intensity,
                                         128 + 0.5 * intensity);
             }
-
-            sf::Color destinationColor = sf::Color(255,
-                                                   255,
-                                                   255,
-                                                   0);
+            
+            if (selectedNodes.front() == source && selectedNodes.back() == destination) {
+                sourceColor = selectedLinkColor;
+                destinationColor = selectedLinkColor;
+                selectedLink = l;
+            }
 
             // Line between nodes
             double x1 = n1.x * zoom + transformX;
@@ -226,6 +241,10 @@ void NetworkSimulatorGUI::drawLinks() {
 
             window->draw(line, 2, sf::Lines);
         } catch (std::out_of_range) { }
+    }
+    
+    if (selectedLink) {
+        // TODO: display some values
     }
 }
 
@@ -308,8 +327,9 @@ void NetworkSimulatorGUI::drawTime() {
         << "[D] Distribution   "
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
-        << "[Arrow Keys] Move"
-        << "[,/.] Change Speed";
+        << "[Arrow Keys] Move   "
+        << "[,/.] Change Speed   "
+        << ((selectedLink) ? "[Alt+L] Create traffic log" : "");
 
 
     text.setString(ss.str());
@@ -559,8 +579,8 @@ void NetworkSimulatorGUI::changeDistributionView() {
 }
 
 void NetworkSimulatorGUI::checkMouseOverNode(int x, int y) {
+    // Check if on node
     focusNode = "";
-
     for (auto n : visibleNodes) {
         int nx = n.second.x * zoom + transformX;
         int ny = n.second.y * zoom + transformY;
@@ -603,6 +623,53 @@ void NetworkSimulatorGUI::timerCallback() {
 bool NetworkSimulatorGUI::windowExists() {
     sf::Window* ptrw = window;
     return ptrw;
+}
+
+void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
+#if DEBUG
+    std::cout
+        << "Transmission log for link "
+        << l->getSource()->getAddress()
+        << " - "
+        << l->getDestination()->getAddress()
+        << std::endl;
+#endif
+    ns::TransmissionLogType log = l->getTransmissionLog();
+    std::ofstream logFile;
+    std::stringstream fileName;
+    try {
+        fileName
+            << ns::logFilePath
+            << "traffic_log_"
+            << l->getSource()->getAddress()
+            << "-"
+            << l->getDestination()->getAddress()
+            << "_"
+            << std::to_string(rand() % 100000)
+            << ".txt";
+        
+        logFile.open (fileName.str());
+        for (auto& s : log) {
+            // Create row
+            std::stringstream ss;
+            ss.precision(3);
+            ss.setf(std::ios::fixed);
+            ss << s.first << " " << (double) s.second / 1000.0 << std::endl;
+            
+            // Write row to file
+            logFile << ss.str();
+        }
+        logFile.close();
+#if DEBUG
+        std::cout << "Log file created succesfully!" << std::endl;
+#endif
+    } catch (std::exception) {
+#if DEBUG
+        std::cout << "Log file could not be opened!" << std::endl;
+#endif
+    }
+    
+    
 }
 
 void NetworkSimulatorGUI::update() {
@@ -687,12 +754,18 @@ void NetworkSimulatorGUI::update() {
                         else networkSimulator->clearRouting();
                         break;
 
-                    case sf::Keyboard::S:
-                        toggleStatVisibility();
+                    case sf::Keyboard::L:
+                        if (altDown && selectedLink) {
+                            createTransmissionLogFile(selectedLink);
+                        }
                         break;
 
                     case sf::Keyboard::M:
                         changeDistributionView();
+                        break;
+
+                    case sf::Keyboard::S:
+                        toggleStatVisibility();
                         break;
 
                     case sf::Keyboard::Q:
@@ -742,7 +815,7 @@ void NetworkSimulatorGUI::update() {
     }
 
     drawLinks();
-    drawRouting();
+    if (!selectedLink) drawRouting();
     drawNodes();
     drawTextBoxes();
 

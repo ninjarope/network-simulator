@@ -21,6 +21,7 @@ class NetworkSimulatorUI;
 
 namespace ns {
     const int maxThreads = 64;
+    const std::string logFilePath = "traffic_logs/";
     
     enum Notification {
         someNotificationType1,
