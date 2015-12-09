@@ -51,7 +51,7 @@ class ApplicationFactory {
             case RANDOM_ROUTER:
                 return new RandomRouter();
             case TEST_ROUTER:
-                return new TestRouter();
+                return new RTableRouter();
             case ROUTING_GENERATOR:
                 return new RoutingGenerator();
             default:

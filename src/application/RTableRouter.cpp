@@ -1,5 +1,5 @@
 //
-//  TestRouter.cpp
+//  RTableRouter.cpp
 //  NetworkSimulator
 //
 //  Created by Tommi Gröhn on 13.11.2015.
@@ -13,9 +13,9 @@
 #include "../packet/Packet.h"
 #include "../ns.h"
 
-TestRouter::TestRouter() { type = "TestRouter"; }
+RTableRouter::RTableRouter() { type = "RTableRouter"; }
 
-void TestRouter::process(double currentTime) {
+void RTableRouter::process(double currentTime) {
     Packet* p;
     ns::AddressType packetDestination;
     

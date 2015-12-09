@@ -13,13 +13,6 @@
 
 #include "network/NetworkSimulator.h"
 #include "ui/NetworkSimulatorGUI.h"
-#include "application/RandomRouter.h"
-#include "RTableRouter.h"
-#include "link/TestLink.h"
-#include "link/ParametricLink.h"
-#include "application/PacketGenerator.h"
-#include "application/PacketReceiver.h"
-#include "RTableRouter.h"
 
 #include "network/RandomNetworkGenerator.h"
 

@@ -15,12 +15,11 @@
 #include "../network/NetworkSimulator.h"
 #include "../ui/NetworkSimulatorGUI.h"
 #include "../application/RandomRouter.h"
-#include "RTableRouter.h"
+#include "../application/RTableRouter.h"
 #include "../link/TestLink.h"
 #include "../link/ParametricLink.h"
 #include "../application/PacketGenerator.h"
 #include "../application/PacketReceiver.h"
-#include "RTableRouter.h"
 
 
 /**
@@ -126,16 +125,16 @@ TEST_CASE("Starting a network", "[network]") {
 //// add some applications running on nodes
 //    ns.getNode("A")->addApplications(new PacketReceiver);
 //    ns.getNode("A")->addApplications(new PacketGenerator(1000, ns.getAddresses()));
-//    ns.getNode("A")->addApplications(new TestRouter);
+//    ns.getNode("A")->addApplications(new RTableRouter);
 //    ns.getNode("B")->addApplications(new PacketReceiver);
-//    ns.getNode("B")->addApplications(new TestRouter);
+//    ns.getNode("B")->addApplications(new RTableRouter);
 //    ns.getNode("C")->addApplications(new PacketReceiver);
 //    ns.getNode("C")->addApplications(new PacketGenerator(800, ns.getAddresses()));
-//    ns.getNode("C")->addApplications(new TestRouter);
+//    ns.getNode("C")->addApplications(new RTableRouter);
 //    ns.getNode("D")->addApplications(new PacketReceiver);
-//    ns.getNode("D")->addApplications(new TestRouter);
+//    ns.getNode("D")->addApplications(new RTableRouter);
 //    ns.getNode("E")->addApplications(new PacketReceiver);
-//    ns.getNode("E")->addApplications(new TestRouter);
+//    ns.getNode("E")->addApplications(new RTableRouter);
 //
 //// TODO Test added applications somehow
 //
