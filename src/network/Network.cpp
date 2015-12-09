@@ -30,7 +30,6 @@ ApplicationNode* Network::getNode(ns::AddressType address) {
 }
 Link* Network::getLink(ns::AddressType source, ns::AddressType destination) {
     // TODO: exception handling
-    /** \todo { exception handling } */
     for (auto& link : links) {
         if (link->getSource()->getAddress() == source &&
             link->getDestination()->getAddress() == destination) return link;
@@ -50,7 +49,6 @@ bool Network::addNode(double x, double y, ns::AddressType address) {
 
 bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link* l) {
     // TODO: exception handling
-    /** \todo { exception handling } */
     if (l) {
         this->allAvailableLinks.insert({source, destination});
         this->allAvailableLinks.insert({destination, source});

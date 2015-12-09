@@ -44,7 +44,7 @@ namespace ns {
     };
 
     typedef std::map<ns::AddressType, TotalWeight> RoutingTable;
-    /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
+    // TODO This should be Minimal Cost Spanning Tree of links/nodes 
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;
 }
