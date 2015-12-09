@@ -23,9 +23,9 @@ void ParametricLink::reset() {
     // Enter critical section
     std::lock_guard <std::recursive_mutex> lock(mtx);
 
-    packetsWaiting.load()->clear();
-    packetsInTransmission.load()->clear();
-    transmittedPackets.load()->clear();
+    packetsWaiting.clear();
+    packetsInTransmission.clear();
+    transmittedPackets.clear();
     
     previousTime = 0.0;
     packetToTransitTime = 0.0;
@@ -38,8 +38,8 @@ void ParametricLink::run(double currentTime) {
     // Get atomic containers
     std::lock_guard <std::recursive_mutex> lock(mtx);
     
-    auto& packetsWaiting = *this->packetsWaiting.load();
-    auto& packetsInTransmission = *this->packetsInTransmission.load();
+    //auto& packetsWaiting = *this->packetsWaiting;
+    //auto& packetsInTransmission = *this->packetsInTransmission;
 
     // waiting time until next packet will be picked for transmission
     if (!packetsWaiting.empty()) packetToTransitTime -= timeDelta;
@@ -71,7 +71,7 @@ void ParametricLink::run(double currentTime) {
             destination->receivePacket(it->first);
 
             // add packet to transmission log {packetId, deliveryTime}
-            if (logging) transmittedPackets.load()->push_back({it->first->getID(), currentTime});
+            if (logging) transmittedPackets.push_back({it->first->getID(), currentTime});
             
             it = packetsInTransmission.erase(it);
         } else it++;
