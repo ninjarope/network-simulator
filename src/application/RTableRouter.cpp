@@ -9,7 +9,7 @@
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 
-#include "TestRouter.h"
+#include "RTableRouter.h"
 #include "../packet/Packet.h"
 #include "../ns.h"
 
