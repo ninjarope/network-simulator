@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
         // Arguments override behaviour -> testing
         bool args = argc > 1;
         std::string firstArg;
-        
+
         if (args) firstArg = argv[1];
         if ((firstArg != "random" && argc > 2) || (firstArg[0] == '-')) {
             // Run tests
@@ -56,15 +56,30 @@ int main(int argc, char** argv) {
 
             // load xml
             if (argc == 5 && firstArg == "random") {
-                RandomNetworkGenerator g(ns, std::stoi(argv[2]), std::stoi(argv[3]), std::stoi(argv[4]));
+                int nodes = std::stoi(argv[2]);
+                int links = std::stoi(argv[3]);
+                int generators = std::stoi(argv[4]);
+//                if (nodes <= links || generators > nodes) {
+//                    std::cerr << "Parameters are incorrect!"
+//                        << std::endl
+//                        << "They should be random <#nodes> <#links> <#generators>"
+//                        << std::endl
+//                        << "Note that you can't have more generators than nodes"
+//                        << std::endl
+//                        << "Or links more than (nodes - 1)"
+//                        << std::endl;
+//                    return 1;
+//                }
+
+                RandomNetworkGenerator g(ns, nodes, links, generators);
                 g.generate();
             } else {
                 r.load(filepath);
                 std::cout << "Log: Xml file loaded" << std::endl;
                 r.process();
             }
-            
-            
+
+
             // Let's go!
             ns.start();
         }

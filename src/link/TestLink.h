@@ -17,6 +17,8 @@
 class TestLink : public Link {
 public:
     TestLink();
+
+    void reset() override;
     
     /** Forward new packets to destination with no delay. */
     void run(double currentTime) override;

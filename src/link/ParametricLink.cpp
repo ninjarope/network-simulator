@@ -16,15 +16,10 @@ ParametricLink::ParametricLink() : Link() {
     logging = true;
 }
 
-ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay, double weight) : Link() {
+ParametricLink::ParametricLink(double transmissionSpeed, double propagationDelay, double weight) : ParametricLink() {
     this->transmissionSpeed = transmissionSpeed;    // interval
     this->propagationDelay = propagationDelay;      // transmission time per packet
     this->weight = weight;
-
-    // TODO Refactor
-    previousTime = 0.0;
-    packetToTransitTime = 0.0;
-    logging = true;
 }
 
 void ParametricLink::reset() {
