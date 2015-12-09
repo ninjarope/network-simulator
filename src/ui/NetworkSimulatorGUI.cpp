@@ -312,7 +312,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move"
-        << "[-/+] Change Speed";
+        << "[,/.] Change Speed";
 
 
     text.setString(ss.str());
@@ -498,7 +498,7 @@ void NetworkSimulatorGUI::drawRouting() {
         try {
             Node* n1 = networkSimulator->getNode(source);
             while (n1) {
-                ns::AddressType next = n1->getRoutingTable().at(dest).nextHop;
+                ns::AddressType next = n1->getRoutingTableEntry(dest).nextHop;
                 Node* n2 = networkSimulator->getNode(next);
 
                 if (!n2) break;
@@ -667,11 +667,11 @@ void NetworkSimulatorGUI::update() {
                         networkSimulator->toggleTimer();
                         break;
 
-                    case sf::Keyboard::Subtract:
+                    case sf::Keyboard::Comma:
                         networkSimulator->slowdown();
                         break;
 
-                    case sf::Keyboard::Add:
+                    case sf::Keyboard::Period:
                         networkSimulator->fasten();
                         break;
 

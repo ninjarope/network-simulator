@@ -42,6 +42,8 @@ public:
     /** Factory for application spawning */
     ApplicationFactory* getApplicationFactory() const { return applicationFactory; }
 
+    std::recursive_mutex mtx;
+    
 private:
     std::thread t;
     NetworkSimulatorUI* ui;

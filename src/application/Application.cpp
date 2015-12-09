@@ -15,7 +15,10 @@ Application::Application(Node* hostNode) { setHost(hostNode); }
 
 Application::~Application() {}
 
-void Application::reset() { previousTime = 0.0; }
+void Application::reset() {
+    previousTime = 0.0;
+    passedTime = 0.0;
+}
 
 void Application::setHost(Node* hostNode) { this->hostNode = hostNode; }
 

@@ -44,14 +44,16 @@ void Timer::startTimer() {
             callbackDuration = returnTime - callTime;
 
             // delay if callback ran faster than the given interval
-            if (callbackDuration < std::chrono::milliseconds(interval)) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(interval) - callbackDuration);
+            int waitTime = (double) interval / slowdownrate;
+            if (callbackDuration < std::chrono::milliseconds(waitTime)) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - callbackDuration);
             }
 
-            currentTime += interval / slowdownrate;
+            currentTime += interval;
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        int waitTime = (double) interval / slowdownrate;
+        std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));
     }
 }
 

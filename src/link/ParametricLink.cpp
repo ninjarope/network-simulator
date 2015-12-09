@@ -33,8 +33,8 @@ void ParametricLink::reset() {
 
     packetsWaiting.load()->clear();
     packetsInTransmission.load()->clear();
-    transmittedPackets.clear();
-
+    transmittedPackets.load()->clear();
+    
     previousTime = 0.0;
     packetToTransitTime = 0.0;
 }
@@ -51,15 +51,15 @@ void ParametricLink::run(double currentTime) {
 
     // waiting time until next packet will be picked for transmission
     if (!packetsWaiting.empty()) packetToTransitTime -= timeDelta;
-
+    
     // add packets to transmission if there is some waiting...
     if (packetToTransitTime <= 0.0 && !packetsWaiting.empty()) {
         auto it = packetsWaiting.begin();
-
+        
         // packet size determines total duration of transmission
         packetsInTransmission.insert({*it, propagationDelay});
         packetsWaiting.erase(it);
-
+        
         // reset waiting time (proportional to the size of added packet)
         // "time to transmit a packet == packet size / link speed"
         packetToTransitTime = (*it)->getSize() / transmissionSpeed;
@@ -79,8 +79,8 @@ void ParametricLink::run(double currentTime) {
             destination->receivePacket(it->first);
 
             // add packet to transmission log {packetId, deliveryTime}
-            if (logging) transmittedPackets.push_back({it->first->getID(), currentTime});
-
+            if (logging) transmittedPackets.load()->push_back({it->first->getID(), currentTime});
+            
             it = packetsInTransmission.erase(it);
         } else it++;
     }

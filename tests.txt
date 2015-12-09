@@ -1,0 +1,7 @@
+Font loaded succesfully!
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000304s
+Test adding nodes to network completed in 0.000359s
+===============================================================================
+All tests passed (2 assertions in 2 test cases)
+

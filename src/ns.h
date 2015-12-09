@@ -23,6 +23,7 @@ class NetworkSimulator;
 class NetworkSimulatorUI;
 
 namespace ns {
+    const int maxThreads = 64;
     
     enum Notification {
         someNotificationType1,

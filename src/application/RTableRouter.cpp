@@ -31,6 +31,7 @@ void RTableRouter::process(double currentTime) {
         //routingTable
         bool routingExists = false;
 
+        std::lock_guard<std::recursive_mutex> lock(hostNode->mtx);
         
         for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
