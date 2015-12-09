@@ -21,8 +21,9 @@ Application* RandomRouter::setParameters(std::vector<std::string> parameters) {
 }
 
 void RandomRouter::process(double timeDelta) {
+    (void) timeDelta;
     auto& packets = hostNode->getPackets();
-    
+
     // forward packets
     if (hostNode->getConnections().size() > 0) {
         for (auto &p : packets) {
@@ -31,6 +32,6 @@ void RandomRouter::process(double timeDelta) {
             targetLink->addPacket(p);
         }
     }
-    
+
     packets.clear();
 }

@@ -13,9 +13,10 @@
 RTableRouter::RTableRouter() { type = "RTableRouter"; }
 
 void RTableRouter::process(double currentTime) {
+    (void) currentTime;
     Packet* p;
     ns::AddressType packetDestination;
-    
+
     ns::Packets& packets = hostNode->getPackets();
 
     // if there is packets to processs
@@ -29,7 +30,7 @@ void RTableRouter::process(double currentTime) {
         bool routingExists = false;
 
         std::lock_guard<std::recursive_mutex> lock(hostNode->mtx);
-        
+
         for (auto entry : hostNode->getRoutingTable()) {
             if (entry.first == packetDestination) {
                 for (auto l : hostNode->getConnections()) {
@@ -49,7 +50,7 @@ void RTableRouter::process(double currentTime) {
             targetLink->addPacket(p);
             packets.erase(packets.begin());
         }
-        
+
 
     }
 }

@@ -36,7 +36,7 @@ double Timer::getTimerInterval() { return interval; }
 void Timer::startTimer() {
     std::chrono::time_point<std::chrono::system_clock> callTime, returnTime;
     std::chrono::duration<double> callbackDuration;
-    
+
     currentTime = 0.0;
     isRunning = true;
     isPaused = false;
@@ -78,4 +78,4 @@ void Timer::stopTimer() {
 
 void Timer::resetTimer() { currentTime = 0.0; }
 
-void Timer::setRunningTime(double milliseconds) {}
+void Timer::setRunningTime(double milliseconds) { endTime = milliseconds; }
