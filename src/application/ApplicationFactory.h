@@ -9,7 +9,7 @@
 #include "PacketReceiver.h"
 #include "PacketGenerator.h"
 #include "RandomRouter.h"
-#include "TestRouter.h"
+#include "RTableRouter.h"
 #include "RoutingGenerator.h"
 #include "../network/NetworkSimulator.h"
 
