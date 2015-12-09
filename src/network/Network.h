@@ -2,42 +2,41 @@
 //  Network.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
+
 #ifndef __NetworkSimulator__Network__
 #define __NetworkSimulator__Network__
 
 #include <vector>
 #include <memory>
-#include <iterator>
 #include <iostream>
+
 #include "../Notifiable.h"
 #include "../node/ApplicationNode.h"
 #include "../link/Link.h"
+#include "ShortestPath.h"
 
 /**
  * Network class. This class should control all additions and removals
  * of nodes and links.
  */
-class Network: public Notifiable {
+class Network : public Notifiable {
   public:
     Network();
     ~Network();
 
     /** Return all network nodes. */
-    const std::map<ns::AddressType, ApplicationNode*>& getNodes() const;
+    std::map<ns::AddressType, ApplicationNode*>& getNodes();
 
     /** Return all links between nodes. */
-    const std::vector<Link*>& getLinks() const;
+    std::vector<Link*>& getLinks();
 
     /** Return single node. */
-    ApplicationNode* operator[](ns::AddressType address) const;
+    ApplicationNode* operator[](ns::AddressType address);
 
-    ApplicationNode* getNode(ns::AddressType address) const;
+    ApplicationNode* getNode(ns::AddressType address);
 
     /** Return single link. */
-    const Link* getLink(ns::AddressType source, ns::AddressType destination) const;
+    Link* getLink(ns::AddressType source, ns::AddressType destination);
 
     /** Add new node to network. Network takes ownership of the node. */
     bool addNode(ns::AddressType address);
@@ -65,11 +64,25 @@ class Network: public Notifiable {
 
     /** Get addresses in current network. */
     const std::vector <ns::AddressType>& getAddresses() const;
+    
+    /** Updates the routing table of each node. */
+    void updateRouting();
+
+    /** Clears the routing table of each node. */
+    void clearRouting();
+
+    /** Clears the routing table of each node. */
+    bool routingExists();
+
+    /** Clears the routing table of each node. */
+    const std::vector< std::vector<std::string>>& getPaths() const { return shortestPath.getShortestPaths(); }
 
   protected:
     std::vector <ns::AddressType> addresses;
     std::map<ns::AddressType, ApplicationNode*> nodes;
     std::vector<Link*> links;
     ns::LinkStorage allAvailableLinks;
+    ShortestPath shortestPath;
+
 };
 #endif /* defined(__NetworkSimulator__Network__) */

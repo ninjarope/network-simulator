@@ -2,9 +2,6 @@
 //  ApplicationNode.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__ApplicationNode__
 #define __NetworkSimulator__ApplicationNode__
@@ -37,6 +34,7 @@ public:
     /** Connect multiple new applications to host. Node takes ownership of applications. */
     void addApplications(std::vector<Application*> applications);
 
+    /** Return all applications that node is currently running. */
     const std::vector<std::unique_ptr<Application>> &getApplications() const;
 
     /** Set applications (clears previous applications). */

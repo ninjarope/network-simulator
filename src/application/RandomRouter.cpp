@@ -1,42 +1,37 @@
 //
-// Created by j on 11/17/15.
+//  RandomRouter.cpp
+//  NetworkSimulator
 //
 
-#include "RandomRouter.h"
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 #include <vector>
 #include <sstream>
+
+#include "RandomRouter.h"
 
 RandomRouter::RandomRouter() {
     type = "Random Router";
     srand((unsigned int) time(NULL));
 }
 
-/**
- * Empties the packet queue and routes them randomly
- */
+Application* RandomRouter::setParameters(std::vector<std::string> parameters) {
+    (void) parameters;
+    return this;
+}
+
 void RandomRouter::process(double timeDelta) {
-    routingTable = hostNode->getConnections();
-    connections = std::vector<Link*>();
+    (void) timeDelta;
     auto& packets = hostNode->getPackets();
-    
-    // Find the connections where this node is source
-    for (auto &c : routingTable) {
-        if (c->getSource()->getAddress() == hostNode->getAddress()) {
-            
-            connections.push_back(c);
-        }
-    }
-    
+
     // forward packets
-    for (auto &p : packets) {
-        if (connections.size() > 0) {
+    if (hostNode->getConnections().size() > 0) {
+        for (auto &p : packets) {
             int randI = rand() % connections.size();
             Link* targetLink = connections[randI];
             targetLink->addPacket(p);
         }
     }
-    
+
     packets.clear();
 }

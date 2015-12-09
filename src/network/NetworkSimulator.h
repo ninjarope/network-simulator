@@ -1,46 +1,53 @@
 //  NetworkSimulator.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
+
 #ifndef __NetworkSimulator__NetworkSimulator__
 #define __NetworkSimulator__NetworkSimulator__
+
 #include <memory>
-#include "ShortestPath.h"
+#include <thread>
+
 #include "../ns.h"
 #include "Timer.h"
 #include "Network.h"
 #include "../ui/NetworkSimulatorUI.h"
 #include "../application/ApplicationFactory.h"
+
 /**
  * The controller
  */
 class NetworkSimulator : public Network, public Timer {
 public:
     NetworkSimulator();
-    ~NetworkSimulator();
-    void setUI(NetworkSimulatorUI* ui);
 
+    ~NetworkSimulator();
+    
+    /** Set UI. This object takes ownership of the pointer. */
+    void setUI(NetworkSimulatorUI* ui);
+    
     /**
-     * Calls run() method (in multiple threads?) of all nodes and links.
-     * In final implementation this function should be private.
+     * Updates concurrently (in given max number of threads) the state of
+     * all nodes and links.
      */
-    
-    void start();
-    
     void timerCallback() override;
 
-    /** Updates the routing table of each node. */
-    void updateRouting();
+    /** Starts timer and UI. */
+    void start();
+
+    /** Resets nodes, links and graph layout. */
+    void reset();
 
     /** Terminate controller and UI. */
     void quit();
 
-    /** Factory for application spawning */
+    /** Factory for application spawning. */
     ApplicationFactory* getApplicationFactory() const { return applicationFactory; }
 
+    std::recursive_mutex mtx;
+    
 private:
+    std::thread controllerThread;
     NetworkSimulatorUI* ui;
     ApplicationFactory* applicationFactory;
 };

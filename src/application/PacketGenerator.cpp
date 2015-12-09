@@ -2,8 +2,6 @@
 //  PacketGenerator.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//
 
 #include <sstream>
 #include <iostream>
@@ -47,8 +45,7 @@ void PacketGenerator::process(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
     
-    
-    if (passedTime > 1000.0 / rate) {
+    if (passedTime > 1000.0 / rate) {        
         for (unsigned int i = 0; i < (unsigned int) (passedTime * rate / 1000.0); i++) {
             ns::AddressType source = hostNode->getAddress();
             ns::AddressType destination;

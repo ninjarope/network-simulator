@@ -1,6 +1,6 @@
 //
-// Created by j on 12/3/15.
-//
+//  XMLReader.h
+//  NetworkSimulator
 
 #ifndef NS1_XMLREADER_H
 #define NS1_XMLREADER_H
@@ -48,6 +48,9 @@ class XMLReader {
      */
     void process();
 
+    /** Processes the root node setting the interval, speed and endtime for the timer (of network simulator) */
+    void parseRoot();
+
   private:
     tinyxml2::XMLDocument doc;
     NetworkSimulator& ns;
@@ -56,12 +59,12 @@ class XMLReader {
     /**
      * Creates nodes from xml elements and attributes and adds them to the network
      */
-    void buildNode(XMLElement* nodeElement);
+    void buildNode(XMLElement*);
 
     /**
     * Creates nodes from xml elements and attributes and adds them to the network
     */
-    void buildLink(XMLElement* e);
+    void buildLink(XMLElement*);
 };
 
 #endif //NS1_XMLREADER_H

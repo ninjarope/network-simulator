@@ -2,35 +2,37 @@
 //  Network.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include "Network.h"
 
 Network::Network() {
 
 }
+
 Network::~Network() {
     for (auto& link : links) delete link;
     for (auto& node : nodes) delete node.second;
 }
-const std::map<ns::AddressType, ApplicationNode*>& Network::getNodes() const { return nodes; }
-const std::vector<Link*>& Network::getLinks() const { return links; }
-ApplicationNode* Network::operator[](ns::AddressType address) const {
+
+std::map<ns::AddressType, ApplicationNode*>& Network::getNodes() { return nodes; }
+
+std::vector<Link*>& Network::getLinks() { return links; }
+
+ApplicationNode* Network::operator[](ns::AddressType address) {
     return getNode(address);
 }
-ApplicationNode* Network::getNode(ns::AddressType address) const {
-    if (nodes.at(address))
+ApplicationNode* Network::getNode(ns::AddressType address) {
+    try {
         return nodes.at(address);
-    else
+    } catch (std::out_of_range) {
         return nullptr;
+    }
 }
-const Link* Network::getLink(ns::AddressType source, ns::AddressType destination) const {
+Link* Network::getLink(ns::AddressType source, ns::AddressType destination) {
     // TODO: exception handling
-    /** \todo { exception handling } */
     for (auto& link : links) {
-        if (link->getDestination()->getAddress() == destination) return link;
+        if (link->getSource()->getAddress() == source &&
+            link->getDestination()->getAddress() == destination) return link;
     }
     return nullptr;
 }
@@ -47,7 +49,6 @@ bool Network::addNode(double x, double y, ns::AddressType address) {
 
 bool Network::addLink(ns::AddressType source, ns::AddressType destination, Link* l) {
     // TODO: exception handling
-    /** \todo { exception handling } */
     if (l) {
         this->allAvailableLinks.insert({source, destination});
         this->allAvailableLinks.insert({destination, source});
@@ -116,7 +117,33 @@ size_t Network::getLinkCount() {
 const std::vector <ns::AddressType>& Network::getAddresses() const {
     return addresses;
 }
-/** check LinkStorage */
+
+void Network::updateRouting(){
+    // shortestPath = ShortestPath(this->nodes, this->links,this->allAvailableLinks);
+    // shortestPath.alsideperm();
+    // Update routings of all nodes
+    for (auto& path : shortestPath.getShortestPaths()) {
+        getNode(path.front())->updateTable(path);
+    }
+}
+
+void Network::clearRouting(){
+    shortestPath = ShortestPath();
+    for (auto& n : nodes) {
+        n.second->clearRoutingTable();
+    }
+}
+
+/** Clears the routing table of each node. */
+bool Network::routingExists() {
+    bool exists = false;
+    for (auto& n : nodes) {
+        exists |= !n.second->getRoutingTable().empty();
+    }
+    return exists;
+}
+
+
 void Network::printLinks() {
     for (auto i : this->allAvailableLinks) {
         std::cout << i.first << "-" << i.second << std::endl;

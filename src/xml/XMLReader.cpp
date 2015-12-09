@@ -1,9 +1,10 @@
 //
-// Created by j on 12/3/15.
+//  XMLReader.cpp
+//  NetworkSimulator
 //
 
-#include <iostream>
 #include "XMLReader.h"
+#include <iostream>
 
 XMLReader::XMLReader(NetworkSimulator& ns_) : ns(ns_) {
     applicationFactory = ns.getApplicationFactory();
@@ -20,17 +21,18 @@ void XMLReader::load(const char* filepath) {
 }
 
 void XMLReader::process() {
-    // Load first node and test for error
-    // XMLHandle enables checking for nullptr's / in other words error handling
+    parseRoot();
+
     XMLHandle docHandle(&doc);
     XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
+    
     if (!nodeElement)
         throw "No nodes defined.";
 
     buildNode(nodeElement);
-
-    // Load consequtive nodes
     XMLHandle neHandle(docHandle.FirstChild().FirstChildElement("node"));
+    
+    // Load consequtive nodes
     nodeElement = neHandle.NextSiblingElement("node").ToElement();
     while (nodeElement) {
         buildNode(nodeElement);
@@ -43,12 +45,47 @@ void XMLReader::process() {
         return;
 
     // Load links
-    XMLHandle leHandle(docHandle.FirstChild().FirstChildElement("link"));
     XMLElement* linkElement = neHandle.NextSiblingElement("link").ToElement();
     while (linkElement) {
         buildLink(linkElement);
         XMLHandle leHandle(linkElement);
         linkElement = leHandle.NextSiblingElement("link").ToElement();
+    }
+}
+
+void XMLReader::parseRoot() {
+    // Load first node and test for error
+    // XMLHandle enables checking for nullptr's / in other words error handling
+    XMLHandle docHandle(&doc);
+    XMLElement* rootElement = docHandle.FirstChild().ToElement();
+    
+    if (!rootElement)
+        throw "No root element defined.";
+
+    int interval = -1;
+    double slowdownrate = -1.0;
+    int endTime = -1;
+
+    rootElement->QueryIntAttribute("interval", &interval);
+    
+    if (interval >= 0) {
+        std::cout << "Set interval: " << interval << std::endl;
+        ns.setTimerInterval(interval);
+    }
+
+
+    rootElement->QueryDoubleAttribute("slowdownrate", &slowdownrate);
+    
+    if (slowdownrate >= 0.0){
+        std::cout << "Set slowdownrate: " << slowdownrate << std::endl;
+        ns.setTimerSlowdownrate(slowdownrate);
+    }
+
+    rootElement->QueryIntAttribute("endTime", &endTime);
+    
+    if (endTime >= 0) {
+        std::cout << "Set endtime: " << endTime << std::endl;
+        ns.setTimerEndTime(endTime);
     }
 }
 
@@ -73,29 +110,32 @@ void XMLReader::buildNode(XMLElement* e) {
 
         if (appType == "PacketReceiver") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(PACKET_RECEIVER));
+            addApplications(applicationFactory->create(ApplicationFactory::PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
-            std::vector<std::string> parameters;
+            std::vector <std::string> parameters;
             parameters.push_back(applicationElement->Attribute("rate"));
-            
+
             XMLHandle pHandle(applicationElement);
             XMLElement* parameterElement = pHandle.FirstChildElement("destination").ToElement();
-            while (parameterElement)  {
+            while (parameterElement) {
                 parameters.push_back(parameterElement->Attribute("address"));
-                
+
                 XMLHandle pHandle(parameterElement);
                 parameterElement = pHandle.NextSiblingElement("destination").ToElement();
             }
-            
+
             ns.getNode(address)->addApplications(applicationFactory
-                                                 ->create(PACKET_GENERATOR)
-                                                 ->setParameters(parameters));
+                                                     ->create(ApplicationFactory::PACKET_GENERATOR)
+                                                     ->setParameters(parameters));
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(RANDOM_ROUTER));
-        } else if (appType == "TestRouter") {
+                addApplications(applicationFactory->create(ApplicationFactory::RANDOM_ROUTER));
+        } else if (appType == "RTableRouter") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(TEST_ROUTER));
+                addApplications(applicationFactory->create(ApplicationFactory::RTABLE_ROUTER));
+        } else if (appType == "RoutingGenerator") {
+            ns.getNode(address)->
+                addApplications(applicationFactory->create(ApplicationFactory::ROUTING_GENERATOR));
         }
 
         XMLHandle aeHandle(applicationElement); // while-loop scope
@@ -111,7 +151,7 @@ void XMLReader::buildLink(XMLElement* e) {
     double speed = 0.0;
     double delay = 0.0;
     double weight = 0.0;
-    
+
     // get attributes
     source = e->Attribute("source");
     destination = e->Attribute("destination");
@@ -119,7 +159,7 @@ void XMLReader::buildLink(XMLElement* e) {
     e->QueryDoubleAttribute("speed", &speed);
     e->QueryDoubleAttribute("delay", &delay);
     e->QueryDoubleAttribute("weight", &weight);
-    
+
     ns.addLink(source, destination, new ParametricLink(speed, delay, weight));
     if (!directed) ns.addLink(destination, source, new ParametricLink(speed, delay, weight));
 }

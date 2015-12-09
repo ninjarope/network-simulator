@@ -2,20 +2,19 @@
 //  NetworkSimulatorGUI.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 25.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__NetworkSimulatorGUI__
 #define __NetworkSimulator__NetworkSimulatorGUI__
 
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 #include <sstream>
 #include <map>
 
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+
 #include "NetworkSimulatorUI.h"
+#include "../debug.h"
 
 /**
  * Concrete UI class / GUI
@@ -53,6 +52,11 @@ public:
      * Render links.
      */
     void drawLinks();
+    
+    /**
+     * Render text boxes.
+     */
+    void drawTextBoxes();
 
     /**
      * Show current time.
@@ -80,6 +84,11 @@ public:
     void drawQueueDistribution();
 
     /**
+     * Show routing between two nodes.
+     */
+    void drawRouting();
+
+    /**
      * Stat display on / off.
      */
     void toggleStatVisibility();
@@ -93,6 +102,28 @@ public:
      * Change between different distribution views.
      */
     void changeDistributionView();
+    
+    /**
+     * Sets focus on node if mouse cursor is on it.
+     */
+    void checkMouseOverNode(int x, int y);
+
+    /**
+     * Toggles select state of given node.     
+     */
+    void toggleSelect(ns::AddressType address);
+
+    /**
+     * Threaded callback to update GUI
+     */
+    void timerCallback() override;
+    
+    /** 
+     * Return true if rendering window is created, false otherwise.
+     */
+    bool windowExists();
+    
+    void createTransmissionLogFile(Link* l);
 
     /**
      * Main function that is called from Network Simulator.
@@ -100,34 +131,45 @@ public:
      */
     void update() override;
     
-private:
+protected:
     sf::RenderWindow* window;
     sf::Event event;
     sf::Font font;
     sf::Text text;
     sf::Color defaultNodeColor;
+    sf::Color defaultFillColor;
     sf::Color defaultDistColor;
+    sf::Color selectedLinkColor;
     
     unsigned int fontSize;
     unsigned int nodeRadius;
-    unsigned int width;
-    unsigned int height;
+    unsigned int windowWidth;
+    unsigned int windowHeight;
     double transformX;
     double transformY;
+    double zoom;
+    bool statsVisible;
+    bool distributionVisible;
+    bool altDown = false;
+    bool linkSelected;
     
     // Helper struct
-    struct point {
+    struct Point {
         double x;
         double y;
     };
-    std::map<ns::AddressType, point> visibleNodes;
     
-    bool statsVisible;
-    bool distributionVisible;
+    std::map<ns::AddressType, Point> visibleNodes;
+    std::list<ns::AddressType> selectedNodes;
+    ns::AddressType focusNode;
+    Link* selectedLink;
+    
     enum {
         Traffic,
         Queue
-    } distributionMode ;
+    } distributionMode;
+    
+    
 };
 
 

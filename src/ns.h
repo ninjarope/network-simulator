@@ -2,9 +2,6 @@
 //  ns.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__ns__
 #define __NetworkSimulator__ns__
@@ -23,21 +20,31 @@ class NetworkSimulator;
 class NetworkSimulatorUI;
 
 namespace ns {
+    const int maxThreads = 64;
+    const std::string logFilePath = "traffic_logs/";
+    
     enum Notification {
         someNotificationType1,
         someNotificationType2
     };
-
+    
     typedef std::string AddressType;
     typedef std::string PacketDataType;
-    typedef std::list<Packet*> Packets;
+    typedef std::vector<Packet*> Packets;
     typedef std::vector<Link*> Connections;
     typedef std::map<AddressType, std::list<Node*>> PathsToDestinationAddress;
     typedef std::string PacketIdType;
     typedef double TimePointType;
     typedef std::list<std::pair<PacketIdType, TimePointType>> TransmissionLogType;
     typedef std::multimap<AddressType, AddressType> LinkStorage;
-    /** \todo TODO This should be Minimal Cost Spanning Tree of links/nodes */
+    
+    struct TotalWeight {
+        AddressType nextHop;
+        double totalWeight;
+    };
+
+    typedef std::map<ns::AddressType, TotalWeight> RoutingTable;
+    // TODO This should be Minimal Cost Spanning Tree of links/nodes 
     typedef std::map<Node*, PathsToDestinationAddress> ShortestPaths;
     typedef std::list<Notification> Notifications;
 }
