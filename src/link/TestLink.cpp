@@ -12,18 +12,18 @@ TestLink::TestLink() : Link() {}
 
 void TestLink::run(double currentTime) {
     // Get atomic containers
-    auto& packetsWaiting = *this->packetsWaiting.load();
+//    auto& packetsWaiting = *this->packetsWaiting.load;
 
-    while (!packetsWaiting.empty()) {
-        destination->receivePacket(packetsWaiting.front());
+    while (!packetsWaiting->empty()) {
+        destination->receivePacket(packetsWaiting->front());
         
         /* Some debugging output... */
         std::cout
             << "Link "
             << source->getAddress() << "-"
             << destination->getAddress() << " forwarded "
-            << packetsWaiting.front()->getData() << " to node "
+            << packetsWaiting->front()->getData() << " to node "
             << destination->getAddress() << std::endl;
-        packetsWaiting.erase(packetsWaiting.begin());
+        packetsWaiting->erase(packetsWaiting->begin());
     }
 }

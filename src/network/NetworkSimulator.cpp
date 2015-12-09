@@ -41,8 +41,8 @@ void NetworkSimulator::timerCallback() {
     std::list<std::thread> linkWorkers;
     
     auto node = getNodes().begin();
-    auto link = getLinks().begin();
     auto endNode = getNodes().end();
+    auto link = getLinks().begin();
     auto endLink = getLinks().end();
     double ct = getCurrentTime();
     
@@ -65,9 +65,6 @@ void NetworkSimulator::timerCallback() {
         for (auto& t : linkWorkers) t.join();
         linkWorkers.clear();
     }
-    
-    // Start thread for UI
-//    if (ui) ui->update();
 }
 
 

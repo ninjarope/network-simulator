@@ -11,8 +11,10 @@
 #include "../packet/Packet.h"
 
 Link::Link() {
-    packetsWaiting.store(new ns::Packets);
-    packetsInTransmission.store(new std::map<Packet*, double>);
+    packetsWaiting = new ns::Packets;
+    packetsInTransmission = new std::map<Packet*, double>;
+//    packetsWaiting.store(new ns::Packets);
+//    packetsInTransmission.store(new std::map<Packet*, double>);
 }
 
 Link::Link(Node* source, Node* destination) : Link() {
@@ -27,8 +29,8 @@ Link::Link(Node* source, Node* destination, double weight) : Link() {
 }
 
 Link::~Link() {
-    for (auto& packet : *packetsWaiting.load()) delete packet;
-    for (auto& packet : *packetsInTransmission.load()) delete packet.first;
+    for (auto& packet : *packetsWaiting) delete packet;
+    for (auto& packet : *packetsInTransmission) delete packet.first;
 
     // This could be also just notifying source node...
     source->removeConnection(this);
@@ -50,11 +52,20 @@ bool Link::setDestination(Node* destination) {
 
 }
 
-void Link::addPacket(Packet* p) { packetsWaiting.load()->push_back(p); }
+void Link::addPacket(Packet* p) {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    packetsWaiting->push_back(p);
+}
 
-Node* Link::getSource() { return source; }
+Node* Link::getSource() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return source;
+}
 
-Node* Link::getDestination() { return destination; }
+Node* Link::getDestination() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return destination;
+}
 
 void Link::setWeight(double weight) {
     this->weight = weight;
@@ -82,13 +93,16 @@ double Link::getPropagationDelay() {
 }
 
 const ns::Packets& Link::getPacketsWaiting() const {
-    return *packetsWaiting.load();
+    return *packetsWaiting;
 }
 
-size_t Link::getQueueLength() { return packetsWaiting.load()->size(); }
+size_t Link::getQueueLength() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return packetsWaiting->size();
+}
 
 const std::map<Packet*, double>& Link::getPacketsInTransmission() const {
-    return *packetsInTransmission.load();
+    return *packetsInTransmission;
 }
 
 const ns::TransmissionLogType& Link::getTransmissionLog() const {

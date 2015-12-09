@@ -62,10 +62,11 @@ public:
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
-    
-    std::mutex mtx;
 
 protected:
+
+    std::recursive_mutex mtx;
+    
     ns::Connections connections;
     ns::Packets packets;
     ns::AddressType address;

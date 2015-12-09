@@ -21,7 +21,8 @@ Node::~Node() {
     for (auto& packet : packets) delete packet;
 }
 
-void Node::receivePacket(Packet* p) {    
+void Node::receivePacket(Packet* p) {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     packets.push_back(p);
 }
 
@@ -31,8 +32,8 @@ void Node::addConnection(Link* link) {
 
 void Node::removeConnection(Link* link) {
     // Enter critical section
-    std::unique_lock<std::mutex> lock(mtx);
-    
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+
     /* Requires some checking and mods... */
     auto it = connections.begin();
     if (*it && link) {
@@ -45,9 +46,15 @@ void Node::removeConnection(Link* link) {
     }
 }
 
-ns::Connections& Node::getConnections() { return connections; }
+ns::Connections& Node::getConnections() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return connections;
+}
 
-ns::Packets& Node::getPackets() { return packets; }
+ns::Packets& Node::getPackets() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return packets;
+}
 
 ns::AddressType Node::getAddress() { return address; }
 
@@ -57,7 +64,7 @@ double Node::getY() { return y; }
 
 void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     // Enter critical section
-    std::unique_lock<std::mutex> lock(mtx);
+    std::lock_guard<std::recursive_mutex> lock(mtx);
 
     // For given destination (last address in path) associate next node in path (check that first is this node)
     try {
@@ -70,5 +77,8 @@ void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     
 }
 
-ns::RoutingTable Node::getRoutingTable() { return routingTable; }
+ns::RoutingTable Node::getRoutingTable() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    return routingTable;
+}
 

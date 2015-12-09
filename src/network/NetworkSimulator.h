@@ -24,10 +24,9 @@ public:
     void setUI(NetworkSimulatorUI* ui);
     
     /**
-     * Calls run() method (in multiple threads?) of all nodes and links.
+     * Calls run() method (in multiple threads) of all nodes and links.
      * In final implementation this function should be private.
      */
-
     void timerCallback() override;
 
     /** Starts timer and ui thread */

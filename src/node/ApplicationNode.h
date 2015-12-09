@@ -44,6 +44,8 @@ public:
     
     /** Return type names of applications that node is running. */
     std::string getType() const override;
+
+
     
     /** Run all connected applications. */
     void run(double currentTime) override;
