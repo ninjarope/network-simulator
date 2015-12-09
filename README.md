@@ -4,6 +4,12 @@ This page outlines the usage and architecture of the program while also instruct
 
 ---
 
+## Dependencies
+
++ [SFML](http://www.sfml-dev.org/) for the gui
+
+---
+
 ## Usage
 
 + Build with make (Makefile included and should handle most platforms)
@@ -109,11 +115,15 @@ Example of getting a specific node by address:
 
 + Links have source and address. They also enclose parameters for speed, delay and weight to simulate bandwidth, latency and other such factors.
 
+### XMLReader
+
++ Handles the reading of xml documents for to generate the network. Based on the [tinyxml2](http://www.grinninglizard.com/tinyxml2/) library (included as a header).
+
 ---
 
 ## Testing
 
-+ Uses [Catch](https://github.com/philsquared/Catch) testing framework
++ Uses [Catch](https://github.com/philsquared/Catch) testing framework (included as a header).
 
 + Basic usage is through arguments. The executive can be run normally by not giving it any parameters. Parameters override the executive to be utilized for testing.
 
