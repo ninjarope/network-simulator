@@ -11,7 +11,7 @@
 #include "../network/NetworkSimulator.h"
 
 /**
- * Abstract base class for all UI implementations. 
+ * Abstract base class for all UI implementations.
  */
 class NetworkSimulatorTesterUI : public NetworkSimulatorUI {
   public:
@@ -36,8 +36,11 @@ class NetworkSimulatorTesterUI : public NetworkSimulatorUI {
      *  transmitted packet.
      */
     void displayTrafficLog(ns::AddressType source, ns::AddressType destination) override {
+      (void) source;
+      (void) destination;
 #if DEBUG
         std::cout << "source: " << source << " destination: " << destination << std::endl;
+
 #endif
     };
 
@@ -49,6 +52,7 @@ class NetworkSimulatorTesterUI : public NetworkSimulatorUI {
     }
     /** NetworkSimulator will call this in it's timer callbacks. */
     void update() override { };
+
 
 
 };

@@ -186,13 +186,13 @@ void NetworkSimulatorGUI::drawLinks() {
     // link between two selected nodes
     linkSelected = false;
     selectedLink = nullptr;
-    
+
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         try {
             ns::AddressType source = l->getSource()->getAddress();
             ns::AddressType destination = l->getDestination()->getAddress();
-            
+
             auto n1 = visibleNodes.at(source);
             auto n2 = visibleNodes.at(destination);
 
@@ -221,7 +221,7 @@ void NetworkSimulatorGUI::drawLinks() {
                                         128 - 0.5 * intensity,
                                         128 + 0.5 * intensity);
             }
-            
+
             if (selectedNodes.front() == source && selectedNodes.back() == destination) {
                 sourceColor = selectedLinkColor;
                 destinationColor = selectedLinkColor;
@@ -242,7 +242,7 @@ void NetworkSimulatorGUI::drawLinks() {
             window->draw(line, 2, sf::Lines);
         } catch (std::out_of_range) { }
     }
-    
+
     if (selectedLink) {
         // TODO: display some values
     }
@@ -400,7 +400,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
     }
 
     // Draw relative bar graph showing distribution of traffic between the links
-    for (auto i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         size_t traffic = links[i]->getTransmissionLog().size();
         double h = (double) windowHeight * traffic / maxTraffic;
 
@@ -463,7 +463,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     }
 
     // Draw relative bar graph showing distribution of queueLength between the links
-    for (auto i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         size_t queueLength = links[i]->getQueueLength();
         double h = (double) windowHeight * queueLength / maxQueue;
 
@@ -647,7 +647,7 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
             << "_"
             << std::to_string(rand() % 100000)
             << ".txt";
-        
+
         logFile.open (fileName.str());
         for (auto& s : log) {
             // Create row
@@ -655,7 +655,7 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
             ss.precision(3);
             ss.setf(std::ios::fixed);
             ss << s.first << " " << (double) s.second / 1000.0 << std::endl;
-            
+
             // Write row to file
             logFile << ss.str();
         }
@@ -668,8 +668,8 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
         std::cout << "Log file could not be opened!" << std::endl;
 #endif
     }
-    
-    
+
+
 }
 
 void NetworkSimulatorGUI::update() {
@@ -829,4 +829,3 @@ void NetworkSimulatorGUI::update() {
     // Draw buffer to screen
     window->display();
 }
-
