@@ -94,8 +94,12 @@ void NetworkSimulator::quit() {
 #if DEBUG
     std::cout << "TERMINATING..." << std::endl;
 #endif
+<<<<<<< HEAD
+
+=======
     std::lock_guard<std::recursive_mutex> lock(mtx);
     
+>>>>>>> routing_fix
     ui->stopTimer();
     stopTimer();
 }
