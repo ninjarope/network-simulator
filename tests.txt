@@ -5,3 +5,40 @@ Test adding nodes to network completed in 0.000359s
 ===============================================================================
 All tests passed (2 assertions in 2 test cases)
 
+Font loaded succesfully!
+UI SET: 0x1bd4640
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000139s
+Destroying NetworkSimulator
+Test adding nodes to network completed in 7.5e-05s
+Destroying NetworkSimulator
+Test adding 10 000 nodes to network completed in 0.027712s
+Destroying NetworkSimulator
+Test adding 10 000 000 nodes to network completed in 36.2569s
+Creating a tester ui completed in 2.7e-05s
+UI SET: 0xca6204c0
+Destroying NetworkSimulator
+Starting a network completed in 4.3e-05s
+===============================================================================
+All tests passed (6 assertions in 6 test cases)
+
+Destroying NetworkSimulator
+------------------------------------------------------------\n
+Font loaded succesfully!
+UI SET: 0x122d640
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000169s
+Destroying NetworkSimulator
+Test adding nodes to network completed in 0.000106s
+Destroying NetworkSimulator
+Test adding 10 000 nodes to network completed in 0.032353s
+Destroying NetworkSimulator
+Test adding 10 000 000 nodes to network completed in 35.8951s
+Creating a tester ui completed in 2.8e-05s
+UI SET: 0xc9c79570
+Destroying NetworkSimulator
+Starting a network completed in 5.8e-05s
+===============================================================================
+All tests passed (6 assertions in 6 test cases)
+
+Destroying NetworkSimulator
