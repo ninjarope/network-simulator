@@ -42,9 +42,9 @@ void ShortestPath::alsideperm(){
     for(auto val:this->allNodes){
         permCpyAllNodes.push_back(val);
     }
-    for(auto i=0;i<this->allNodes.size();i++){
+    for(unsigned int i=0;i<this->allNodes.size();i++){
         nod=this->allNodes.at(i);
-        for(auto j=0;j<permCpyAllNodes.size();j++){
+        for(unsigned int j=0;j<permCpyAllNodes.size();j++){
             if(nod != permCpyAllNodes.at(j)){
                 tempermCpyAllNodes.push_back(this->allNodes.at(j));
             }
@@ -259,9 +259,9 @@ std::vector<std::string> ShortestPath::validate(std::vector<std::string> cpyAllN
 //checks for simmilar paths in the final NodeRtable array
 bool ShortestPath::checkSimilarPath(std::vector< std::vector<std::string> > nodeRTableFullPaths, std::vector<std::string> cpyAllNodes){
     bool is_equal=0;
-    for(unsigned int i=0;i<this->nodeRTableFullPaths.size();i++){
-        if(this->nodeRTableFullPaths[i].size() == cpyAllNodes.size()){
-            is_equal = std::equal ( this->nodeRTableFullPaths[i].begin(), this->nodeRTableFullPaths[i].end(), cpyAllNodes.begin());
+    for(unsigned int i=0;i<nodeRTableFullPaths.size();i++){
+        if(nodeRTableFullPaths[i].size() == cpyAllNodes.size()){
+            is_equal = std::equal ( nodeRTableFullPaths[i].begin(), nodeRTableFullPaths[i].end(), cpyAllNodes.begin());
         }
         if(is_equal==1){
             break;
@@ -297,7 +297,7 @@ void ShortestPath::allShortestPaths(){
     key is the address of source and destination together value is DBL_MAX
     */
 
-    for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
+    for (unsigned int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
         srcDest += this->nodeRTableFullPaths[i][this->nodeRTableFullPaths[i].size()-1];
@@ -308,7 +308,7 @@ void ShortestPath::allShortestPaths(){
     changing the value of the temporary map to minimum one
     */
 
-    for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
+    for (unsigned int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
         srcDest += this->nodeRTableFullPaths[i][this->nodeRTableFullPaths[i].size()-1];
@@ -324,7 +324,7 @@ void ShortestPath::allShortestPaths(){
      and the value of the temp (minimum weight) is equal to the weight of the path
      then that path added to the vector of shortestPaths
     */
-    for (int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
+    for (unsigned int i = 0; i < this->nodeRTableFullPaths.size() ; i++){
         std::string srcDest="";
         srcDest += this->nodeRTableFullPaths[i][0];
         srcDest += this->nodeRTableFullPaths[i][this->nodeRTableFullPaths[i].size()-1];
@@ -337,9 +337,9 @@ void ShortestPath::allShortestPaths(){
     //printing for test
     std::cout<<"----------------------ALL SHORTEST PATHS------------------"<<std::endl;
     std::cout<<this->shortestPaths.size()<<std::endl;
-    for (int i = 0; i < this->shortestPaths.size() ; i++){
+    for (unsigned int i = 0; i < this->shortestPaths.size() ; i++){
         std::cout << "Path: ";
-        for (int j = 0; j < this->shortestPaths[i].size() ; j++){
+        for (unsigned int j = 0; j < this->shortestPaths[i].size() ; j++){
             std::cout << this->shortestPaths[i][j];
         }
         std::cout << std::endl;

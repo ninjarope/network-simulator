@@ -17,33 +17,33 @@
 class Timer {
 public:
     Timer();
-    
+
     virtual ~Timer();
-    
+
     /** Return current running time in milliseconds. */
     double getCurrentTime();
 
     /** Set timer interval in milliseconds. */
     void setTimerInterval(double milliseconds);
-    
+
     /** Return timer interval. */
     double getTimerInterval();
-    
+
     /** Reset and start timer. */
     void startTimer();
-    
+
     /** Pause or resume timer (change current state). */
     void toggleTimer();
-    
+
     /** Stop timer. */
     void stopTimer();
-    
+
     /** Set maximum running time. */
     void setRunningTime(double seconds);
-    
+
     /** Function will be called at set interval when timer is running. */
     virtual void timerCallback() = 0;
-    
+
 protected:
     bool running;
     bool paused;

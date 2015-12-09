@@ -16,6 +16,7 @@
 TestRouter::TestRouter() { type = "TestRouter"; }
 
 void TestRouter::process(double currentTime) {
+    (void) currentTime;
     Packet* p;
     ns::AddressType packetDestination;
     ns::Packets& packets = hostNode->getPackets();
@@ -56,7 +57,7 @@ void TestRouter::process(double currentTime) {
             targetLink->addPacket(p);
             packets.erase(packets.begin());
         }
-        
+
 
     }
 }

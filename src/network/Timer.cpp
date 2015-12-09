@@ -22,18 +22,18 @@ Timer::~Timer() {}
 
 double Timer::getCurrentTime() { return currentTime; }
 
-void Timer::setTimerInterval(double milliseconds) {}
+void Timer::setTimerInterval(double milliseconds) { interval = milliseconds; }
 
 double Timer::getTimerInterval() { return interval; }
 
 void Timer::startTimer() {
     std::chrono::time_point<std::chrono::system_clock> callTime, returnTime;
     std::chrono::duration<double> callbackDuration;
-    
+
     currentTime = 0.0;
     running = true;
     paused = false;
-    
+
     while (running) {
         callTime = std::chrono::system_clock::now();
         timerCallback();
@@ -56,4 +56,4 @@ void Timer::toggleTimer() {
 
 void Timer::stopTimer() { running = false; }
 
-void Timer::setRunningTime(double milliseconds) {}
+void Timer::setRunningTime(double seconds) { endTime = seconds; }

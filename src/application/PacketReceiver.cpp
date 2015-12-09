@@ -12,11 +12,12 @@
 PacketReceiver::PacketReceiver() { type = "PacketReceiver"; }
 
 void PacketReceiver::process(double currentTime) {
+    (void) currentTime;
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {
         if ((*it)->getDestination() == hostNode->getAddress()) {
             it = hostNode->getPackets().erase(it);
         } else it++;
-        
+
     }
 }

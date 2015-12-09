@@ -9,7 +9,7 @@
 class ShortestPath {
 public:
     ShortestPath() = default;
-    
+
     ShortestPath(std::map<ns::AddressType, ApplicationNode*> nodes ,std::vector<Link*> links,ns::LinkStorage allAvailableLinks);
 
     const std::vector< std::vector<std::string> >& getShortestPaths() const;
