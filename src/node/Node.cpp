@@ -3,10 +3,12 @@
 //  NetworkSimulator
 //
 
-#include "Node.h"
-#include "../ns.h"
 #include <map>
 #include <iostream>
+
+#include "Node.h"
+#include "../ns.h"
+
 
 Node::Node() {}
 

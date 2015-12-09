@@ -5,7 +5,6 @@
 
 #define CATCH_CONFIG_RUNNER
 
-
 #include <iostream>
 #include <string>
 

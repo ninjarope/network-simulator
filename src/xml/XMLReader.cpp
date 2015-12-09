@@ -3,8 +3,8 @@
 //  NetworkSimulator
 //
 
-#include <iostream>
 #include "XMLReader.h"
+#include <iostream>
 
 XMLReader::XMLReader(NetworkSimulator& ns_) : ns(ns_) {
     applicationFactory = ns.getApplicationFactory();
@@ -30,9 +30,9 @@ void XMLReader::process() {
         throw "No nodes defined.";
 
     buildNode(nodeElement);
-
-    // Load consequtive nodes
     XMLHandle neHandle(docHandle.FirstChild().FirstChildElement("node"));
+    
+    // Load consequtive nodes
     nodeElement = neHandle.NextSiblingElement("node").ToElement();
     while (nodeElement) {
         buildNode(nodeElement);
@@ -45,7 +45,6 @@ void XMLReader::process() {
         return;
 
     // Load links
-    XMLHandle leHandle(docHandle.FirstChild().FirstChildElement("link"));
     XMLElement* linkElement = neHandle.NextSiblingElement("link").ToElement();
     while (linkElement) {
         buildLink(linkElement);

@@ -6,9 +6,10 @@
 #ifndef __NetworkSimulator__RTableRouter__
 #define __NetworkSimulator__RTableRouter__
 
+#include <map>
+
 #include "Application.h"
 #include "../ns.h"
-#include <map>
 
 /**
  * Example implementation of application. Application implementation

@@ -7,6 +7,7 @@
 #define __NetworkSimulator__Timer__
 
 #include <iostream>
+
 #include "../ns.h"
 
 /**

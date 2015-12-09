@@ -6,15 +6,15 @@
 #ifndef __NetworkSimulator__NetworkSimulatorGUI__
 #define __NetworkSimulator__NetworkSimulatorGUI__
 
+#include <sstream>
+#include <map>
+
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <sstream>
-#include <map>
-#include <thread>
-#include "../debug.h"
 
 #include "NetworkSimulatorUI.h"
+#include "../debug.h"
 
 /**
  * Concrete UI class / GUI
@@ -116,13 +116,11 @@ public:
     /**
      * Threaded callback to update GUI
      */
-    void timerCallback() override {
-#if DEBUG
-        std::cout << "UPDATE UI..." << std::endl;
-#endif
-        update();
-    }
-
+    void timerCallback() override;
+    
+    /** 
+     * Return true if rendering window is created, false otherwise.
+     */
     bool windowExists();
 
     /**
@@ -130,7 +128,6 @@ public:
      * Encapsulates all UI subjects.
      */
     void update() override;
-    
     
 protected:
     sf::RenderWindow* window;
@@ -148,6 +145,9 @@ protected:
     double transformX;
     double transformY;
     double zoom;
+    bool statsVisible;
+    bool distributionVisible;
+    bool altDown = false;
     
     // Helper struct
     struct Point {
@@ -159,16 +159,11 @@ protected:
     std::list<ns::AddressType> selectedNodes;
     ns::AddressType focusNode;
     
-    bool statsVisible;
-    bool distributionVisible;
-    
     enum {
         Traffic,
         Queue
     } distributionMode;
     
-    
-    bool altDown = false;
     
 };
 

@@ -8,8 +8,8 @@
 
 #include <vector>
 #include <memory>
-#include <iterator>
 #include <iostream>
+
 #include "../Notifiable.h"
 #include "../node/ApplicationNode.h"
 #include "../link/Link.h"

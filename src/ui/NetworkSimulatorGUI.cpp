@@ -593,11 +593,17 @@ void NetworkSimulatorGUI::toggleSelect(ns::AddressType address) {
     }
 }
 
+void NetworkSimulatorGUI::timerCallback() {
+#if DEBUG
+    std::cout << "UPDATE UI..." << std::endl;
+#endif
+    update();
+}
+
 bool NetworkSimulatorGUI::windowExists() {
     sf::Window* ptrw = window;
     return ptrw;
 }
-
 
 void NetworkSimulatorGUI::update() {
     // Double checking that the window has been created

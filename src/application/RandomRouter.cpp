@@ -3,11 +3,12 @@
 //  NetworkSimulator
 //
 
-#include "RandomRouter.h"
 #include <cstdlib>     /* srand, rand */
 #include <ctime>       /* time */
 #include <vector>
 #include <sstream>
+
+#include "RandomRouter.h"
 
 RandomRouter::RandomRouter() {
     type = "Random Router";

@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
 #include <chrono>
 #include <thread>
 
@@ -18,23 +17,22 @@
 
 #include "../xml/tinyxml2.h"
 
+// Network
 #include "../network/Timer.h"
 #include "../network/Network.h"
-
 #include "../network/NetworkSimulator.h"
+#include "../network/RandomNetworkGenerator.h"
 
+// UI
 #include "../ui/NetworkSimulatorGUI.h"
 #include "../ui/NetworkSimulatorTesterUI.h"
 
-#include "../application/PacketGenerator.h"
-#include "../application/PacketReceiver.h"
-#include "../application/RandomRouter.h"
-#include "../application/RTableRouter.h"
+// Application factory
+#include "../application/ApplicationFactory.h"
 
+// Links
 #include "../link/ParametricLink.h"
 #include "../link/Link.h"
-
-#include "../network/RandomNetworkGenerator.h"
 
 /**
  * test case for loading xml
@@ -57,7 +55,6 @@ TEST_CASE("Xml Loading", "[xml]") {
 }
 
 TEST_CASE("Test adding nodes to network", "[network]") {
-//    SECTION("Test adding nodes to network") {
     NetworkSimulator ns;
     int n = 10;
 
@@ -70,7 +67,6 @@ TEST_CASE("Test adding nodes to network", "[network]") {
 }
 
 TEST_CASE("Test adding 10 000 nodes to network", "[network]") {
-//    SECTION("Test adding nodes to network") {
     NetworkSimulator ns;
     int n = 10000;
 
@@ -97,14 +93,12 @@ TEST_CASE("Test adding 10 000 nodes to network", "[network]") {
 //}
 
 TEST_CASE("Creating a tester ui", "[network],[ui]") {
-//    SECTION("Test adding nodes to network") {
     NetworkSimulatorUI* ui = NetworkSimulatorTesterUI::createUI();
 
     CHECK(ui);
 }
 
 TEST_CASE("Starting a network", "[network]") {
-//    SECTION("Test adding nodes to network") {
     NetworkSimulator ns;
     NetworkSimulatorUI* ui = NetworkSimulatorTesterUI::createUI();
     ns.setUI(ui);
@@ -163,7 +157,6 @@ std::string createRandomNetwork(NetworkSimulator& ns, int nodes, int links, int 
 }
 
 // This test mysteriously messes up the control for all the other tests..
-//    SECTION("Comprehensive all around test with gui") {
 TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
 
     std::cout << "Running integration tests / may take a few minutes.." << std::endl;
@@ -278,16 +271,7 @@ TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
                 }
             }
         }
-
-//        SECTION(createRandomNetwork(ns, 10, 10, 10), "") {
-//            SECTION("Running the simulator", "") {
-//                ui->generateGraphLayout();
-//                runNs(ns);
-//            }
-//        }
     }
-
 }
-
 
 #endif //NS1_TESTINGTESTS_H

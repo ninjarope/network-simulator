@@ -6,13 +6,14 @@
 #ifndef __NetworkSimulator__Node__
 #define __NetworkSimulator__Node__
 
+#include <map>
+#include <atomic>
+#include <mutex>
+
 #include "../ns.h"
 #include "../Notifiable.h"
 #include "../packet/Packet.h"
 #include "../link/Link.h"
-#include <map>
-#include <atomic>
-#include <mutex>
 
 /** Abstract base class for nodes. */
 class Node : public Notifiable {

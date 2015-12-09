@@ -8,7 +8,6 @@
 
 #include "../ns.h"
 #include "../network/NetworkSimulator.h"
-#include <thread>
 
 /**
  * Abstract base class for all UI implementations. 
