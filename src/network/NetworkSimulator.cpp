@@ -24,11 +24,10 @@ NetworkSimulator::~NetworkSimulator() {
 #if DEBUG
     std::cout << "Destroying NetworkSimulator" << std::endl;
 #endif
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+
     delete applicationFactory;
-    isRunning = false;
-    if (t.joinable()) {
-        t.join();
-    }
+    if (controllerThread.joinable()) controllerThread.join();
 }
 
 void NetworkSimulator::timerCallback() {
@@ -75,7 +74,7 @@ void NetworkSimulator::start() {
 #endif
 
     reset();
-    t = std::thread (&NetworkSimulator::startTimer, this);
+    controllerThread = std::thread (&NetworkSimulator::startTimer, this);
     ui->startTimer();
     
 }

@@ -22,6 +22,7 @@ void RandomNetworkGenerator::generate() {
     const int maxNodes = std::pow(nodeCount, 2) - nodeCount;
     const int maxDistance = 1000;
     const double pi = 3.14159265;
+    
     auto distance = [] (double x1, double y1, double x2, double y2) {
         return std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
     };
@@ -35,7 +36,7 @@ void RandomNetworkGenerator::generate() {
     
     // Links
     std::string source, destination;
-    for (int i = 0; i < std::max(std::min(linkCount, (int) std::pow(nodeCount, 2) - 1), nodeCount); i++) {
+    for (int i = 0; i < std::max(std::min(linkCount, maxNodes), nodeCount); i++) {
         source = std::to_string(i % nodeCount);
         double sx = ns.getNode(source)->getX();
         double sy = ns.getNode(source)->getY();
@@ -50,12 +51,17 @@ void RandomNetworkGenerator::generate() {
         } while ((destination == source || ns.getLink(source, destination) || distance(sx, sy, dx, dy) < maxDistance / 3)
                  && j < maxNodes);
         
-        if (j > maxNodes) std::cerr << "Could not create link!" << std::endl;
-        // Create bidirectional link
-        double speed = 1.0 + rand() % 16;
-        double delay = 100;
-        ns.addLink(source, destination, new ParametricLink(speed, delay));
-        ns.addLink(destination, source, new ParametricLink(speed, delay));
+        if (j < maxNodes) {
+            // Create bidirectional link
+            double speed = 1.0 + rand() % 16;
+            double delay = 100;
+            ns.addLink(source, destination, new ParametricLink(speed, delay));
+            ns.addLink(destination, source, new ParametricLink(speed, delay));
+        } else {
+#if DEBUG
+            std::cerr << "Could not create link!" << std::endl;
+#endif
+        }
     }
     
     // Routing generators

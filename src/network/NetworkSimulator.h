@@ -45,7 +45,7 @@ public:
     std::recursive_mutex mtx;
     
 private:
-    std::thread t;
+    std::thread controllerThread;
     NetworkSimulatorUI* ui;
     ApplicationFactory* applicationFactory;
 };
