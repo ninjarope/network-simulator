@@ -6,8 +6,10 @@
     </node>
 
     <node address="B" x="3.0" y="1.0">
-        <application type="PacketGenerator" rate="2.0">
+        <application type="PacketGenerator" rate="200.0">
             <destination address="D"/>
+            <destination address="C"/>
+            <destination address="A"/>
         </application>
         <application type="RoutingGenerator"/>
         <application type="PacketReceiver"/>

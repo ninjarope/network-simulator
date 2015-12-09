@@ -50,7 +50,7 @@ void RandomNetworkGenerator::generate() {
         
         if (j < maxNodes) {
             // Create bidirectional link
-            double speed = 1.0 + rand() % 16;
+            double speed = 1.0 + rand() % 8;
             double delay = 100;
             ns.addLink(source, destination, new ParametricLink(speed, delay));
             ns.addLink(destination, source, new ParametricLink(speed, delay));

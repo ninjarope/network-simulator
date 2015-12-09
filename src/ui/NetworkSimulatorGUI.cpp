@@ -186,7 +186,13 @@ void NetworkSimulatorGUI::drawLinks() {
     // link between two selected nodes
     linkSelected = false;
     selectedLink = nullptr;
-
+    
+    size_t maxQueue = 1;
+    for (auto& l : networkSimulator->getLinks()) {
+        size_t queueLen = l->getQueueLength();
+        if (queueLen > maxQueue) maxQueue = queueLen;
+    }
+    
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         try {
@@ -215,7 +221,7 @@ void NetworkSimulatorGUI::drawLinks() {
             }
             else if (distributionMode == Queue) {
                 value = l->getQueueLength();
-                intensity = std::min((int) value, 255);
+                intensity = (double) value / maxQueue * 255;
                 sourceColor = sf::Color(128 + 0.5 * intensity,
                                         128 - 0.5 * intensity,
                                         128 - 0.5 * intensity,
@@ -255,18 +261,28 @@ void NetworkSimulatorGUI::drawTextBoxes() {
     sf::Color boxColor = sf::Color(128, 128, 128);
     for (auto n : selectedNodes) {
         // Draw to rendering buffer
-        text.setString(i++ == 0 ? "SOURCE" : "DESTINATION");
+        std::stringstream ss;
+        ss << (i++ == 0 ? "SOURCE" : "DESTINATION");
+        for (auto& a : networkSimulator->getNode(n)->getApplications()) {
+            ss << std::endl << a->getType();
+        }
+        if (selectedLink) {
+            ss << std::endl << std::endl << "QUEUE" << std::endl;
+            if (i == 0) ss << networkSimulator->getLink(selectedNodes.front(), selectedNodes.back())->getQueueLength();
+            else ss << networkSimulator->getLink(selectedNodes.back(), selectedNodes.front())->getQueueLength();
+        }
+        text.setString(ss.str());
         sf::FloatRect textBounds = text.getLocalBounds();
 
         // Node center point
         int x = visibleNodes.at(n).x * zoom + transformX - textBounds.width / 2;
-        int y = visibleNodes.at(n).y * zoom + transformY - textBounds.height / 2 - fontSize * 4;
+        int y = visibleNodes.at(n).y * zoom + transformY - textBounds.height - margin * 5;
 
         text.setPosition(x, y);
 
         // Box
         sf::RectangleShape rec(sf::Vector2f(textBounds.width + margin * 2,
-                                            textBounds.height * 2.0 + margin * 2));
+                                            textBounds.height + margin * 3));
 
         rec.setFillColor(sf::Color(0, 0, 0, 128));
         rec.setOutlineColor(boxColor);
@@ -303,12 +319,7 @@ void NetworkSimulatorGUI::drawTime() {
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
-        << " s   "
-        << " ROUTING: "
-        << (networkSimulator->routingExists() ? "shortest paths" : "random")
-        << " TOTAL PACKETS TRANSMITTED: "
-        << totalTraffic;
-
+        << " s   ";
 
     text.setString(ss.str());
 
@@ -323,12 +334,11 @@ void NetworkSimulatorGUI::drawTime() {
         << "[Enter] Restart   "
         << "[Space] Pause   "
         << "[G] Switch routing   "
-        << "[S] Stats   "
         << "[D] Distribution   "
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move   "
-        << "[,/.] Change Speed   "
+        << "[, / .] Change Speed   "
         << ((selectedLink) ? "[Alt+L] Create traffic log" : "");
 
 
@@ -762,10 +772,6 @@ void NetworkSimulatorGUI::update() {
 
                     case sf::Keyboard::M:
                         changeDistributionView();
-                        break;
-
-                    case sf::Keyboard::S:
-                        toggleStatVisibility();
                         break;
 
                     case sf::Keyboard::Q:
