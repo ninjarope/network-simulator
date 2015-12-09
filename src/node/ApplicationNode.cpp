@@ -66,7 +66,6 @@ std::string ApplicationNode::getType() const {
 void ApplicationNode::run(double currentTime) {
     for (auto& application : applications) {
         // Enter critical section
-        
         application->process(currentTime);
     }
 }

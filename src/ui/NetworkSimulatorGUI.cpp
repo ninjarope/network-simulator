@@ -312,7 +312,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move"
-        << "[-/+] Change Speed";
+        << "[,/.] Change Speed";
 
 
     text.setString(ss.str());
@@ -667,11 +667,11 @@ void NetworkSimulatorGUI::update() {
                         networkSimulator->toggleTimer();
                         break;
 
-                    case sf::Keyboard::Subtract:
+                    case sf::Keyboard::Comma:
                         networkSimulator->slowdown();
                         break;
 
-                    case sf::Keyboard::Add:
+                    case sf::Keyboard::Period:
                         networkSimulator->fasten();
                         break;
 

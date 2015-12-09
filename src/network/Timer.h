@@ -30,8 +30,8 @@ class Timer {
     void setTimerSlowdownrate(double);
     void setTimerEndTime(int);
 
-    void slowdown() { slowdownrate += 10.0; std::cout << "slowed down to " << slowdownrate << std::endl; }
-    void fasten() { slowdownrate -= 10.0; std::cout << "fastened down to " << slowdownrate << std::endl; }
+    void slowdown() { slowdownrate /= 2.0; std::cout << "slowed down to " << slowdownrate << std::endl; }
+    void fasten() { slowdownrate *= 2.0; std::cout << "fastened down to " << slowdownrate << std::endl; }
 
     /** Return timer interval. */
     double getTimerInterval();

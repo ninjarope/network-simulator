@@ -35,7 +35,8 @@ void NetworkSimulator::timerCallback() {
 #if DEBUG
     std::cout << "RUNNING NS TIMER " << this << std::endl << " " << currentTime;
 #endif
-
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    
     std::list<std::thread> nodeWorkers;
     std::list<std::thread> linkWorkers;
     
@@ -80,6 +81,8 @@ void NetworkSimulator::start() {
 }
 
 void NetworkSimulator::reset() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    
     ui->generateGraphLayout();
     for (auto& node : getNodes()) if (node.second) node.second->reset();
     for (auto& link : getLinks()) if (link) link->reset();

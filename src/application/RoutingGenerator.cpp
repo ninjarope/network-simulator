@@ -25,6 +25,7 @@ void RoutingGenerator::process(double currentTime) {
     //    for (auto r : hostRoutingTable) {
     //        std::cout << r.first << "," << r.second.nextHop << "," << r.second.totalWeight << std::endl;
     //    }
+    
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
     
@@ -33,6 +34,7 @@ void RoutingGenerator::process(double currentTime) {
         if (!hostRoutingTable.empty()) {
             for (auto connection : hostNode->getConnections()) {
                 Node* neighbor = connection->getDestination();
+                std::lock_guard<std::recursive_mutex> lock(neighbor->mtx);
                 
                 try {
                     // Check if in neighbor routing table has new destinations
@@ -65,7 +67,6 @@ void RoutingGenerator::process(double currentTime) {
             // Trivial path to node itself, which has zero weight
             ns::AddressType ownAddress = hostNode->getAddress();
             hostRoutingTable.insert({ownAddress, {ownAddress, 0.0}});
-            
             // Initialize routing table with direct connections to neighbors
             for (auto connection : hostNode->getConnections()) {
                 ns::AddressType neighborAddress = connection->getDestination()->getAddress();

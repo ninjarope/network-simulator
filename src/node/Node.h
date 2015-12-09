@@ -69,6 +69,7 @@ public:
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;
     
+    std::recursive_mutex mtx;
 
 protected:
     ns::Connections connections;
@@ -81,7 +82,6 @@ protected:
     double x = 0;
     double y = 0;
 
-    std::recursive_mutex mtx;
 
 };
 
