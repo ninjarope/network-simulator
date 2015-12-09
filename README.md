@@ -7,50 +7,50 @@ Simulator for network connection points, paths between them and packets flowing 
 ## Usage
 
 + Build with make (Makefile included and should handle most platforms)
->
-> Running the executive:
->
->```
->./ns [relative-xml-file-path]
->./ns [relative-xml-file-path] > log.txt
->./ns random [node-count] [edge-count] [packet-generator-count]
->```
+
+ Running the executive:
+
+```
+./ns [relative-xml-file-path]
+./ns [relative-xml-file-path] > log.txt
+./ns random [node-count] [edge-count] [packet-generator-count]
+```
 
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.
 + To modify the network, use xml files (resources directory).
->
->Basic xml layout:
->
->```xml
-><network interval="10" slowdownrate="1.0" endTime="10000">
->    <node address="somename" x="1.0" y="1.0">
->        <application type="PacketReceiver"/>
->        <application type="PacketGenerator"/>
->           <destination address="A"/>
->           ... more destinations ...
->        
->        ... more applications ...
->
->    </node>
->
->    ... more nodes ...
->
->    <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
->    
->    ... more links ...
->
-></network>
->```
->
-+ Networks parameters are optional
+
+Basic xml layout:
+
+```xml
+<network interval="10" slowdownrate="1.0" endTime="10000">
+    <node address="somename" x="1.0" y="1.0">
+        <application type="PacketReceiver"/>
+        <application type="PacketGenerator"/>
+           <destination address="A"/>
+           ... more destinations ...
+        
+        ... more applications ...
+
+    </node>
+
+    ... more nodes ...
+
+    <link source="A" destination="B" directed="false" type="Wireless" speed="1.0" delay="1.0" weight="1.0"/>
+    
+    ... more links ...
+
+</network>
+```
+
++ Network's parameters are optional
     + interval = ms for every step
     + slowdownrate = the bigger, the slower
     + endTime = end point for the intervals
 + Applications to be used are 
     + PacketReceiver
     + PacketGenerator - defines the destinations for the generated packets
-    + RandomRouter
-    + RTableRouter
+    + RandomRouter - is random
+    + RTableRouter - uses the nodes routing table
 + Routing can be done with 
     + the random applications
     + with aforementioned links (xml) between nodes.
@@ -110,25 +110,25 @@ Example of getting a specific node by address:
 + Uses [Catch](https://github.com/philsquared/Catch) testing framework
 
 + Basic usage is through arguments. The executive can be run normally by not giving it any parameters. Parameters override the executive to be utilized for testing.
->
->Running tests for xml (linux):
->
->```
->./ns "[tag]" <options>
->```
->
->./ns refers to the built executive. The arguments include the tag of the test and options for the tests. To get tags for all tests use:
->
->```
->./ns -l
->```
->
->and for help and usage:
->
->```
->./ns -h
->```
->
+
+Running tests for xml (linux):
+
+```
+./ns "[tag]" <options>
+```
+
+./ns refers to the built executive. The arguments include the tag of the test and options for the tests. To get tags for all tests use:
+
+```
+./ns -l
+```
+
+and for help and usage:
+
+```
+./ns -h
+```
+
 ---
 
 ## Documentation
