@@ -19,21 +19,21 @@ public:
     Packet(ns::AddressType s, ns::AddressType d, ns::PacketDataType data, double size = 1.0);
 
     //copy constructor
-    Packet(const Packet& that) : id(that.id), destination(that.destination), data(that.data), size(that.size){}
+   Packet(const Packet& that) : id(that.id), destination(that.destination), data(that.data), size(that.size){}
 
-    //copy assignment operator
-    Packet& operator=(const Packet& that)
-      {
-          id = that.id;
-          destination = that.destination;
-          data = that.data;
-          size = that.size;
+   //copy assignment operator
+   Packet& operator=(const Packet& that)
+     {
+         id = that.id;
+         destination = that.destination;
+         data = that.data;
+         size = that.size;
 
-          return *this;
-      }
+         return *this;
+     }
 
-    //destructor
-    ~Packet(){}
+   //destructor
+   ~Packet(){}
 
     /** Return packet ID. */
     ns::PacketIdType getID();
