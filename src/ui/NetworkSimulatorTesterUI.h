@@ -2,9 +2,6 @@
 //  NetworkSimulatorTesterUI.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 14.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__NetworkSimulatorTesterUI__
 #define __NetworkSimulator__NetworkSimulatorTesterUI__

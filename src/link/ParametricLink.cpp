@@ -2,9 +2,6 @@
 //  ParametricLink.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 18.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include <sstream>
 
@@ -38,9 +35,9 @@ void ParametricLink::run(double currentTime) {
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
 
-
-
     // Get atomic containers
+    std::lock_guard <std::recursive_mutex> lock(mtx);
+    
     auto& packetsWaiting = *this->packetsWaiting.load();
     auto& packetsInTransmission = *this->packetsInTransmission.load();
 

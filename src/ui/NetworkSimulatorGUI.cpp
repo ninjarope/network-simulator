@@ -2,18 +2,15 @@
 //  NetworkSimulatorGUI.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 25.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
+
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <cfloat>
+#include <algorithm>
 
 #include "NetworkSimulatorGUI.h"
 #include "debug.h"
-
-#include <cstdlib>     /* srand, rand */
-#include <ctime>       /* time */
-#include <cmath>
-#include <cfloat>       /* DBL_MAX */
-#include <algorithm>
 
 NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
     // Create window

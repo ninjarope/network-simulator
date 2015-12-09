@@ -2,9 +2,6 @@
 //  Application.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__Application__
 #define __NetworkSimulator__Application__
@@ -16,7 +13,6 @@
 #include "../packet/Packet.h"
 #include "../node/Node.h"
 #include "../link/Link.h"
-
 
 /**
  * Abstract node application base class.

@@ -1,5 +1,6 @@
 //
-// Created by j on 12/4/15.
+//  tests.h
+//  NetworkSimulator
 //
 
 #ifndef NS1_TESTINGTESTS_H
@@ -33,16 +34,13 @@
 #include "../link/ParametricLink.h"
 #include "../link/Link.h"
 
-#include "network/RandomNetworkGenerator.h"
+#include "../network/RandomNetworkGenerator.h"
 
 /**
  * test case for loading xml
  *
  * @filepath relative filepath to xml file
  */
-//TEST_CASE("All tests", "[all]") {
-
-//    SECTION("Xml Loading") {
 TEST_CASE("Xml Loading", "[xml]") {
     tinyxml2::XMLDocument doc;
     doc.LoadFile("resources/simple.xml");
@@ -57,8 +55,6 @@ TEST_CASE("Xml Loading", "[xml]") {
     }
     REQUIRE(doc.ErrorID() == 0);
 }
-
-//    NetworkSimulator ns;
 
 TEST_CASE("Test adding nodes to network", "[network]") {
 //    SECTION("Test adding nodes to network") {

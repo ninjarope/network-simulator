@@ -2,9 +2,6 @@
 //  ParametricLink.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 18.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__ParametricLink__
 #define __NetworkSimulator__ParametricLink__

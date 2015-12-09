@@ -2,15 +2,16 @@
 //  PacketReceiver.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include <iostream>
 #include "PacketReceiver.h"
 
 PacketReceiver::PacketReceiver() { type = "PacketReceiver"; }
 
+Application* PacketReceiver::setParameters(std::vector<std::string> parameters) {
+    (void) parameters;
+    return this;
+}
 void PacketReceiver::process(double currentTime) {
     auto it = hostNode->getPackets().begin();
     while (it != hostNode->getPackets().end()) {

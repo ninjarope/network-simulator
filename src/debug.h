@@ -1,5 +1,6 @@
 //
-// Created by j on 12/8/15.
+//  debug.h
+//  NetworkSimulator
 //
 
 #define DEBUG false

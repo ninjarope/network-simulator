@@ -2,9 +2,6 @@
 //  Timer.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include <iostream>
 #include <thread>
@@ -25,8 +22,14 @@ void Timer::setTimerValues(int i, double s, int et) {
 }
 
 void Timer::setTimerInterval(int i) { interval = i; }
+
 void Timer::setTimerSlowdownrate(double s) { slowdownrate = s; }
+
 void Timer::setTimerEndTime(int et) { endTime = et; }
+
+void Timer::slowdown() { slowdownrate *= 2.0; }
+
+void Timer::fasten() { slowdownrate /= 2.0; }
 
 double Timer::getTimerInterval() { return interval; }
 
@@ -50,7 +53,7 @@ void Timer::startTimer() {
             callbackDuration = returnTime - callTime;
 
             // delay if callback ran faster than the given interval
-            int waitTime = (double) interval / slowdownrate;
+            int waitTime = (double) interval * slowdownrate;
             if (callbackDuration < std::chrono::milliseconds(waitTime)) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - callbackDuration);
             }
@@ -58,7 +61,7 @@ void Timer::startTimer() {
             currentTime += interval;
         }
 
-        int waitTime = (double) interval / slowdownrate;
+        int waitTime = (double) interval * slowdownrate;
         std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));
     }
 }

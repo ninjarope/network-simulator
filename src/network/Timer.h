@@ -2,9 +2,6 @@
 //  Timer.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__Timer__
 #define __NetworkSimulator__Timer__
@@ -30,11 +27,18 @@ class Timer {
 
     /** Set timer interval in milliseconds. */
     void setTimerInterval(int);
+    
+    /** Set timer interval scaling factor. */
     void setTimerSlowdownrate(double);
+    
+    /** Set end time (0 for infinity) */
     void setTimerEndTime(int);
 
-    void slowdown() { slowdownrate /= 2.0; std::cout << "slowed down to " << slowdownrate << std::endl; }
-    void fasten() { slowdownrate *= 2.0; std::cout << "fastened down to " << slowdownrate << std::endl; }
+    /** Slow down the timer. */
+    void slowdown();
+    
+    /** Fasten the timer. */
+    void fasten();
 
     /** Return timer interval. */
     double getTimerInterval();

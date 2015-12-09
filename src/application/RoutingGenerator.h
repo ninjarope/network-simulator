@@ -2,15 +2,15 @@
 //  RoutingGenerator.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 6.12.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__RoutingGenerator__
 #define __NetworkSimulator__RoutingGenerator__
 
 #include "Application.h"
 
+/** Routing table generator application implementing distance-vector
+  * routing protocol.
+  */
 class RoutingGenerator : public Application {
 public:
     RoutingGenerator();
@@ -20,8 +20,11 @@ public:
         (void) parameters;
         return this;
     }
+    
     /**
-     * If host node is recipient of packet, receives (deletes) packet.
+     * Frequently checks routing table of neighbor nodes and gradually
+     * forms host node's routing table, based on lowest known total cost
+     * of path to given destination node.
      */
     void process(double currentTime) override;
     
@@ -29,6 +32,5 @@ private:
     unsigned int rate;
     unsigned int count;
 };
-
 
 #endif /* defined(__NetworkSimulator__RoutingGenerator__) */

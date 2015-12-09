@@ -2,8 +2,6 @@
 //  PacketGenerator.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//
 
 #include <sstream>
 #include <iostream>

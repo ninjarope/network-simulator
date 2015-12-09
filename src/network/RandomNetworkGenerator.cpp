@@ -2,9 +2,6 @@
 //  RandomNetworkGenerator.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 6.12.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include <string>
 #include <cstdlib>     /* srand, rand */
@@ -66,12 +63,12 @@ void RandomNetworkGenerator::generate() {
     
     // Routing generators
     for (auto node : ns.getNodes()) {
-        node.second->addApplications(applicationFactory.create(ROUTING_GENERATOR));
+        node.second->addApplications(applicationFactory.create(ApplicationFactory::ROUTING_GENERATOR));
     }
     
     // Packet receivers
     for (auto node : ns.getNodes()) {
-        node.second->addApplications(applicationFactory.create(PACKET_RECEIVER));
+        node.second->addApplications(applicationFactory.create(ApplicationFactory::PACKET_RECEIVER));
     }
     
     // Packet generators
@@ -79,12 +76,12 @@ void RandomNetworkGenerator::generate() {
         std::string rate = std::to_string(1 + rand() % 100);
         std::string recipient = std::to_string(rand() % nodeCount);
         ns.getNode(std::to_string(i))
-        ->addApplications(applicationFactory.create(PACKET_GENERATOR)
+        ->addApplications(applicationFactory.create(ApplicationFactory::PACKET_GENERATOR)
                           ->setParameters({rate, recipient}));
     }
     
     // Routers
     for (auto node : ns.getNodes()) {
-        node.second->addApplications(applicationFactory.create(RTABLE_ROUTER));
+        node.second->addApplications(applicationFactory.create(ApplicationFactory::RTABLE_ROUTER));
     }
 }

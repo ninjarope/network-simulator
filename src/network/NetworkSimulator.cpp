@@ -1,7 +1,6 @@
+//
 //  NetworkSimulator.cpp
 //  NetworkSimulator
-//
-//  Created by Tommi Gröhn on 13.11.2015.
 //
 
 #include <thread>
@@ -72,7 +71,6 @@ void NetworkSimulator::start() {
 #if DEBUG
     std::cout << ui << std::endl;
 #endif
-
     reset();
     controllerThread = std::thread (&NetworkSimulator::startTimer, this);
     ui->startTimer();

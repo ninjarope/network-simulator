@@ -1,6 +1,6 @@
 //
-// Created by j on 12/3/15.
-//
+//  XMLReader.h
+//  NetworkSimulator
 
 #ifndef NS1_XMLREADER_H
 #define NS1_XMLREADER_H

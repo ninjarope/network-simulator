@@ -1,5 +1,6 @@
 //
-// Created by j on 11/17/15.
+//  RandomRouter.h
+//  NetworkSimulator
 //
 
 #ifndef __ns1_randomrouter_h__
@@ -16,12 +17,10 @@ public:
     RandomRouter();
     
     /** Set parameters of the application. */
-    Application* setParameters(std::vector<std::string> parameters) override {
-        (void) parameters;
-        return this;
-    }
-    
-    /** Update state of the router. */
+    Application* setParameters(std::vector<std::string> parameters) override;
+    /**
+     * Empties the packet queue and routes them randomly
+     */
     void process(double currentTime) override;
 
 private:

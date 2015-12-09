@@ -2,9 +2,6 @@
 //  Node.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__Node__
 #define __NetworkSimulator__Node__
@@ -55,16 +52,20 @@ public:
     /** Derived classes must define their type and implement this. */
     virtual std::string getType() const = 0;
 
+    /** Update routing table from given known complete shortest path. */
     void updateTable(std::vector<ns::AddressType> shortestPath);
+    
+    /** Update single routing table entry (total path cost to given destination). */
     void updateTable(ns::AddressType, ns::TotalWeight);
     
     /** Return modifiable routing table. */
     ns::RoutingTable& getRoutingTable();
     
+    /** Get current lowest known path cost for given destination. */
     ns::TotalWeight getRoutingTableEntry(ns::AddressType address);
     
+    /** Clear routing table of node. */
     void clearRoutingTable();
-    
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;

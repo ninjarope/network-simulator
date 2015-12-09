@@ -1,5 +1,6 @@
 //
-// Created by j on 11/17/15.
+//  RandomRouter.cpp
+//  NetworkSimulator
 //
 
 #include "RandomRouter.h"
@@ -13,9 +14,11 @@ RandomRouter::RandomRouter() {
     srand((unsigned int) time(NULL));
 }
 
-/**
- * Empties the packet queue and routes them randomly
- */
+Application* RandomRouter::setParameters(std::vector<std::string> parameters) {
+    (void) parameters;
+    return this;
+}
+
 void RandomRouter::process(double timeDelta) {
     auto& packets = hostNode->getPackets();
     

@@ -2,9 +2,6 @@
 //  RTableRouter.h
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #ifndef __NetworkSimulator__RTableRouter__
 #define __NetworkSimulator__RTableRouter__

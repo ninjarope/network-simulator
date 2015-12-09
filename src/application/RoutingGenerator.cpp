@@ -2,9 +2,6 @@
 //  RoutingGenerator.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 6.12.2015.
-//  Copyright (c) 2015 tommigrohn. All rights reserved.
-//
 
 #include <algorithm>
 #include <iostream>
@@ -19,12 +16,6 @@ RoutingGenerator::RoutingGenerator() {
 
 void RoutingGenerator::process(double currentTime) {
     ns::RoutingTable& hostRoutingTable = hostNode->getRoutingTable();
-    
-    //    // Print rtable
-    //    std::cout << hostNode->getAddress() << std::endl;
-    //    for (auto r : hostRoutingTable) {
-    //        std::cout << r.first << "," << r.second.nextHop << "," << r.second.totalWeight << std::endl;
-    //    }
     
     double timeDelta = currentTime - previousTime;
     previousTime = currentTime;
@@ -71,8 +62,6 @@ void RoutingGenerator::process(double currentTime) {
             for (auto connection : hostNode->getConnections()) {
                 ns::AddressType neighborAddress = connection->getDestination()->getAddress();
                 double weight = connection->getWeight();
-                
-                // Insert entry
                 hostRoutingTable.insert({neighborAddress, {neighborAddress, weight}});
             }
         }

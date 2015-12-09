@@ -2,8 +2,6 @@
 //  NetworkSimulatorTestUI.cpp
 //  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 14.11.2015.
-//
 
 #include "NetworkSimulatorTUI.h"
 

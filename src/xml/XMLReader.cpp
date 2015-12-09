@@ -1,5 +1,6 @@
 //
-// Created by j on 12/3/15.
+//  XMLReader.cpp
+//  NetworkSimulator
 //
 
 #include <iostream>
@@ -24,6 +25,7 @@ void XMLReader::process() {
 
     XMLHandle docHandle(&doc);
     XMLElement* nodeElement = docHandle.FirstChild().FirstChildElement("node").ToElement();
+    
     if (!nodeElement)
         throw "No nodes defined.";
 
@@ -57,6 +59,7 @@ void XMLReader::parseRoot() {
     // XMLHandle enables checking for nullptr's / in other words error handling
     XMLHandle docHandle(&doc);
     XMLElement* rootElement = docHandle.FirstChild().ToElement();
+    
     if (!rootElement)
         throw "No root element defined.";
 
@@ -65,6 +68,7 @@ void XMLReader::parseRoot() {
     int endTime = -1;
 
     rootElement->QueryIntAttribute("interval", &interval);
+    
     if (interval >= 0) {
         std::cout << "Set interval: " << interval << std::endl;
         ns.setTimerInterval(interval);
@@ -72,12 +76,14 @@ void XMLReader::parseRoot() {
 
 
     rootElement->QueryDoubleAttribute("slowdownrate", &slowdownrate);
+    
     if (slowdownrate >= 0.0){
         std::cout << "Set slowdownrate: " << slowdownrate << std::endl;
         ns.setTimerSlowdownrate(slowdownrate);
     }
 
     rootElement->QueryIntAttribute("endTime", &endTime);
+    
     if (endTime >= 0) {
         std::cout << "Set endtime: " << endTime << std::endl;
         ns.setTimerEndTime(endTime);
@@ -105,7 +111,7 @@ void XMLReader::buildNode(XMLElement* e) {
 
         if (appType == "PacketReceiver") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(PACKET_RECEIVER));
+            addApplications(applicationFactory->create(ApplicationFactory::PACKET_RECEIVER));
         } else if (appType == "PacketGenerator") {
             std::vector <std::string> parameters;
             parameters.push_back(applicationElement->Attribute("rate"));
@@ -120,17 +126,17 @@ void XMLReader::buildNode(XMLElement* e) {
             }
 
             ns.getNode(address)->addApplications(applicationFactory
-                                                     ->create(PACKET_GENERATOR)
+                                                     ->create(ApplicationFactory::PACKET_GENERATOR)
                                                      ->setParameters(parameters));
         } else if (appType == "RandomRouter") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(RANDOM_ROUTER));
+                addApplications(applicationFactory->create(ApplicationFactory::RANDOM_ROUTER));
         } else if (appType == "RTableRouter") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(RTABLE_ROUTER));
+                addApplications(applicationFactory->create(ApplicationFactory::RTABLE_ROUTER));
         } else if (appType == "RoutingGenerator") {
             ns.getNode(address)->
-                addApplications(applicationFactory->create(ROUTING_GENERATOR));
+                addApplications(applicationFactory->create(ApplicationFactory::ROUTING_GENERATOR));
         }
 
         XMLHandle aeHandle(applicationElement); // while-loop scope

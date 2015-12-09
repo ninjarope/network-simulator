@@ -1,5 +1,6 @@
 //
-// Created by j on 12/3/15.
+//  ApplicationFactory.h
+//  NetworkSimulator
 //
 
 #ifndef NS1_APPLICATIONFACTORY_H
@@ -13,25 +14,24 @@
 #include "RoutingGenerator.h"
 #include "../network/NetworkSimulator.h"
 
-
-/**
- * Encapsulates the different types of applications that
- * can be spawned with this factory
- */
-enum ApplicationType {
-    PACKET_RECEIVER,
-    PACKET_GENERATOR,
-    RANDOM_ROUTER,
-    RTABLE_ROUTER,
-    ROUTING_GENERATOR
-};
-
 /**
  * Acts as a middleman between all the applications and the components
  * that need to spawn them.
  */
 class ApplicationFactory {
   public:
+    /**
+     * Encapsulates the different types of applications that
+     * can be spawned with this factory
+     */
+    enum ApplicationType {
+        PACKET_RECEIVER,
+        PACKET_GENERATOR,
+        RANDOM_ROUTER,
+        RTABLE_ROUTER,
+        ROUTING_GENERATOR
+    };
+
     /**
      * Constructor takes network simulator reference to get
      * addresses for the creation of Packet Generator application

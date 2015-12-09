@@ -1,5 +1,11 @@
+//
+//  ShortestPath.h
+//  NetworkSimulator
+//
+
 #ifndef _SHORTESTPATH_H_
 #define    _SHORTESTPATH_H_
+
 #include <cfloat> // for DBL_MAX the greatest amount of a double used in finding shortest path
 
 #include "../ns.h"

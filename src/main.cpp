@@ -1,25 +1,24 @@
-//  ns_classes.cpp
-//  NetworkSimulator
 //
-//  Created by Tommi Gröhn on 13.11.2015.
+//  main.cpp
+//  NetworkSimulator
 //
 
 #define CATCH_CONFIG_RUNNER
 
-#include "test/catch.h"
 
 #include <iostream>
 #include <string>
 
 #include "network/NetworkSimulator.h"
+#include "network/RandomNetworkGenerator.h"
 #include "ui/NetworkSimulatorGUI.h"
 
-#include "network/RandomNetworkGenerator.h"
-
-// dependency for xml parsing
+// Dependency for xml parsing
 #include "xml/tinyxml2.h"
 #include "xml/XMLReader.h"
 
+// Dependency for tests
+#include "test/catch.h"
 #include "test/Tests.h"
 
 int main(int argc, char** argv) {
@@ -54,22 +53,11 @@ int main(int argc, char** argv) {
                 filepath = "resources/default.xml";
             }
 
-            // load xml
+            // Load xml
             if (argc == 5 && firstArg == "random") {
                 int nodes = std::stoi(argv[2]);
                 int links = std::stoi(argv[3]);
                 int generators = std::stoi(argv[4]);
-//                if (nodes <= links || generators > nodes) {
-//                    std::cerr << "Parameters are incorrect!"
-//                        << std::endl
-//                        << "They should be random <#nodes> <#links> <#generators>"
-//                        << std::endl
-//                        << "Note that you can't have more generators than nodes"
-//                        << std::endl
-//                        << "Or links more than (nodes - 1)"
-//                        << std::endl;
-//                    return 1;
-//                }
 
                 RandomNetworkGenerator g(ns, nodes, links, generators);
                 g.generate();
@@ -78,7 +66,6 @@ int main(int argc, char** argv) {
                 std::cout << "Log: Xml file loaded" << std::endl;
                 r.process();
             }
-
 
             // Let's go!
             ns.start();
