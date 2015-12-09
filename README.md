@@ -161,7 +161,7 @@ This will create documentation in html by default of the classes and their relat
 
 Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
 
-The directory ./doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
+The directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
     
 Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
 
