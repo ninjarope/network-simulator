@@ -59,9 +59,12 @@ public:
     void updateTable(ns::AddressType, ns::TotalWeight);
     
     /** Return modifiable routing table. */
-    ns::RoutingTable getRoutingTable();
+    ns::RoutingTable& getRoutingTable();
+    
+    ns::TotalWeight getRoutingTableEntry(ns::AddressType address);
     
     void clearRoutingTable();
+    
     
     /** Perform some actions when clock ticks. */
     virtual void run(double currentTime) = 0;

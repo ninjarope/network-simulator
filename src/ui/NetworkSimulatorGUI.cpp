@@ -498,7 +498,7 @@ void NetworkSimulatorGUI::drawRouting() {
         try {
             Node* n1 = networkSimulator->getNode(source);
             while (n1) {
-                ns::AddressType next = n1->getRoutingTable().at(dest).nextHop;
+                ns::AddressType next = n1->getRoutingTableEntry(dest).nextHop;
                 Node* n2 = networkSimulator->getNode(next);
 
                 if (!n2) break;

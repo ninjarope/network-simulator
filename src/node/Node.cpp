@@ -31,7 +31,7 @@ void Node::addConnection(Link* link) {
 
 void Node::removeConnection(Link* link) {
     // Enter critical section
-    std::unique_lock<std::recursive_mutex> lock(mtx);
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     
     /* Requires some checking and mods... */
     auto it = connections.begin();
@@ -57,7 +57,7 @@ double Node::getY() { return y; }
 
 void Node::updateTable(std::vector<ns::AddressType> shortestPath){
     // Enter critical section
-    std::unique_lock<std::recursive_mutex> lock(mtx);
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     
     // For given destination (last address in path) associate next node in path (check that first is this node)
     try {
@@ -71,16 +71,25 @@ void Node::updateTable(std::vector<ns::AddressType> shortestPath){
 }
 
 void Node::updateTable(ns::AddressType address, ns::TotalWeight w) {
-    std::unique_lock<std::recursive_mutex> lock(mtx);
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     routingTable.insert({address, w});
 }
 
-ns::RoutingTable Node::getRoutingTable() {
-    std::unique_lock<std::recursive_mutex> lock(mtx);
+ns::RoutingTable& Node::getRoutingTable() {
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     return routingTable;
 }
 
+ns::TotalWeight Node::getRoutingTableEntry(ns::AddressType address) {
+    try {
+        std::lock_guard<std::recursive_mutex> lock(mtx);
+        return routingTable.at(address);
+    } catch (std::out_of_range) {
+        return {ns::AddressType(), 0.0};
+    }
+}
+
 void Node::clearRoutingTable() {
-    std::unique_lock<std::recursive_mutex> lock(mtx);
+    std::lock_guard<std::recursive_mutex> lock(mtx);
     routingTable.clear();
 }
