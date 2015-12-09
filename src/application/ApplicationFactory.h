@@ -22,7 +22,7 @@ enum ApplicationType {
     PACKET_RECEIVER,
     PACKET_GENERATOR,
     RANDOM_ROUTER,
-    TEST_ROUTER,
+    RTABLE_ROUTER,
     ROUTING_GENERATOR
 };
 
@@ -50,7 +50,7 @@ class ApplicationFactory {
                 return new PacketGenerator();
             case RANDOM_ROUTER:
                 return new RandomRouter();
-            case TEST_ROUTER:
+            case RTABLE_ROUTER:
                 return new RTableRouter();
             case ROUTING_GENERATOR:
                 return new RoutingGenerator();

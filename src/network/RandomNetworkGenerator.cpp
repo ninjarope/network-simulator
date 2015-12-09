@@ -79,6 +79,6 @@ void RandomNetworkGenerator::generate() {
     
     // Routers
     for (auto node : ns.getNodes()) {
-        node.second->addApplications(applicationFactory.create(TEST_ROUTER));
+        node.second->addApplications(applicationFactory.create(RTABLE_ROUTER));
     }
 }
