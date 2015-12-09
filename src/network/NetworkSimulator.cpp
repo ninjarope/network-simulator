@@ -94,6 +94,8 @@ void NetworkSimulator::quit() {
 #if DEBUG
     std::cout << "TERMINATING..." << std::endl;
 #endif
+    std::lock_guard<std::recursive_mutex> lock(mtx);
+    
     ui->stopTimer();
     stopTimer();
 }
