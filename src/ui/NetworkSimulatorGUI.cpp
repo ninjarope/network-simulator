@@ -191,12 +191,6 @@ void NetworkSimulatorGUI::drawLinks() {
     linkSelected = false;
     selectedLink = nullptr;
     
-    size_t maxQueue = 1;
-    for (auto& l : networkSimulator->getLinks()) {
-        size_t queueLen = l->getQueueLength();
-        if (queueLen > maxQueue) maxQueue = queueLen;
-    }
-    
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         if (!l) continue;
@@ -208,8 +202,8 @@ void NetworkSimulatorGUI::drawLinks() {
             auto n2 = visibleNodes.at(destination);
 
             // Color changes
-            int value = 0;
-            int intensity = 0;
+            double value = 0.0;
+            size_t intensity = 0;
             sf::Color sourceColor = sf::Color(128,
                                               128,
                                               128,
@@ -220,20 +214,20 @@ void NetworkSimulatorGUI::drawLinks() {
                                                    0);
 
             if (distributionMode == Traffic) {
-                value = l->getPacketsInTransmission().empty() ? 0 : 128;
-                intensity = (int) std::min(value, 128);
-                sourceColor = sf::Color(128 - intensity,
-                                        128 + intensity,
-                                        128 - intensity,
-                                        128 + intensity);
+                value = (l->getPacketsInTransmission().empty() ? 0.0 : 255);
+                intensity = std::min((int) value, 255);
+                sourceColor = sf::Color(128 - 0.5 * intensity,
+                                        128 + 0.5 * intensity,
+                                        128 - 0.5 * intensity,
+                                        128 + 0.5 * intensity);
             }
             else if (distributionMode == Queue) {
-                value = l ? (int) l->getQueueLength() : 0;
-                intensity = std::min ((double) value / maxQueue, 128.0);
-                sourceColor = sf::Color(128 + intensity,
-                                        128 - intensity,
-                                        128 - intensity,
-                                        128 + intensity);
+                value = l->getQueueLength();
+                intensity = std::min((int) value * 10, 255);
+                sourceColor = sf::Color(128 + 0.5 * intensity,
+                                        128 - 0.5 * intensity,
+                                        128 - 0.5 * intensity,
+                                        128 + 0.5 * intensity);
             }
             
             if (focusNode == source && !altDown) {
@@ -282,15 +276,21 @@ void NetworkSimulatorGUI::drawTextBoxes() {
     for (auto n : selectedNodes) {
         // Draw to rendering buffer
         std::stringstream ss;
-        ss << (i++ == 0 ? "SOURCE" : "DESTINATION");
+        ss << (i == 0 ? "SOURCE" : "DESTINATION");
         for (auto& a : networkSimulator->getNode(n)->getApplications()) {
             ss << std::endl << a->getType();
         }
         if (selectedLink) {
-            ss << std::endl << std::endl << "QUEUE" << std::endl;
+            ss << std::endl << std::endl << "QUEUE TO ";
             Link* l;
-            if (i == 0) l = networkSimulator->getLink(selectedNodes.front(), selectedNodes.back());
-            else l = networkSimulator->getLink(selectedNodes.back(), selectedNodes.front());
+            if (i == 0) {
+                ss << selectedNodes.back() << std::endl;
+                l = networkSimulator->getLink(selectedNodes.front(), selectedNodes.back());
+            }
+            else {
+                ss << selectedNodes.front() << std::endl;
+                l = networkSimulator->getLink(selectedNodes.back(), selectedNodes.front());
+            }
             if (l) ss << l->getQueueLength();
         }
         text.setString(ss.str());
@@ -327,6 +327,8 @@ void NetworkSimulatorGUI::drawTextBoxes() {
         window->draw(triangle);
         window->draw(rec);
         window->draw(text);
+        
+        i++;
     }
 }
 
