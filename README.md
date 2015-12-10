@@ -4,6 +4,16 @@ This page outlines the usage and architecture of the program while also instruct
 
 ---
 
+This README among the other documentations and reports have been compiled and uploaded to a [temporary github page](http://rojun.github.io/doxygen_doc/index.html). We recommend to build/generate the doxygen documentation (instructions below) or following the given link.
+
+---
+
+## Dependencies
+
++ [SFML](http://www.sfml-dev.org/) for the gui
+
+---
+
 ## Usage
 
 + Build with make (Makefile included and should handle most platforms)
@@ -101,6 +111,44 @@ Press Enter
 
 ---
 
+## Documentation
+
++ Included in the root folder are two doxygen configuration files. 
+
+Doxygen documentation can be generated with these configuration by running:
+
+    `doxygen <doxygen-conf-file>`
+
+This will create documentation in html by default of the classes and their related material
+
+### Temporary backup for the doxygen
+
+We've [generated the documentation](http://rojun.github.io/doxygen_doc/index.html) for the time being.
+
+### Requirements for the documentation
+
+Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
+
+The directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
+    
+Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
+
+### Commenting for the documentation
+
+Doxygen understands many variations of commenting. We should use these conventions:
+
+    /**
+     * Block comments for longer comments (classes etc)
+     */
+
+    /** one liners, that should be included in the doxygen */
+
+    /* one liners that are only for code reading / no doxygen support */
+
+    // same as the above (one liners)
+
+---
+
 ## Architecture
 
 Classes are intended to follow loose coupling principles where applicable. It follows MVC-model abstracting the view layer. There's few other view layers implemented, but they are mostly for testing purposes. 
@@ -151,11 +199,15 @@ Example of getting a specific node by address:
 
 + Links have source and address. They also enclose parameters for speed, delay and weight to simulate bandwidth, latency and other such factors.
 
+### XMLReader
+
++ Handles the reading of xml documents for to generate the network. Based on the [tinyxml2](http://www.grinninglizard.com/tinyxml2/) library (included as a header).
+
 ---
 
 ## Testing
 
-+ Uses [Catch](https://github.com/philsquared/Catch) testing framework
++ Uses [Catch](https://github.com/philsquared/Catch) testing framework (included as a header).
 
 + Basic usage is through arguments. The executive can be run normally by not giving it any parameters. Parameters override the executive to be utilized for testing.
 
@@ -176,40 +228,6 @@ and for help and usage:
 ```
 ./ns -h
 ```
-
----
-
-## Documentation
-
-+ Included in the root folder are two doxygen configuration files. 
-
-Doxygen documentation can be generated with these configuration by running:
-
-    `doxygen <doxygen-conf-file>`
-
-This will create documentation in html by default of the classes and their related material
-
-### Requirements for the documentation
-
-Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
-
-The directory ./doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
-    
-Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
-
-### Commenting for the documentation
-
-Doxygen understands many variations of commenting. We should use these conventions:
-
-    /**
-     * Block comments for longer comments (classes etc)
-     */
-
-    /** one liners, that should be included in the doxygen */
-
-    /* one liners that are only for code reading / no doxygen support */
-
-    // same as the above (one liners)
 
 ---
 
