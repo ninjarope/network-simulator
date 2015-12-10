@@ -20,6 +20,20 @@ class Timer {
 
     virtual ~Timer();
 
+    //copy constructor
+   Timer(const Timer& that) : interval(that.interval), slowdownrate(that.slowdownrate), endTime(that.endTime) {}
+
+     //copy assignment operator
+    Timer& operator=(const Timer& that)
+       {
+           interval = that.interval;
+           slowdownrate = that.slowdownrate;
+           endTime = that.endTime;
+
+           return *this;
+       }
+
+
     /** Return current running time in milliseconds. */
     double getCurrentTime();
 
@@ -28,16 +42,16 @@ class Timer {
 
     /** Set timer interval in milliseconds. */
     void setTimerInterval(int);
-    
+
     /** Set timer interval scaling factor. */
     void setTimerSlowdownrate(double);
-    
+
     /** Set end time (0 for infinity) */
     void setTimerEndTime(int);
 
     /** Slow down the timer. */
     void slowdown();
-    
+
     /** Fasten the timer. */
     void fasten();
 
@@ -52,7 +66,7 @@ class Timer {
 
     /** Stop timer. */
     void stopTimer();
-    
+
     /** Reset current time. */
     void resetTimer();
 

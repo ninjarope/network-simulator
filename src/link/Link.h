@@ -79,6 +79,8 @@ public:
      */
     virtual void run(double currentTime) = 0;
     
+    std::recursive_mutex mtx;
+
 protected:
     Link();
     
@@ -88,14 +90,12 @@ protected:
     
     Node* source;
     Node* destination;
-    std::atomic<ns::Packets*> packetsWaiting;
-    std::atomic<std::map<Packet*, double>*> packetsInTransmission; // {Packet*, [time to delivery]}
-    std::atomic<ns::TransmissionLogType*> transmittedPackets; // {packetId, deliveryTime}
+    ns::Packets packetsWaiting;
+    std::map<Packet*, double> packetsInTransmission; // {Packet*, [time to delivery]}
+    ns::TransmissionLogType transmittedPackets; // {packetId, deliveryTime}
     double transmissionSpeed = 0.0;
     double propagationDelay = 0.0;
     double weight = 1.0;
-    
-    std::recursive_mutex mtx;
 
 };
 

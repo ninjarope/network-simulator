@@ -14,6 +14,9 @@
 #include "debug.h"
 
 NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
+    // Set refresh interval
+    setTimerInterval(16);
+    
     // Create window
     sf::ContextSettings settings;
     settings.antialiasingLevel = 0;
@@ -141,9 +144,10 @@ void NetworkSimulatorGUI::drawNodes() {
     sf::CircleShape nodeShape(nodeRadius);
     for (auto& n : visibleNodes) {
         // Hide others if two nodes selected
-        if (selectedNodes.size() != 2
+        if (selectedNodes.empty()
             || n.first == selectedNodes.front()
-            || n.first == selectedNodes.back()) {
+            || n.first == selectedNodes.back()
+            || n.first == focusNode) {
             const ns::AddressType& address = n.first;
             const int& x = n.second.x * zoom + transformX;
             const int& y = n.second.y * zoom + transformY;
@@ -187,14 +191,9 @@ void NetworkSimulatorGUI::drawLinks() {
     linkSelected = false;
     selectedLink = nullptr;
     
-    size_t maxQueue = 1;
-    for (auto& l : networkSimulator->getLinks()) {
-        size_t queueLen = l->getQueueLength();
-        if (queueLen > maxQueue) maxQueue = queueLen;
-    }
-    
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
+        if (!l) continue;
         try {
             ns::AddressType source = l->getSource()->getAddress();
             ns::AddressType destination = l->getDestination()->getAddress();
@@ -204,8 +203,11 @@ void NetworkSimulatorGUI::drawLinks() {
 
             // Color changes
             double value = 0.0;
-            size_t intensity;
-            sf::Color sourceColor;
+            size_t intensity = 0;
+            sf::Color sourceColor = sf::Color(128,
+                                              128,
+                                              128,
+                                              128);
             sf::Color destinationColor = sf::Color(255,
                                                    255,
                                                    255,
@@ -221,14 +223,25 @@ void NetworkSimulatorGUI::drawLinks() {
             }
             else if (distributionMode == Queue) {
                 value = l->getQueueLength();
-                intensity = (double) value / maxQueue * 255;
+                intensity = std::min((int) value * 10, 255);
                 sourceColor = sf::Color(128 + 0.5 * intensity,
                                         128 - 0.5 * intensity,
                                         128 - 0.5 * intensity,
                                         128 + 0.5 * intensity);
             }
-
-            if (selectedNodes.front() == source && selectedNodes.back() == destination) {
+            
+            if (focusNode == source && !altDown) {
+                if (selectedNodes.front() == destination) {
+                    sourceColor = selectedLinkColor;
+                    destinationColor = selectedLinkColor;
+                } else {
+                    sourceColor = sf::Color::White;
+                    destinationColor = sf::Color::White;
+                }
+            }
+            
+            if ((selectedNodes.front() == source
+                && selectedNodes.back() == destination)) {
                 sourceColor = selectedLinkColor;
                 destinationColor = selectedLinkColor;
                 selectedLink = l;
@@ -259,17 +272,26 @@ void NetworkSimulatorGUI::drawTextBoxes() {
     int i = 0;
     double margin = fontSize / 2;
     sf::Color boxColor = sf::Color(128, 128, 128);
+    
     for (auto n : selectedNodes) {
         // Draw to rendering buffer
         std::stringstream ss;
-        ss << (i++ == 0 ? "SOURCE" : "DESTINATION");
+        ss << (i == 0 ? "SOURCE" : "DESTINATION");
         for (auto& a : networkSimulator->getNode(n)->getApplications()) {
             ss << std::endl << a->getType();
         }
         if (selectedLink) {
-            ss << std::endl << std::endl << "QUEUE" << std::endl;
-            if (i == 0) ss << networkSimulator->getLink(selectedNodes.front(), selectedNodes.back())->getQueueLength();
-            else ss << networkSimulator->getLink(selectedNodes.back(), selectedNodes.front())->getQueueLength();
+            ss << std::endl << std::endl << "QUEUE TO ";
+            Link* l;
+            if (i == 0) {
+                ss << selectedNodes.back() << std::endl;
+                l = networkSimulator->getLink(selectedNodes.front(), selectedNodes.back());
+            }
+            else {
+                ss << selectedNodes.front() << std::endl;
+                l = networkSimulator->getLink(selectedNodes.back(), selectedNodes.front());
+            }
+            if (l) ss << l->getQueueLength();
         }
         text.setString(ss.str());
         sf::FloatRect textBounds = text.getLocalBounds();
@@ -305,6 +327,8 @@ void NetworkSimulatorGUI::drawTextBoxes() {
         window->draw(triangle);
         window->draw(rec);
         window->draw(text);
+        
+        i++;
     }
 }
 
@@ -319,7 +343,9 @@ void NetworkSimulatorGUI::drawTime() {
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
-        << " s   ";
+        << " s   "
+        << std::endl
+        << ((selectedLink) ? "Press [Alt+L] to create traffic log for selected link" : "");
 
     text.setString(ss.str());
 
@@ -333,13 +359,13 @@ void NetworkSimulatorGUI::drawTime() {
         << "[ESC] Exit   "
         << "[Enter] Restart   "
         << "[Space] Pause   "
-        << "[G] Switch routing   "
+        << "[G] Regenerate routing   "
         << "[D] Distribution   "
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move   "
         << "[, / .] Change Speed   "
-        << ((selectedLink) ? "[Alt+L] Create traffic log" : "");
+        << "[Alt] Show routing";
 
 
     text.setString(ss.str());
@@ -561,7 +587,7 @@ void NetworkSimulatorGUI::drawRouting() {
                 weight.setPosition((int) (x2 + x1) / 2, (int) (y2 + y1) / 2);
 
                 window->draw(line, 2, sf::Lines);
-                if (dest == focusNode) {
+                {
                     sf::RectangleShape rec(sf::Vector2f(weight.getLocalBounds().width,
                                                         weight.getLocalBounds().height));
                     rec.setFillColor(sf::Color::Black);
@@ -821,7 +847,7 @@ void NetworkSimulatorGUI::update() {
     }
 
     drawLinks();
-    if (!selectedLink) drawRouting();
+    if (altDown) drawRouting();
     drawNodes();
     drawTextBoxes();
 
