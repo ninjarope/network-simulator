@@ -130,10 +130,10 @@ TEST_CASE("Adding links", "[link]") {
 
 }
 
-void runNs(NetworkSimulator& ns) {
-    ns.setTimerInterval(4);
-    ns.setTimerSlowdownrate(1.0);
-    ns.setTimerEndTime(32);
+void runNs(NetworkSimulator& ns, int i, double s, int et) {
+    ns.setTimerInterval(i);
+    ns.setTimerSlowdownrate(s);
+    ns.setTimerEndTime(et);
 
     NetworkSimulator* nsptr = &ns;
     std::thread t(&NetworkSimulator::start, nsptr);
@@ -217,7 +217,7 @@ TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
 
                     SECTION("Run network simulator for a while", "") {
                         ui->generateGraphLayout();
-                        runNs(ns);
+                        runNs(ns, 4, 1.0, 32);
 
                         REQUIRE(ns.getNodes().size() == 5);
                         REQUIRE(ns.getLinkCount() == 14);
@@ -234,7 +234,7 @@ TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
         SECTION(createRandomNetwork(ns, 10, 10, 10), "") {
             SECTION("Running the simulator", "") {
                 ui->generateGraphLayout();
-                runNs(ns);
+                runNs(ns, 4, 1.0, 32);
             }
         }
 
@@ -245,7 +245,7 @@ TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
                     SECTION(createRandomNetwork(ns, n, l, g), "") {
                         SECTION("Running the simulator", "") {
                             ui->generateGraphLayout();
-                            runNs(ns);
+                            runNs(ns, 4, 1.0, 32);
                         }
                     }
                 }
@@ -257,17 +257,17 @@ TEST_CASE("Comprehensive all around test with tester ui", "[integration]") {
             SECTION(createRandomNetwork(ns, 50, 50, 50), "") {
                 SECTION("Running the simulator", "") {
                     ui->generateGraphLayout();
-                    runNs(ns);
+                    runNs(ns, 8, 1.0, 32);
                 }
             }
         }
 
         // Test random network changing values by steps 2..10
         for (auto n = 0; n < 2; ++n) {
-            SECTION(createRandomNetwork(ns, 500, 500, 250), "") {
+            SECTION(createRandomNetwork(ns, 100, 100, 20), "") {
                 SECTION("Running the simulator", "") {
                     ui->generateGraphLayout();
-                    runNs(ns);
+                    runNs(ns, 8, 1.0, 32);
                 }
             }
         }

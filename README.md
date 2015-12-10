@@ -4,6 +4,10 @@ This page outlines the usage and architecture of the program while also instruct
 
 ---
 
+This README among the other documentations and reports have been compiled and uploaded to a [temporary github page](http://rojun.github.io/doxygen_doc/index.html). We recommend to build/generate the doxygen documentation (instructions below) or following the given link.
+
+---
+
 ## Dependencies
 
 + [SFML](http://www.sfml-dev.org/) for the gui
@@ -22,10 +26,52 @@ This page outlines the usage and architecture of the program while also instruct
 ./ns random [node-count] [edge-count] [packet-generator-count]
 ```
 
+#### Examples of running simulations:
+
+Random
+
+```
+./ns random 50 50 10
+./ns random 10 20 5
+./ns random 1000 1000 100
+```
+
+XML specified
+
+```
+./ns resources/simple.xml
+./ns resources/default.xml
+./ns resources/large.xml
+```
+
+### Control and specifications
+
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.
++ Some of the controls work by holding alt and pressing mouse button on a node
 + To modify the network, use xml files (resources directory).
 
-Basic xml layout:
+#### Examples of using the gui:
+
+```
+run the built executive file with defaults (just './ns')
+Click on a node
+Mouve mouse to another node
+-> shows path and weights if there's a route
+Click another node
+-> Locks it as destination (in means of analysis, the routes, packet generators and paths still remain)
+Press M
+-> Shows queud traffic in red
+Click on the two nodes sharing aforementioned red link
+-> Shows the queue
+Press D
+-> Shows the traffic distribution
+Press M
+-> Shows the queue distribution
+Press Enter
+-> restarts the time lap
+```
+
+### Basic xml layout:
 
 ```xml
 <network interval="10" slowdownrate="1.0" endTime="10000">
@@ -62,6 +108,44 @@ Basic xml layout:
     + with aforementioned links (xml) between nodes.
     + few implemented path algorithms (Currently only shortest path is implemented)
         + This requires tweeking of the code
+
+---
+
+## Documentation
+
++ Included in the root folder are two doxygen configuration files. 
+
+Doxygen documentation can be generated with these configuration by running:
+
+    `doxygen <doxygen-conf-file>`
+
+This will create documentation in html by default of the classes and their related material
+
+### Temporary backup for the doxygen
+
+We've [generated the documentation](http://rojun.github.io/doxygen_doc/index.html) for the time being.
+
+### Requirements for the documentation
+
+Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
+
+The directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
+    
+Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
+
+### Commenting for the documentation
+
+Doxygen understands many variations of commenting. We should use these conventions:
+
+    /**
+     * Block comments for longer comments (classes etc)
+     */
+
+    /** one liners, that should be included in the doxygen */
+
+    /* one liners that are only for code reading / no doxygen support */
+
+    // same as the above (one liners)
 
 ---
 
@@ -144,40 +228,6 @@ and for help and usage:
 ```
 ./ns -h
 ```
-
----
-
-## Documentation
-
-+ Included in the root folder are two doxygen configuration files. 
-
-Doxygen documentation can be generated with these configuration by running:
-
-    `doxygen <doxygen-conf-file>`
-
-This will create documentation in html by default of the classes and their related material
-
-### Requirements for the documentation
-
-Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
-
-The directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
-    
-Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
-
-### Commenting for the documentation
-
-Doxygen understands many variations of commenting. We should use these conventions:
-
-    /**
-     * Block comments for longer comments (classes etc)
-     */
-
-    /** one liners, that should be included in the doxygen */
-
-    /* one liners that are only for code reading / no doxygen support */
-
-    // same as the above (one liners)
 
 ---
 
