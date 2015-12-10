@@ -89,6 +89,11 @@ public:
     void drawRouting();
 
     /**
+     * Show total weight of computed path
+     */
+    void drawTotalWeight(ns::TotalWeight);
+
+    /**
      * Stat display on / off.
      */
     void toggleStatVisibility();

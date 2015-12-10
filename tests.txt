@@ -745,3 +745,124 @@ Comprehensive all around test with tester ui completed in 0.223004s
 ===============================================================================
 All tests passed (7 assertions in 7 test cases)
 
+------------------------------------------------------------
+------------------------------------------------------------
+Starting a new batch of tests..
+------------------------------------------------------------
+Font loaded succesfully!
+OK. No problem! XML File loaded.
+Xml Loading completed in 0.000136s
+Test adding nodes to network completed in 6.9e-05s
+Test adding 10 000 nodes to network completed in 0.033978s
+Creating a tester ui completed in 2e-05s
+Starting a network completed in 1.6e-05s
+Adding links completed in 5e-05s
+Running integration tests / may take a few minutes..
+Run network simulator for a while completed in 0.102102s
+Create some links between nodes completed in 0.102237s
+Add some applications running on nodes completed in 0.102285s
+Create some nodes completed in 0.102309s
+Creating the MVC Objects completed in 0.102324s
+Comprehensive all around test with tester ui completed in 0.10328s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.102013s
+Random network with
+Nodes: 10
+Links: 10
+Generators: 10
+ completed in 0.102133s
+Creating the MVC Objects for random generator completed in 0.121542s
+Comprehensive all around test with tester ui completed in 0.122637s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101856s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 1
+ completed in 0.101951s
+Creating the MVC Objects for random generator completed in 0.122646s
+Comprehensive all around test with tester ui completed in 0.123731s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.102011s
+Random network with
+Nodes: 2
+Links: 1
+Generators: 2
+ completed in 0.102107s
+Creating the MVC Objects for random generator completed in 0.121235s
+Comprehensive all around test with tester ui completed in 0.122308s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101851s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 1
+ completed in 0.101947s
+Creating the MVC Objects for random generator completed in 0.120586s
+Comprehensive all around test with tester ui completed in 0.121669s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101977s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 2
+ completed in 0.102075s
+Creating the MVC Objects for random generator completed in 0.121932s
+Comprehensive all around test with tester ui completed in 0.123024s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101894s
+Random network with
+Nodes: 3
+Links: 1
+Generators: 3
+ completed in 0.10199s
+Creating the MVC Objects for random generator completed in 0.123403s
+Comprehensive all around test with tester ui completed in 0.124494s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.10192s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 1
+ completed in 0.102015s
+Creating the MVC Objects for random generator completed in 0.121129s
+Comprehensive all around test with tester ui completed in 0.122234s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101879s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 2
+ completed in 0.102007s
+Creating the MVC Objects for random generator completed in 0.120535s
+Comprehensive all around test with tester ui completed in 0.121722s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101925s
+Random network with
+Nodes: 3
+Links: 2
+Generators: 3
+ completed in 0.102021s
+Creating the MVC Objects for random generator completed in 0.123866s
+Comprehensive all around test with tester ui completed in 0.124992s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.101963s
+Random network with
+Nodes: 50
+Links: 50
+Generators: 50
+ completed in 0.102059s
+Creating the MVC Objects for random generator completed in 0.121126s
+Comprehensive all around test with tester ui completed in 0.122355s
+Running integration tests / may take a few minutes..
+Running the simulator completed in 0.20255s
+Random network with
+Nodes: 100
+Links: 100
+Generators: 20
+ completed in 0.202648s
+Creating the MVC Objects for random generator completed in 0.222475s
+Comprehensive all around test with tester ui completed in 0.224272s
+===============================================================================
+All tests passed (7 assertions in 7 test cases)
+

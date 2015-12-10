@@ -16,7 +16,7 @@
 NetworkSimulatorGUI::NetworkSimulatorGUI() : NetworkSimulatorUI() {
     // Set refresh interval
     setTimerInterval(16);
-    
+
     // Create window
     sf::ContextSettings settings;
     settings.antialiasingLevel = 0;
@@ -190,7 +190,7 @@ void NetworkSimulatorGUI::drawLinks() {
     // link between two selected nodes
     linkSelected = false;
     selectedLink = nullptr;
-    
+
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         if (!l) continue;
@@ -229,7 +229,7 @@ void NetworkSimulatorGUI::drawLinks() {
                                         128 - 0.5 * intensity,
                                         128 + 0.5 * intensity);
             }
-            
+
             if (focusNode == source && altDown) {
                 if (selectedNodes.front() == destination) {
                     sourceColor = selectedLinkColor;
@@ -239,7 +239,7 @@ void NetworkSimulatorGUI::drawLinks() {
                     destinationColor = sf::Color::White;
                 }
             }
-            
+
             if ((selectedNodes.front() == source
                 && selectedNodes.back() == destination)) {
                 sourceColor = selectedLinkColor;
@@ -272,7 +272,7 @@ void NetworkSimulatorGUI::drawTextBoxes() {
     int i = 0;
     double margin = fontSize / 2;
     sf::Color boxColor = sf::Color(128, 128, 128);
-    
+
     for (auto n : selectedNodes) {
         // Draw to rendering buffer
         std::stringstream ss;
@@ -327,7 +327,7 @@ void NetworkSimulatorGUI::drawTextBoxes() {
         window->draw(triangle);
         window->draw(rec);
         window->draw(text);
-        
+
         i++;
     }
 }
@@ -550,6 +550,10 @@ void NetworkSimulatorGUI::drawRouting() {
 
         try {
             Node* n1 = networkSimulator->getNode(source);
+
+            // draw total sum of weights
+            drawTotalWeight(n1->getRoutingTableEntry(dest));
+
             while (n1) {
                 ns::AddressType next = n1->getRoutingTableEntry(dest).nextHop;
                 Node* n2 = networkSimulator->getNode(next);
@@ -603,6 +607,25 @@ void NetworkSimulatorGUI::drawRouting() {
             }
         } catch (std::out_of_range) { }
     }
+}
+
+void NetworkSimulatorGUI::drawTotalWeight(ns::TotalWeight w) {
+
+    std::stringstream ss;
+    ss.precision(2);
+    ss.setf(std::ios::fixed);
+
+    ss << "Path weight: "
+        << w.totalWeight;
+
+    sf::Text weight;
+    weight.setFont(font);
+    weight.setCharacterSize(14);
+    weight.setColor(sf::Color::White);
+    weight.setString(ss.str());
+    double yOffset = (int) text.getLocalBounds().height + 2.0;
+    weight.setPosition(windowWidth - 200.0, yOffset);
+    window->draw(weight);
 }
 
 inline void NetworkSimulatorGUI::toggleStatVisibility() { statsVisible = !statsVisible; }
@@ -684,7 +707,7 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
             << std::to_string(rand() % 100000)
             << ".txt";
 
-        logFile.open (fileName.str());
+        logFile.open(fileName.str());
         for (auto& s : log) {
             // Create row
             std::stringstream ss;
@@ -704,7 +727,6 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
         std::cout << "Log file could not be opened!" << std::endl;
 #endif
     }
-
 
 }
 
