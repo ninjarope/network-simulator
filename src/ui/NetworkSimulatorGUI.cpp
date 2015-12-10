@@ -230,7 +230,7 @@ void NetworkSimulatorGUI::drawLinks() {
                                         128 + 0.5 * intensity);
             }
             
-            if (focusNode == source && !altDown) {
+            if (focusNode == source && altDown) {
                 if (selectedNodes.front() == destination) {
                     sourceColor = selectedLinkColor;
                     destinationColor = selectedLinkColor;
@@ -365,7 +365,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move   "
         << "[, / .] Change Speed   "
-        << "[Alt] Show routing";
+        << "[Alt] Show connections";
 
 
     text.setString(ss.str());
@@ -847,7 +847,7 @@ void NetworkSimulatorGUI::update() {
     }
 
     drawLinks();
-    if (altDown) drawRouting();
+    if (!altDown) drawRouting();
     drawNodes();
     drawTextBoxes();
 
