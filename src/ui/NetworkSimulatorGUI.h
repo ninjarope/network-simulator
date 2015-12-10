@@ -8,6 +8,7 @@
 
 #include <sstream>
 #include <map>
+#include <cmath>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -29,12 +30,12 @@ public:
      * Enables generic UI supertype and switching of its implementation layer.
      */
     static NetworkSimulatorUI* createUI();
-    
+
     /**
      * Generate layout based on network structure.
      */
     void generateGraphLayout() override;
-    
+
     /**
      * Show traffic in a link. Search the link with parameters.
      *
@@ -52,7 +53,7 @@ public:
      * Render links.
      */
     void drawLinks();
-    
+
     /**
      * Render text boxes.
      */
@@ -62,12 +63,12 @@ public:
      * Show current time.
      */
     void drawTime();
-    
+
     /**
      * Show queues of links.
      */
     void drawQueues();
-    
+
     /**
      * Show applications of all nodes.
      */
@@ -102,14 +103,14 @@ public:
      * Change between different distribution views.
      */
     void changeDistributionView();
-    
+
     /**
      * Sets focus on node if mouse cursor is on it.
      */
     void checkMouseOverNode(int x, int y);
 
     /**
-     * Toggles select state of given node.     
+     * Toggles select state of given node.
      */
     void toggleSelect(ns::AddressType address);
 
@@ -117,20 +118,23 @@ public:
      * Threaded callback to update GUI
      */
     void timerCallback() override;
-    
-    /** 
+
+    /**
      * Return true if rendering window is created, false otherwise.
      */
     bool windowExists();
-    
+
     void createTransmissionLogFile(Link* l);
+
+    void drawPacket();
+   std::pair <double, double> giveRatio(int pos);
 
     /**
      * Main function that is called from Network Simulator.
      * Encapsulates all UI subjects.
      */
     void update() override;
-    
+
 protected:
     sf::RenderWindow* window;
     sf::Event event;
@@ -140,7 +144,12 @@ protected:
     sf::Color defaultFillColor;
     sf::Color defaultDistColor;
     sf::Color selectedLinkColor;
-    
+
+
+std::vector <Link*> allLinks;
+   std::vector < std::pair < double, double> > ratioL;
+   std::pair <double, double> ratio;
+
     unsigned int fontSize;
     unsigned int nodeRadius;
     unsigned int windowWidth;
@@ -152,24 +161,24 @@ protected:
     bool distributionVisible;
     bool altDown = false;
     bool linkSelected;
-    
+
     // Helper struct
     struct Point {
         double x;
         double y;
     };
-    
+
     std::map<ns::AddressType, Point> visibleNodes;
     std::list<ns::AddressType> selectedNodes;
     ns::AddressType focusNode;
     Link* selectedLink;
-    
+
     enum {
         Traffic,
         Queue
     } distributionMode;
-    
-    
+
+
 };
 
 

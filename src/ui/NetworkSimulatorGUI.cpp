@@ -7,6 +7,8 @@
 #include <ctime>
 #include <cmath>
 #include <cfloat>
+#include <thread>
+#include <chrono>
 #include <algorithm>
 #include <fstream>
 
@@ -186,13 +188,19 @@ void NetworkSimulatorGUI::drawLinks() {
     // link between two selected nodes
     linkSelected = false;
     selectedLink = nullptr;
-    
+
+    size_t maxQueue = 1;
+    for (auto& l : networkSimulator->getLinks()) {
+        size_t queueLen = l->getQueueLength();
+        if (queueLen > maxQueue) maxQueue = queueLen;
+    }
+
     for (auto& l : networkSimulator->getLinks()) {
         // Start and end points (nodes)
         try {
             ns::AddressType source = l->getSource()->getAddress();
             ns::AddressType destination = l->getDestination()->getAddress();
-            
+
             auto n1 = visibleNodes.at(source);
             auto n2 = visibleNodes.at(destination);
 
@@ -215,13 +223,13 @@ void NetworkSimulatorGUI::drawLinks() {
             }
             else if (distributionMode == Queue) {
                 value = l->getQueueLength();
-                intensity = std::min((int) value, 255);
+                intensity = (double) value / maxQueue * 255;
                 sourceColor = sf::Color(128 + 0.5 * intensity,
                                         128 - 0.5 * intensity,
                                         128 - 0.5 * intensity,
                                         128 + 0.5 * intensity);
             }
-            
+
             if (selectedNodes.front() == source && selectedNodes.back() == destination) {
                 sourceColor = selectedLinkColor;
                 destinationColor = selectedLinkColor;
@@ -242,11 +250,54 @@ void NetworkSimulatorGUI::drawLinks() {
             window->draw(line, 2, sf::Lines);
         } catch (std::out_of_range) { }
     }
-    
+
     if (selectedLink) {
         // TODO: display some values
     }
 }
+
+
+void NetworkSimulatorGUI::drawPacket() {
+
+  for(unsigned int i=0; i< networkSimulator->getLinks().size(); i++){
+      if(!networkSimulator->getLinks().at(i)->getPacketsInTransmission().empty()){
+
+                double lSx = (visibleNodes.at(networkSimulator->getLinks().at(i)->getSource()->getAddress()).x)*zoom + transformX; //* zoom + transformX;
+                double lSy = (visibleNodes.at(networkSimulator->getLinks().at(i)->getSource()->getAddress()).y)*zoom + transformY; //* zoom + transformY;
+                double lDx = (visibleNodes.at(networkSimulator->getLinks().at(i)->getDestination()->getAddress()).x)*zoom + transformX; //* zoom + transformX;
+                double lDy = (visibleNodes.at(networkSimulator->getLinks().at(i)->getDestination()->getAddress()).y)*zoom + transformY; //* zoom + transformY;
+                double movPosPacketX = lSx;
+                double movPosPacketY = lSy;
+                double len = sqrt((lDx-lSx)*(lDx-lSx) + (lDy-lSy)*(lDy-lSy));
+                double dx = (lDx-lSx)/len;
+                double dy = (lDy-lSy)/len;
+                double dist = 0;
+              //  std::cout <<"per Link:"<< i << std::endl;
+              //  std::cout <<"Length" <<len << std::endl;
+          for (int j= 0 ; j< len/4 ;j++){
+                 dist += len/4;
+                if ((dist) <len ){
+                     movPosPacketX = lSx + dist*dx;
+                     movPosPacketY = lSy + dist*dy;
+
+                  //   std::cout << "X: "<<  movPosPacketX << std::endl;
+                     sf::CircleShape circle;
+                     circle.setRadius(3);
+                     circle.setFillColor(sf::Color::Blue);
+
+                     circle.setPosition(movPosPacketX, movPosPacketY);
+                      //std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                     window->draw(circle);
+                     //std::cout << "counter: "<< j << std::endl;
+
+                }
+
+
+         }
+      }
+  }
+}
+
 
 void NetworkSimulatorGUI::drawTextBoxes() {
     // Pop-up boxes for selected nodes
@@ -255,18 +306,28 @@ void NetworkSimulatorGUI::drawTextBoxes() {
     sf::Color boxColor = sf::Color(128, 128, 128);
     for (auto n : selectedNodes) {
         // Draw to rendering buffer
-        text.setString(i++ == 0 ? "SOURCE" : "DESTINATION");
+        std::stringstream ss;
+        ss << (i++ == 0 ? "SOURCE" : "DESTINATION");
+        for (auto& a : networkSimulator->getNode(n)->getApplications()) {
+            ss << std::endl << a->getType();
+        }
+        if (selectedLink) {
+            ss << std::endl << std::endl << "QUEUE" << std::endl;
+            if (i == 0) ss << networkSimulator->getLink(selectedNodes.front(), selectedNodes.back())->getQueueLength();
+            else ss << networkSimulator->getLink(selectedNodes.back(), selectedNodes.front())->getQueueLength();
+        }
+        text.setString(ss.str());
         sf::FloatRect textBounds = text.getLocalBounds();
 
         // Node center point
         int x = visibleNodes.at(n).x * zoom + transformX - textBounds.width / 2;
-        int y = visibleNodes.at(n).y * zoom + transformY - textBounds.height / 2 - fontSize * 4;
+        int y = visibleNodes.at(n).y * zoom + transformY - textBounds.height - margin * 5;
 
         text.setPosition(x, y);
 
         // Box
         sf::RectangleShape rec(sf::Vector2f(textBounds.width + margin * 2,
-                                            textBounds.height * 2.0 + margin * 2));
+                                            textBounds.height + margin * 3));
 
         rec.setFillColor(sf::Color(0, 0, 0, 128));
         rec.setOutlineColor(boxColor);
@@ -303,12 +364,7 @@ void NetworkSimulatorGUI::drawTime() {
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
-        << " s   "
-        << " ROUTING: "
-        << (networkSimulator->routingExists() ? "shortest paths" : "random")
-        << " TOTAL PACKETS TRANSMITTED: "
-        << totalTraffic;
-
+        << " s   ";
 
     text.setString(ss.str());
 
@@ -323,12 +379,11 @@ void NetworkSimulatorGUI::drawTime() {
         << "[Enter] Restart   "
         << "[Space] Pause   "
         << "[G] Switch routing   "
-        << "[S] Stats   "
         << "[D] Distribution   "
         << "[M] Switch distribution mode   "
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move   "
-        << "[,/.] Change Speed   "
+        << "[, / .] Change Speed   "
         << ((selectedLink) ? "[Alt+L] Create traffic log" : "");
 
 
@@ -400,7 +455,7 @@ void NetworkSimulatorGUI::drawTrafficDistribution() {
     }
 
     // Draw relative bar graph showing distribution of traffic between the links
-    for (auto i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         size_t traffic = links[i]->getTransmissionLog().size();
         double h = (double) windowHeight * traffic / maxTraffic;
 
@@ -463,7 +518,7 @@ void NetworkSimulatorGUI::drawQueueDistribution() {
     }
 
     // Draw relative bar graph showing distribution of queueLength between the links
-    for (auto i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         size_t queueLength = links[i]->getQueueLength();
         double h = (double) windowHeight * queueLength / maxQueue;
 
@@ -647,7 +702,7 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
             << "_"
             << std::to_string(rand() % 100000)
             << ".txt";
-        
+
         logFile.open (fileName.str());
         for (auto& s : log) {
             // Create row
@@ -655,7 +710,7 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
             ss.precision(3);
             ss.setf(std::ios::fixed);
             ss << s.first << " " << (double) s.second / 1000.0 << std::endl;
-            
+
             // Write row to file
             logFile << ss.str();
         }
@@ -668,8 +723,8 @@ void NetworkSimulatorGUI::createTransmissionLogFile(Link* l) {
         std::cout << "Log file could not be opened!" << std::endl;
 #endif
     }
-    
-    
+
+
 }
 
 void NetworkSimulatorGUI::update() {
@@ -764,10 +819,6 @@ void NetworkSimulatorGUI::update() {
                         changeDistributionView();
                         break;
 
-                    case sf::Keyboard::S:
-                        toggleStatVisibility();
-                        break;
-
                     case sf::Keyboard::Q:
                     case sf::Keyboard::Escape:
                         networkSimulator->quit();
@@ -817,6 +868,7 @@ void NetworkSimulatorGUI::update() {
     drawLinks();
     if (!selectedLink) drawRouting();
     drawNodes();
+    drawPacket();
     drawTextBoxes();
 
     if (statsVisible) {
@@ -829,4 +881,3 @@ void NetworkSimulatorGUI::update() {
     // Draw buffer to screen
     window->display();
 }
-
