@@ -16,10 +16,31 @@ This page outlines the usage and architecture of the program while also instruct
 ./ns random [node-count] [edge-count] [packet-generator-count]
 ```
 
+### Examples:
+
+Random
+
+```
+./ns random 50 50 10
+./ns random 10 20 5
+./ns random 1000 1000 100
+```
+
+XML specified
+
+```
+./ns resources/simple.xml
+./ns resources/default.xml
+./ns resources/large.xml
+```
+
+### Control and specifications
+
 + Shows a gui that has few keys mapped and mouse controls. Runs a 10s elapse by default.
++ Some of the controls work by holding alt and pressing mouse button on a node
 + To modify the network, use xml files (resources directory).
 
-Basic xml layout:
+#### Basic xml layout:
 
 ```xml
 <network interval="10" slowdownrate="1.0" endTime="10000">
