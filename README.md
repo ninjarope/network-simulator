@@ -16,7 +16,7 @@ This page outlines the usage and architecture of the program while also instruct
 ./ns random [node-count] [edge-count] [packet-generator-count]
 ```
 
-### Examples:
+#### Examples of running simulations:
 
 Random
 
@@ -40,7 +40,28 @@ XML specified
 + Some of the controls work by holding alt and pressing mouse button on a node
 + To modify the network, use xml files (resources directory).
 
-#### Basic xml layout:
+#### Examples of using the gui:
+
+```
+run the built executive file with defaults (just './ns')
+Click on a node
+Mouve mouse to another node
+-> shows path and weights if there's a route
+Click another node
+-> Locks it as destination (in means of analysis, the routes, packet generators and paths still remain)
+Press M
+-> Shows queud traffic in red
+Click on the two nodes sharing aforementioned red link
+-> Shows the queue
+Press D
+-> Shows the traffic distribution
+Press M
+-> Shows the queue distribution
+Press Enter
+-> restarts the time lap
+```
+
+### Basic xml layout:
 
 ```xml
 <network interval="10" slowdownrate="1.0" endTime="10000">

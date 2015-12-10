@@ -133,7 +133,7 @@ TEST_CASE("Adding links", "[link]") {
 void runNs(NetworkSimulator& ns, int i, double s, int et) {
     ns.setTimerInterval(i);
     ns.setTimerSlowdownrate(s);
-    ns.setTimerEndTime(e);
+    ns.setTimerEndTime(et);
 
     NetworkSimulator* nsptr = &ns;
     std::thread t(&NetworkSimulator::start, nsptr);
