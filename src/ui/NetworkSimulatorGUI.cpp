@@ -343,7 +343,9 @@ void NetworkSimulatorGUI::drawTime() {
     ss
         << "CURRENT TIME: "
         << networkSimulator->getCurrentTime() / 1000.0
-        << " s   ";
+        << " s   "
+        << std::endl
+        << ((selectedLink) ? "Press [Alt+L] to create traffic log for selected link" : "");
 
     text.setString(ss.str());
 
@@ -363,7 +365,7 @@ void NetworkSimulatorGUI::drawTime() {
         << "[1, 2] Zoom   "
         << "[Arrow Keys] Move   "
         << "[, / .] Change Speed   "
-        << ((selectedLink) ? "[Alt+L] Create traffic log" : "");
+        << "[Alt] Show routing";
 
 
     text.setString(ss.str());
