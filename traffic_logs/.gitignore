@@ -1,0 +1,3 @@
+# Ignore all traffic log files
+*
+!.gitignore
