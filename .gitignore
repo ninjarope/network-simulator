@@ -2,6 +2,11 @@ ns
 doxygen_doc/
 
 #################
+## traffic log files
+#################
+traffic_log/*
+
+#################
 ## Intellij
 #################
 .idea/
@@ -19,6 +24,7 @@ obj/
 #################
 ## XCode
 #################
+NetworkSimulatorXcode
 *.xcodeproj
 *.xcodeproj/
 
