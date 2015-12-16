@@ -1,3 +1,5 @@
+sudo: required
+
 branches:
     only:
         - master
@@ -6,4 +8,5 @@ before-install:
     - sudo apt-get update -qq
     - sudo apt-get install -y libsfml-dev
 
-language: cpp
+script:
+    - make
