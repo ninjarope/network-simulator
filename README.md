@@ -16,7 +16,7 @@ This README among the other documentations and reports have been compiled and up
 
 ## Usage
 
-+ Build with make (Makefile included and should handle most platforms)
++ Build with make (Makefile included and should handle at least linux and OSX)
 
  Running the executive:
 
