@@ -5,7 +5,7 @@ doxygen_doc/
 ## Intellij
 #################
 .idea/
-CMakeLists.txt
+#CMakeLists.txt
 
 
 #################
