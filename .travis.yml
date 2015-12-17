@@ -6,28 +6,16 @@ sudo: false
 
 language: c++
 
-script: 
-    - mkdir build && cd build
-    - cmake .. -DSFML_ROOT="$SFML_ROOT" 
-    - cmake --build .
-    - ctest -VV
-    - cd .. && mkdir build-static && cd build-static
-    - cmake .. -DSFML_ROOT="$SFML_STATIC_ROOT" -DSFML_STATIC_LIBRARIES=ON 
-    - cmake --build .
-    - ctest -VV
-    - cd ..
-    - export CXXFLAGS=-I$(pwd)/deps/SFML/build-static/install/include
-    - export LDFLAGS=-L$(pwd)/deps/SFML/build-static/install
-    - export LD_LIBRARY_PATH=$(pwd)/deps/SFML/build-static/install
-    - echo "LDFLAGS=-L$(pwd)/deps/SFML/build-static/install" >> Makefile
+script:
+    - echo $CXXFLAGS
+    - echo $LD_LIBRARY_PATH
+    - echo $LIBRARY_PATH
     - make
 
 cache:
   apt: true
   directories:
     - "$HOME/.travis/cmake/build/install"
-    - "deps/SFML/build/install"
-    - "deps/SFML/build-static/install"
 
 # Update Travis' gcc and build sfml (as the new libsfml-dev provided by travis has issues)
 before_install:
@@ -42,25 +30,25 @@ before_install:
 
 matrix:
     include:
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise
-            - llvm-toolchain-precise-3.7
-          packages:
-            - clang-3.8
-            - g++-5
-            - libglew-dev
-            - libsndfile1-dev
-            - libopenal-dev
-            - libfreetype6-dev
-            - libx11-xcb-dev
-            - udev
-            - libudev-dev
-            - libpthread-stubs0-dev
+    #- os: linux
+      #compiler: clang
+      #addons:
+        #apt:
+          #sources:
+            #- ubuntu-toolchain-r-test
+            #- llvm-toolchain-precise
+            #- llvm-toolchain-precise-3.7
+          #packages:
+            #- clang-3.8
+            #- g++-5
+            #- libglew-dev
+            #- libsndfile1-dev
+            #- libopenal-dev
+            #- libfreetype6-dev
+            #- libx11-xcb-dev
+            #- udev
+            #- libudev-dev
+            #- libpthread-stubs0-dev
     - os: linux
       compiler: gcc
       addons:
@@ -84,24 +72,41 @@ branches:
         - master
 
 install:
-  - pushd .
-  # SFML 2.3 has new dependencies that Travis doesn't have
-  - cd deps/SFML
-  - git checkout 2.2
-  - popd && pushd .
-  # Build SFML (dynamic)
-  - if [ ! -d "deps/SFML/build/install/lib" ]; then export REBUILD_SFML="yes"; else export REBUILD_SFML="no"; fi
-  - if [ "$REBUILD_SFML" == "yes" ]; then cd deps/SFML && rm -rf build && mkdir build && cd build; fi
-  - if [ "$REBUILD_SFML" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" && cmake --build . && cmake --build . --target install; fi
-  - if [ "$REBUILD_SFML" == "yes" ]; then cd install/lib; fi
-  - if [ "$REBUILD_SFML" == "no"  ]; then cd deps/SFML/build/install/lib; fi
-  - export PATH="$(pwd):$PATH" && cd .. && export SFML_ROOT="$(pwd)"
-  - popd && pushd .
-  # Build SFML (static)
-  - if [ ! -d "deps/SFML/build-static/install/lib" ]; then export REBUILD_SFML_STATIC="yes"; else export REBUILD_SFML_STATIC="no"; fi
-  - if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd deps/SFML && rm -rf build-static && mkdir build-static && cd build-static; fi
-  - if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" -DBUILD_SHARED_LIBS=OFF && cmake --build . && cmake --build . --target install; fi
-  - if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd install; fi
-  - if [ "$REBUILD_SFML_STATIC" == "no"  ]; then cd deps/SFML/build-static/install; fi
-  - export SFML_STATIC_ROOT="$(pwd)"
-  - popd && pushd .
+# Build SFML from source
+    - pushd ..
+    - git clone https://github.com/LaurentGomila/SFML.git sfml
+    - cd sfml
+    - git checkout tags/2.2
+    - export CXXFLAGS=-I$(pwd)/include
+    - cd ..
+    - mkdir build-sfml
+    - cd build-sfml
+    - cmake -G "Unix Makefiles" -D CMAKE_INSTALL_PREFIX=$(pwd)/install -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=TRUE ../sfml
+    - make
+    - make install
+#- export PATH="$(pwd)/lib:$PATH"
+    - export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+    - export LIBRARY_PATH=$(pwd)/lib:$LIBRARY_PATH
+    - popd
+
+#- pushd .
+  ## SFML 2.3 has new dependencies that Travis doesn't have
+  #- cd deps/SFML
+  #- git checkout 2.2
+  #- popd && pushd .
+  ## Build SFML (dynamic)
+  #- if [ ! -d "deps/SFML/build/install/lib" ]; then export REBUILD_SFML="yes"; else export REBUILD_SFML="no"; fi
+  #- if [ "$REBUILD_SFML" == "yes" ]; then cd deps/SFML && rm -rf build && mkdir build && cd build; fi
+  #- if [ "$REBUILD_SFML" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" && cmake --build . && cmake --build . --target install; fi
+  #- if [ "$REBUILD_SFML" == "yes" ]; then cd install/lib; fi
+  #- if [ "$REBUILD_SFML" == "no"  ]; then cd deps/SFML/build/install/lib; fi
+  #- export PATH="$(pwd):$PATH" && cd .. && export SFML_ROOT="$(pwd)"
+  #- popd && pushd .
+  ## Build SFML (static)
+  #- if [ ! -d "deps/SFML/build-static/install/lib" ]; then export REBUILD_SFML_STATIC="yes"; else export REBUILD_SFML_STATIC="no"; fi
+  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd deps/SFML && rm -rf build-static && mkdir build-static && cd build-static; fi
+  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" -DBUILD_SHARED_LIBS=OFF && cmake --build . && cmake --build . --target install; fi
+  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd install; fi
+  #- if [ "$REBUILD_SFML_STATIC" == "no"  ]; then cd deps/SFML/build-static/install; fi
+  #- export SFML_STATIC_ROOT="$(pwd)"
+  #- popd && pushd .
