@@ -1,4 +1,4 @@
-
+# References..
 # https://github.com/cpp3ds/cpp3ds
 # https://github.com/cpluspluscom/ChessPlusPlus
 
@@ -7,17 +7,19 @@ sudo: false
 language: c++
 
 script: 
-    #- mkdir build && cd build
-    #- export SFML_SRC=deps/SFML
-    #- cmake ../$(SFML_SRC) -DSFML_ROOT="$SFML_ROOT" 
-    #- cmake --build .
-    #- ctest -VV
-    #- cd .. && mkdir build-static && cd build-static
-    #- cmake ../$(SFML_SRC) -DSFML_ROOT="$SFML_STATIC_ROOT" -DSFML_STATIC_LIBRARIES=ON 
-    #- cmake --build .
-    #- ctest -VV
-    #- cd ..
-    - export CXXFLAGS=-I$(pwd)/$(SFML_SRC)/include
+    - mkdir build && cd build
+    - cmake .. -DSFML_ROOT="$SFML_ROOT" 
+    - cmake --build .
+    - ctest -VV
+    - cd .. && mkdir build-static && cd build-static
+    - cmake .. -DSFML_ROOT="$SFML_STATIC_ROOT" -DSFML_STATIC_LIBRARIES=ON 
+    - cmake --build .
+    - ctest -VV
+    - cd ..
+    - export CXXFLAGS=-I$(pwd)/deps/SFML/build-static/install/include
+    - export LDFLAGS=-L$(pwd)/deps/SFML/build-static/install
+    - export LD_LIBRARY_PATH=$(pwd)/deps/SFML/build-static/install
+    - echo "LDFLAGS=-L$(pwd)/deps/SFML/build-static/install" >> Makefile
     - make
 
 cache:
@@ -58,6 +60,7 @@ matrix:
             - libx11-xcb-dev
             - udev
             - libudev-dev
+            - libpthread-stubs0-dev
     - os: linux
       compiler: gcc
       addons:
@@ -74,6 +77,7 @@ matrix:
             - udev
             - libudev-dev
             - cmake
+            - libpthread-stubs0-dev
 
 branches:
     only:
