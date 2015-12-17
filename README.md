@@ -1,4 +1,6 @@
-# Network Simulator
+# Network Simulator 
+
+![Travis build status](https://travis-ci.org/ninjarope/network-simulator.svg?branch=master)
 
 This page outlines the usage and architecture of the program while also instructing how to generate the doxygen api documentation. License and team information at the bottom.
 
