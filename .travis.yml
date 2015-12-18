@@ -1,21 +1,27 @@
 # References..
+# https://github.com/hakase-labs/hikari/blob/master/.travis.yml
 # https://github.com/cpp3ds/cpp3ds
 # https://github.com/cpluspluscom/ChessPlusPlus
+# http://stackoverflow.com/questions/4250624/ld-library-path-vs-library-path
+# https://docs.travis-ci.com/user/migrating-from-legacy/
 
 sudo: false
 
 language: c++
 
-script:
+script: 
     - echo $CXXFLAGS
     - echo $LD_LIBRARY_PATH
     - echo $LIBRARY_PATH
+    - ls -R $HOME/build/ninjarope/build-sfml/lib
     - make
 
 cache:
   apt: true
   directories:
     - "$HOME/.travis/cmake/build/install"
+    #- "$HOME/build/ninjarope/sfml/include"
+    #- "$HOME/build/ninjarope/build-sfml/lib"
 
 # Update Travis' gcc and build sfml (as the new libsfml-dev provided by travis has issues)
 before_install:
@@ -27,9 +33,16 @@ before_install:
     - git clone https://github.com/LB--/travis.git travis
     - source "./travis/update-cmake.sh"
     - popd
+    - source "./build_sfml.sh"
+
+install:
+    - export CXXFLAGS=-I$HOME/build/ninjarope/sfml/include
+    - export LD_LIBRARY_PATH=$HOME/build/ninjarope/build-sfml/lib:$LD_LIBRARY_PATH
+    - export LIBRARY_PATH=$HOME/build/ninjarope/build-sfml/lib:$LIBRARY_PATH
 
 matrix:
     include:
+# uncomment to include building with clang
     #- os: linux
       #compiler: clang
       #addons:
@@ -49,6 +62,7 @@ matrix:
             #- udev
             #- libudev-dev
             #- libpthread-stubs0-dev
+            #- cmake
     - os: linux
       compiler: gcc
       addons:
@@ -64,49 +78,10 @@ matrix:
             - libx11-xcb-dev
             - udev
             - libudev-dev
-            - cmake
             - libpthread-stubs0-dev
+            - cmake
 
 branches:
     only:
         - master
-
-install:
-# Build SFML from source
-    - pushd ..
-    - git clone https://github.com/LaurentGomila/SFML.git sfml
-    - cd sfml
-    - git checkout tags/2.2
-    - export CXXFLAGS=-I$(pwd)/include
-    - cd ..
-    - mkdir build-sfml
-    - cd build-sfml
-    - cmake -G "Unix Makefiles" -D CMAKE_INSTALL_PREFIX=$(pwd)/install -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=TRUE ../sfml
-    - make
-    - make install
-#- export PATH="$(pwd)/lib:$PATH"
-    - export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
-    - export LIBRARY_PATH=$(pwd)/lib:$LIBRARY_PATH
-    - popd
-
-#- pushd .
-  ## SFML 2.3 has new dependencies that Travis doesn't have
-  #- cd deps/SFML
-  #- git checkout 2.2
-  #- popd && pushd .
-  ## Build SFML (dynamic)
-  #- if [ ! -d "deps/SFML/build/install/lib" ]; then export REBUILD_SFML="yes"; else export REBUILD_SFML="no"; fi
-  #- if [ "$REBUILD_SFML" == "yes" ]; then cd deps/SFML && rm -rf build && mkdir build && cd build; fi
-  #- if [ "$REBUILD_SFML" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" && cmake --build . && cmake --build . --target install; fi
-  #- if [ "$REBUILD_SFML" == "yes" ]; then cd install/lib; fi
-  #- if [ "$REBUILD_SFML" == "no"  ]; then cd deps/SFML/build/install/lib; fi
-  #- export PATH="$(pwd):$PATH" && cd .. && export SFML_ROOT="$(pwd)"
-  #- popd && pushd .
-  ## Build SFML (static)
-  #- if [ ! -d "deps/SFML/build-static/install/lib" ]; then export REBUILD_SFML_STATIC="yes"; else export REBUILD_SFML_STATIC="no"; fi
-  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd deps/SFML && rm -rf build-static && mkdir build-static && cd build-static; fi
-  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cmake .. -DCMAKE_INSTALL_PREFIX="$(pwd)/install" -DBUILD_SHARED_LIBS=OFF && cmake --build . && cmake --build . --target install; fi
-  #- if [ "$REBUILD_SFML_STATIC" == "yes" ]; then cd install; fi
-  #- if [ "$REBUILD_SFML_STATIC" == "no"  ]; then cd deps/SFML/build-static/install; fi
-  #- export SFML_STATIC_ROOT="$(pwd)"
-  #- popd && pushd .
+        - dev
