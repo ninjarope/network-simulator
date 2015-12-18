@@ -6,7 +6,7 @@ This page outlines the usage and architecture of the program while also instruct
 
 ---
 
-This README among the other documentations and reports have been compiled and uploaded to a [temporary github page](http://rojun.github.io/doxygen_doc/index.html). We recommend to build/generate the doxygen documentation (instructions below) or following the given link.
+This README among the other documentations and reports have been compiled and uploaded to a [temporary github page](http://rojun.github.io/doxygen_doc/index.html) (updated last in Dec 10, 2015 / commit 8ace..). We recommend to build/generate the doxygen documentation (instructions below) or following the given link.
 
 ---
 
@@ -54,24 +54,32 @@ XML specified
 
 #### Examples of using the gui:
 
-```
-run the built executive file with defaults (just './ns')
-Click on a node
-Mouve mouse to another node
--> shows path and weights if there's a route
-Click another node
--> Locks it as destination (in means of analysis, the routes, packet generators and paths still remain)
-Press M
--> Shows queud traffic in red
-Click on the two nodes sharing aforementioned red link
--> Shows the queue
-Press D
--> Shows the traffic distribution
-Press M
--> Shows the queue distribution
-Press Enter
--> restarts the time lap
-```
+*Path, weights and total path weight if there's a route*
+
+* Run the built executive file with defaults (just './ns')
+* Click on a node
+* Move mouse to another node
+
+*Lock a destination* (in means of analysis: the routes, packet generators and paths still remain)
+
+* Click another node
+
+*Show queued traffic for the nodes* (links color in red according to the amount of traffic)
+
+* Press M
+
+*Show the queue for a node*
+
+* Click on the two nodes sharing aforementioned red link
+
+*Show traffic distribution*
+
+* Press D
+
+*Restart the simulation* (or the timer, rather)
+
+* Press Enter
+
 
 ### Basic xml layout:
 
@@ -125,15 +133,19 @@ This will create documentation in html by default of the classes and their relat
 
 ### Temporary backup for the doxygen
 
-We've [generated the documentation](http://rojun.github.io/doxygen_doc/index.html) for the time being.
+We've [generated the documentation](http://rojun.github.io/doxygen_doc/index.html) for the time being. This might not be accurate for the current state of the project until we get around to automate building these artifacts and hosting them online appropriately.
 
 ### Requirements for the documentation
 
-Doxygen - of course - to generate the documentation with it. This is the only requirement, if the non-graphs configuration is used.
+*With graphs*
 
-The directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
-    
-Graphviz should be installed to use doxygen with the graph enabled configuration. The graphs are built with graphviz's dot tool.
+Install Doxygen and Graphviz and use the included 'doxygen-with-graphs' conf-file. The graphs are built with graphviz's dot tool.
+
+*Without graphs*
+
+Install Doxygen and use the included 'doxygen-without-graphs' conf-file.
+
+In both cases the directory ./doxygen_doc might be necessary to create by hand, if doxygen doesn't handle directory creation for you.
 
 ### Commenting for the documentation
 
@@ -145,13 +157,13 @@ Doxygen understands many variations of commenting. We should use these conventio
 
     /** one liners, that should be included in the doxygen */
 
-    /* one liners that are only for code reading / no doxygen support */
-
-    // same as the above (one liners)
+    // one liners that are only for code reading / no doxygen support
 
 ---
 
 ## Architecture
+
+This is a quick overlook of the components that make things run. A more detailed version can be found in the Doxygen generated API documentation.
 
 Classes are intended to follow loose coupling principles where applicable. It follows MVC-model abstracting the view layer. There's few other view layers implemented, but they are mostly for testing purposes. 
 
@@ -174,6 +186,7 @@ Example of getting a specific node by address:
 
 + Clocks the processes in the program.
 + Can be paused.
++ Is run in a separate thread
 
 ### Node
 
@@ -194,7 +207,7 @@ Example of getting a specific node by address:
 ### Link
 
 + Links are composed of a pair of two nodes = pair<Node *, Node *>.
-
+ 
 + The simplest link type is a directed link, but undirected or bidirectional links are implicit in current implementations. They are implemented by having two directed links.
 
 #### ParametricLink
@@ -219,13 +232,15 @@ Running tests for xml (linux):
 ./ns "[tag]" <options>
 ```
 
-./ns refers to the built executive. The arguments include the tag of the test and options for the tests. To get tags for all tests use:
+./ns refers to the built executive. The arguments include the tag of the test and options for the tests. 
+
+List all tags:
 
 ```
 ./ns -l
 ```
 
-and for help and usage:
+Help and usage:
 
 ```
 ./ns -h
@@ -237,22 +252,29 @@ and for help and usage:
 
 This repository contains three subdirectories:
 
-+ plan/ for the plan 
-+ doc/  for the final documentation
-+ src/  for all the source code
++ doc/   :: Additional documentation
++ fonts/ :: Included fonts used with the Gui
++ plan/  :: First plan
++ resources/    :: Resources for the executive - f.ex. the xml files.
++ src/   :: Source code
++ traffic_logs/ :: In program traffic logs get saved here
 
 ---
 
 ## License
 
-
- MIT license applies for all that's included here, if not explicitly stated otherwise (in files). See LICENSE.
+MIT license applies for all that's included here, if not explicitly stated otherwise (in files). See LICENSE.
 
 ---
 
-## Team
+## Team Ninjarope
 
-Agrasagar Bhattacharyya
-Chamran Moradi Ashour
-Joni Turunen
-Tommi Gröhn
+Tommi Gröhn & Joni Turunen
+
+### Previous contributors 
+#### (team before Dec 2015)
+
+* Agrasagar Bhattacharyya
+* Chamran Moradi Ashour
+* Joni Turunen
+* Tommi Gröhn
