@@ -2,11 +2,13 @@
 
 ![Travis build status](https://travis-ci.org/ninjarope/network-simulator.svg?branch=master)
 
-This page outlines the usage and architecture of the program while also instructing how to generate the doxygen api documentation. License and team information at the bottom.
+Network Simulator in C++ that provides a statistical perspective to traffic flow simulation in a network of nodes and their applications.
 
 ---
 
 This README among the other documentations and reports have been compiled and uploaded to a [temporary github page](http://rojun.github.io/doxygen_doc/index.html) (updated last in Dec 10, 2015 / commit 8ace..). We recommend to build/generate the doxygen documentation (instructions below) or following the given link.
+
+This page outlines the usage and architecture of the program while also instructing how to generate the doxygen api documentation. License and team information at the bottom.
 
 ---
 
