@@ -12,6 +12,22 @@ This page outlines the usage and architecture of the program while also instruct
 
 ---
 
+## Screenshots
+
+Basic graph defined by an xml file:
+
+![Basic xml generated graph](./doc/ns-xml_generated_graph.jpg)
+
+Random generated graph showing 250 nodes and statistics for packets:
+
+![Random generated graph](./doc/ns-random_generated_graph_nodes.jpg)
+
+Random generated graph with iteratively calculated shortest path:
+
+![Random generated graph](./doc/ns-random_generated_graph_path.jpg)
+
+---
+
 ## Dependencies
 
 + [SFML](http://www.sfml-dev.org/) for the gui
